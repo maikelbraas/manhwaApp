@@ -1,0 +1,70 @@
+<div class="container py-5">
+  <div class="manga-card">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img
+          src="<%= manhwa.image %>"
+          class="img-fluid rounded-start"
+          alt="<%= manhwa.slug %>" />
+      </div>
+      <div class="col-md-8">
+        <div class="card-body p-4">
+          <h1 class="card-title mb-3"><%- manhwa.title %></h1>
+          <h6 class="card-subtitle mb-3">Chapter <%- manhwa.chapters %></h6>
+          <p class="card-text">
+            <small class="card-status">Status: <%- manhwa.status %></small>
+          </p>
+          <p class="card-text mb-4"><%- manhwa.content %></p>
+          <div class="mb-4">
+            Genres: <% for(let genre of manhwa.genres){ %>
+            <span class="badge genre-badge me-2"
+              ><i class="fas fa-fist-raised me-1"></i> <%- genre.name %></span
+            >
+            <% } %>
+          </div>
+          <div class="manhwa-chapters">
+            <a
+              href="<%- manhwa.baseurl %>manga/<%- manhwa.slug %>"
+              target="_blank"
+              >Manhwa site</a
+            >
+          </div>
+
+          <div class="d-grid gap-3">
+            <% if(typeof currentUser != 'undefined'){ %> <% if(typeof
+            manhwa.saved != 'undefined'){ %>
+            <p>Your last saved manhwa chapter: <%= manhwa.saved.chapter %></p>
+            <% }else{ %>
+            <form
+              action="/auth/chapter/<%- manhwa.mid %>"
+              class="d-flex flex-row col-12 col-md-4"
+              method="POST">
+              <input
+                class="form-control bg-dark m-2 sm-4 text-light"
+                type="number"
+                pattern="[0-9]*"
+                inputmode="numeric"
+                name="chapternumber"
+                id=""
+                max="<%- manhwa.chapters %>"
+                min="0"
+                required />
+              <button
+                type="submit"
+                class="btn btn-primary form-control m-2 text-white">
+                <i class="fas fa-bookmark me-2">Log chapter</i>
+              </button>
+            </form>
+
+            <% }} %>
+            <button
+              class="btn btn-success col-4"
+              onclick="window.history.go(-1); return faslse;">
+              Return
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

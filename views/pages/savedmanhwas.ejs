@@ -1,0 +1,33 @@
+<div class="manhwa-rows" tabindex="0">
+  <label for="">Ongoing</label>
+  <div class="devider" id="ongoing">
+    <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
+    '') == 'ongoing' && manhwa.chapter != manhwa.chapters){ %> <%-
+    include('parts/card.ejs', {manhwa}) %> <% }} %>
+  </div>
+  <label for="">Hiatus</label>
+  <div class="devider" id="hiatus">
+    <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
+    '') == 'hiatus' && manhwa.chapter != manhwa.chapters){ %> <%-
+    include('parts/card.ejs', {manhwa}) %> <% }} %>
+  </div>
+  <label for="">Completed</label>
+  <div class="devider" id="completed">
+    <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
+    '') == 'completed' && manhwa.chapter != manhwa.chapters){ %> <%-
+    include('parts/card.ejs', {manhwa}) %> <% }} %>
+  </div>
+  <label for="">Dropped</label>
+  <div class="devider" id="dropped">
+    <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
+    '') == 'dropped' && manhwa.chapter != manhwa.chapters){ %> <%-
+    include('parts/card.ejs', {manhwa}) %> <% }} %>
+  </div>
+  <label for="">Up to date</label>
+  <div class="devider" id="uptodate">
+    <% for(let manhwa of manhwas){ if(manhwa.chapter == manhwa.chapters){ %> <%-
+    include('parts/card.ejs', {manhwa}) %> <% }} %>
+  </div>
+</div>
+
+<script src="/js/saved.js" type="module"></script>
