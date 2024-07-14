@@ -56,7 +56,7 @@ export default async function manhwaCheck(req, res, next) {
             let chapterLinkSlice;
             chapterLinkSlice = jsonSingle.slice(jsonSingle.search('<div class="eplister" id="chapterlist">'), jsonSingle.search('var chapterSearchNotFound'));
             let splitted = chapterLinkSlice.split('<li data-num="');
-            // splitted.shift();
+            splitted.shift();
             for (let splits of splitted) {
                 try {
                     let link = splits.split('href=')[1].split('"')[1];
