@@ -63,7 +63,7 @@ export default async function manhwaCheckReaper(req, res, next) {
                 if (checkIfSaved.length > 0)
                     chapterLinks = await searchChapters(manhwa.id);
 
-                manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[chapterLinks.length - 1].number : manhwa.count;
+                manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : manhwa.count;
                 manhwa.genres = genres.slice(2);
                 manhwa.image = "https://" + image;
                 manhwa.description = description;
