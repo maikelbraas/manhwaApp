@@ -38,6 +38,7 @@ class Manhwa {
     }
 
     static async checkUpdate(req, res, next) {
+        // let manhwas = [];
         let manhwas = await manhwaCheckAsuraUpdate(req, res, next);
         if (manhwas.length > 0) {
             for (let manhwa of manhwas) {
@@ -106,13 +107,17 @@ class Manhwa {
     }
 
     static async getSavedManhwas(req, res, next) {
-        const userid = req.session.user.id;
-        const manhwas = await manhwaModel.getSavedManhwas(userid);
-        for (let manhwa of manhwas) {
-            const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter));
-            manhwa.link = link.chapter_link;
+        try {
+            const userid = req.session.user.id;
+            const manhwas = await manhwaModel.getSavedManhwas(userid);
+            for (let manhwa of manhwas) {
+                const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter));
+                manhwa.link = link.chapter_link;
+            }
+            return manhwas;
+        } catch (e) {
+            console.log(e);
         }
-        return manhwas;
     }
 
     static async getManhwasFromJson(req, res, next) {

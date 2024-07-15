@@ -96,6 +96,11 @@ class Manhwa {
 
     static async saveManhwaChapters(mid, link, number) {
         try {
+            const querySearch = "SELECT * FROM manhwa_chapter WHERE manhwamid = ? AND chapter_link = ? AND chapter = ?";
+            const [rowsSearch] = await connect.execute(querySearch, [mid, link, number]);
+            if (rowsSearch.length > 0)
+                return false;
+
             const query = "INSERT INTO manhwa_chapter (manhwamid, chapter_link, chapter) VALUES (?, ?, ?)";
             const [rows] = await connect.execute(query, [mid, link, number]);
             return rows;
