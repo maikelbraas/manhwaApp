@@ -64,7 +64,7 @@ export default async function manhwaCheckAsuraUpdate(req, res, next) {
                     try {
                         let link = splits.split('href=')[1].split('"')[1];
                         let number = parseFloat(splits.split(' ')[0].split('"')[0])
-                        let findChapter = await manhwaModel.findChapterByMidAndLink("reaper-" + manhwa.id, link);
+                        let findChapter = await manhwaModel.findChapterByMidAndLink("asura-" + manhwa.id, link);
                         if (findChapter.length == 0)
                             chapterLinks.push({ link, number })
                     } catch (e) {
