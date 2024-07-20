@@ -44,7 +44,7 @@ class Manhwa {
     }
 
     static async getAllManhwas() {
-        const query = `SELECT * FROM manhwas ORDER BY title ASC`;
+        const query = `SELECT * FROM manhwas WHERE status != 'Dropped' ORDER BY title ASC`;
         const [rows] = await connect.execute(query);
         return rows;
     }
