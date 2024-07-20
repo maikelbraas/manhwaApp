@@ -3,8 +3,10 @@ document.getElementById("startUpdate").addEventListener("click", () => {
     progressDiv.innerHTML = "Starting fetch...";
     createBar("asura");
     createBar("reaper");
+    createBar("flame");
     const asura = document.getElementById('asura');
     const reaper = document.getElementById('reaper');
+    const flame = document.getElementById('flame');
 
     const eventSource = new EventSource("/api/manhwaUpdate");
 
@@ -21,6 +23,12 @@ document.getElementById("startUpdate").addEventListener("click", () => {
                 data.progress.reaper
             )}%`;
             reaper.style.width = data.progress.reaper + "%";
+        }
+        if (data.progress.flame <= 100) {
+            flame.innerHTML = `${Math.round(
+                data.progress.flame
+            )}%`;
+            flame.style.width = data.progress.flame + "%";
         }
         if (data.done) {
             progressDiv.innerHTML +=
@@ -41,8 +49,10 @@ document.getElementById("startCreate").addEventListener("click", () => {
     progressDiv.innerHTML = "Starting fetch...";
     createBar("asura");
     createBar("reaper");
+    createBar("flame");
     const asura = document.getElementById('asura');
     const reaper = document.getElementById('reaper');
+    const flame = document.getElementById('flame');
 
     const eventSource = new EventSource("/api/manhwa");
 
@@ -59,6 +69,12 @@ document.getElementById("startCreate").addEventListener("click", () => {
                 data.progress.reaper
             )}%`;
             reaper.style.width = data.progress.reaper + "%";
+        }
+        if (data.progress.flame <= 100) {
+            flame.innerHTML = `${Math.round(
+                data.progress.flame
+            )}%`;
+            flame.style.width = data.progress.flame + "%";
         }
         if (data.done) {
             progressDiv.innerHTML +=

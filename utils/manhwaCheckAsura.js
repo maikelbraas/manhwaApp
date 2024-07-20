@@ -31,7 +31,7 @@ export default async function manhwaCheck(req, res, next) {
         let checkIfSaved;
         nextManhwa++;
         let inter = (nextManhwa / totalManhwas) * 100;
-        res.write(`data: ${JSON.stringify({ progress: { asura: inter, reaper: 0 } })}\n\n`);
+        res.write(`data: ${JSON.stringify({ progress: { asura: inter, reaper: 0, flame: 0 } })}\n\n`);
         if (manhwa.hasOwnProperty('id')) {
             checkManhwa = await manhwaModel.findManhwaById("asura-" + manhwa.id);
             checkIfSaved = await manhwaModel.findSavedManhwa("asura-" + manhwa.id, req.user.id)

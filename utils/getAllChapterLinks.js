@@ -2,8 +2,14 @@ import manhwaModel from '../models/Manhwa.js';
 export default async function checkSingle(mid) {
     try {
         let [manhwa] = await manhwaModel.findManhwaById(mid);
+        let jsonSingle;
+        let responseSingleOr = await fetch(`${manhwa.baseurl}series/${manhwa.slug}`);
         let responseSingle = await fetch(`${manhwa.baseurl}manga/${manhwa.slug}`);
-        let jsonSingle = await responseSingle.text();
+        if (manhwa.baseurl.includes('flame')) {
+            jsonSingle = await responseSingleOr.text();
+        } else {
+            jsonSingle = await responseSingle.text();
+        }
         //Get chapters links
         let chapterLinks = [];
         let chapterLinkSlice;

@@ -35,7 +35,7 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
 
             nextManhwa++;
             let inter = (nextManhwa / totalManhwas) * 100;
-            res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: inter } })}\n\n`);
+            res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: inter, flame: 0 } })}\n\n`);
             if (manhwa.count == 0 || manhwa.slug == "uncategorized")
                 return false;
             if (manhwa.hasOwnProperty('id')) {
