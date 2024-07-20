@@ -42,14 +42,15 @@ class Auth {
             await user.updateChapter(chapter, req.params.id, userid);
         } else {
             await user.saveChapter(chapter, req.params.id, req.session.user.id);
-        }
-        let chapters = await checkSingle(req.params.id);
-        if (!chapters)
-            this.removeSaved(req, res, next)
-        for (let chapter of chapters) {
-            await manhwaModel.saveManhwaChapters(req.params.id, chapter.link, chapter.number);
+            let chapters = await checkSingle(req.params.id);
+            if (!chapters)
+                this.removeSaved(req, res, next)
+            for (let chapter of chapters) {
+                await manhwaModel.saveManhwaChapters(req.params.id, chapter.link, chapter.number);
+            }
         }
         res.redirect('/auth/savedmanhwas');
+        // next();
     }
 
     static async removeSaved(req, res, next) {

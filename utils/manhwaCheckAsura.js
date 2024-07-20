@@ -71,7 +71,7 @@ export default async function manhwaCheck(req, res, next) {
         }
 
 
-        manhwa.chapters = parseInt(chapter[1]);
+        manhwa.chapters = parseFloat(chapter[1]);
         manhwa.content.rendered = manhwa.content.rendered.replace(/(<([^>]+)>)/gi, "");
         manhwa.genres = genres.slice(2);
         manhwa.baseurl = "https://asuratoon.com/";
