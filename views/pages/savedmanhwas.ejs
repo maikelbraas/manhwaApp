@@ -13,8 +13,8 @@
   </div>
   <label for="">Try</label>
   <div class="devider" id="hiatus">
-    <% for(let manhwa of manhwas){ if(manhwa.chapter == 1 || manhwa.reading ==
-    1){ %> <%- include('parts/card.ejs', {manhwa}) %> <% }} %>
+    <% for(let manhwa of manhwas){ if(manhwa.chapter == 1){ %> <%-
+    include('parts/card.ejs', {manhwa}) %> <% }} %>
   </div>
   <label for="">Completed</label>
   <div class="devider" id="completed">
@@ -27,6 +27,11 @@
   <div class="devider" id="dropped">
     <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
     '') == 'dropped'){ %> <%- include('parts/card.ejs', {manhwa}) %> <% }} %>
+  </div>
+  <label for="">Later</label>
+  <div class="devider" id="hiatus">
+    <% for(let manhwa of manhwas){ if(manhwa.reading == 1){ %> <%-
+    include('parts/card.ejs', {manhwa}) %> <% }} %>
   </div>
   <label for="">Up to date</label>
   <div class="devider" id="uptodate">
