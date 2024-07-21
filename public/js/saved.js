@@ -23,4 +23,8 @@ document.querySelector('.manhwa-rows').addEventListener('click', async (event) =
             }
         }
     }
+    if (event.target.classList == "devider-label") {
+        console.log(getComputedStyle(event.target.nextElementSibling).display);
+        getComputedStyle(event.target.nextElementSibling).display == 'grid' ? event.target.nextElementSibling.style.display = "none" : event.target.nextElementSibling.style.display = "grid";
+    }
 });

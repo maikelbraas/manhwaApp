@@ -1,39 +1,39 @@
 <div class="manhwa-rows" tabindex="0">
-  <label for="">Ongoing</label>
+  <label class="devider-label" for="">Ongoing</label>
   <div class="devider" id="ongoing">
     <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
     '') == 'ongoing' && manhwa.chapter.toFixed(1) != manhwa.chapters.toFixed(1)
     && manhwa.chapter != 1 && manhwa.reading != 1){ %> <%-
     include('parts/card.ejs', {manhwa}) %> <% }} %>
   </div>
-  <label for="">Hiatus</label>
+  <label class="devider-label" for="">Hiatus</label>
   <div class="devider" id="hiatus">
     <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
     '') == 'hiatus'){ %> <%- include('parts/card.ejs', {manhwa}) %> <% }} %>
   </div>
-  <label for="">Try</label>
+  <label class="devider-label" for="">Try</label>
   <div class="devider" id="hiatus">
     <% for(let manhwa of manhwas){ if(manhwa.chapter == 1){ %> <%-
     include('parts/card.ejs', {manhwa}) %> <% }} %>
   </div>
-  <label for="">Completed</label>
+  <label class="devider-label" for="">Completed</label>
   <div class="devider" id="completed">
     <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
     '') == 'completed' && manhwa.chapter.toFixed(1) !=
     manhwa.chapters.toFixed(1)){ %> <%- include('parts/card.ejs', {manhwa}) %>
     <% }} %>
   </div>
-  <label for="">Dropped</label>
+  <label class="devider-label" for="">Dropped</label>
   <div class="devider" id="dropped">
     <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
     '') == 'dropped'){ %> <%- include('parts/card.ejs', {manhwa}) %> <% }} %>
   </div>
-  <label for="">Later</label>
+  <label class="devider-label" for="">Later</label>
   <div class="devider" id="hiatus">
     <% for(let manhwa of manhwas){ if(manhwa.reading == 1){ %> <%-
     include('parts/card.ejs', {manhwa}) %> <% }} %>
   </div>
-  <label for="">Up to date</label>
+  <label class="devider-label" for="">Up to date</label>
   <div class="devider" id="uptodate">
     <% for(let manhwa of manhwas){ if(manhwa.chapter.toFixed(1) ==
     manhwa.chapters.toFixed(1)){ %> <%- include('parts/card.ejs', {manhwa}) %>

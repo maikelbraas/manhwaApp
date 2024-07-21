@@ -16,8 +16,9 @@
   padding-top: 20px;
 }
 
-.devider{
-  border-top: 1px solid #c1c1c1;
+.devider-label{
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c1c1c1;
 }
 
 .loading-spinner{
@@ -175,6 +176,9 @@ input[type=number] {
     }
     main{
       margin-top: 90px;
+    }
+    .devider:nth-child(n+3){
+      display: none;
     }
     
 }
