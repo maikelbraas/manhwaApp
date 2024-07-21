@@ -134,7 +134,7 @@ class Manhwa {
             const userid = req.session.user.id;
             const manhwas = await manhwaModel.getSavedManhwas(userid);
             for (let manhwa of manhwas) {
-                const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter));
+                const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
                 manhwa.link = link.chapter_link;
             }
             return manhwas;
