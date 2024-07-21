@@ -29,4 +29,9 @@ router.delete('/remove/:mid', async (req, res, next) => {
     next();
 })
 
+router.patch('/patch/:mid', async (req, res, next) => {
+    await auth.patchSaved(req, res, next);
+    next();
+})
+
 export default router;

@@ -58,6 +58,12 @@ class Auth {
         const uid = req.session.user.id;
         await manhwaModel.deleteSaved(mid, uid);
     }
+
+    static async patchSaved(req, res, next) {
+        const mid = req.params.mid;
+        const uid = req.session.user.id;
+        await manhwaModel.patchSaved(mid, uid);
+    }
 }
 
 export default Auth;

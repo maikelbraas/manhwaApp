@@ -33,7 +33,7 @@
           </small>
         </p>
         <p class="card-text manhwa-row-content"><%- manhwa.content %></p>
-        <div class="col-md-8">
+        <div class="col-md-12">
           <form
             action="/auth/chapter/<%- manhwa.mid %>"
             class="d-flex flex-row"
@@ -59,13 +59,20 @@
             </button>
           </form>
           <div
-            class="d-flex flex-row align-items-center justify-content-around">
+            class="d-flex flex-row align-items-center mt-2 justify-content-between">
             <button
               type="submit"
               class="btn btn-danger"
               id="<%- manhwa.mid %>"
-              value="Remove">
+              value="remove">
               Remove
+            </button>
+            <button
+              type="submit"
+              class="btn btn-warning"
+              id="<%- manhwa.mid %>"
+              value="later">
+              <%- manhwa.reading == 0 ? "Read Later" : "Start reading" %>
             </button>
             <a href="<%- manhwa.link %>" target="_blank">Current Chapter</a>
           </div>
