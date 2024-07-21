@@ -11,8 +11,9 @@
         <h5 class="card-title"><%- manhwa.title %></h5>
         <p class="card-title">
           <small
-            >Chapters <%- manhwa.chapter.toFixed(1) %> OF <%-
-            manhwa.chapters.toFixed(1) %></small
+            >Chapters <%- manhwa.chapter % 1 !== 0 ? manhwa.chapter.toFixed(1) :
+            manhwa.chapter %> OF <%- manhwa.chapters % 1 !== 0
+            ?manhwa.chapters.toFixed(1) : manhwa.chapters %></small
           >
           |
           <small class="card-time"
