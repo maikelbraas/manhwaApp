@@ -155,6 +155,12 @@ input[type=number] {
     }
 @media only screen AND (max-width: 768px){
     
+  .navbar-nav > li{
+    text-align: center;
+    border: 1px solid #c1c1c1;
+    border-width: 1px 0 1px 0;
+  }
+
     .manhwa-rows > div{
         grid-template-columns: repeat(1, 1fr);
     }
