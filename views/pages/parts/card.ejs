@@ -69,7 +69,7 @@
             </button>
             <button
               type="submit"
-              class="btn btn-warning"
+              class="btn <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-success' %>"
               id="<%- manhwa.mid %>"
               value="later">
               <%- manhwa.reading == 0 ? "Read Later" : "Start reading" %>

@@ -15,7 +15,7 @@ document.querySelector('.manhwa-rows').addEventListener('click', async (event) =
             }
         }
         if (event.target.value == 'later') {
-            if (confirm('Are you sure you want to move the saved manhwa to try?')) {
+            if (confirm(event.target.classList.contains('btn-warning') ? 'Are you sure you want to move the saved manhwa to try?' : 'Are you sure you want to move the saved manhwa to ongoing?')) {
                 await fetch(`/auth/patch/${event.target.id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/html" }
