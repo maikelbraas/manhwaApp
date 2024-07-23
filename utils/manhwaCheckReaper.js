@@ -45,7 +45,7 @@ export default async function manhwaCheckReaper(req, res, next) {
             if (responseSingle.status == 200) {
                 let jsonSingle = await responseSingle.text();
                 //Get genres
-                let genreSlice = jsonSingle.slice(jsonSingle.search('class="seriestugenre"'), jsonSingle.search('<div class="adall">'));
+                let genreSlice = jsonSingle.slice(jsonSingle.search('class="seriestugenre"'), jsonSingle.search('"sharethis-inline-share-buttons"'));
                 genreSlice = genreSlice.split('">')
                 let genres = [];
                 genreSlice.forEach(genre => genres.push(genre.split('</')[0]));

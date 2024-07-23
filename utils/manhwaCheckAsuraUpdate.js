@@ -1,16 +1,26 @@
 import manhwaModel from '../models/Manhwa.js';
+import { ZenRows } from 'zenrows';
 export default async function manhwaCheckAsuraUpdate(req, res, next) {
     let i = 1;
     let nextManhwa = 0;
     let response;
+    let json;
     let manhwas = [];
     let totalManhwas;
+
     do {
         try {
-            response = await fetch(`https://asuratoon.com/wp-json/wp/v2/manga?page=${i}`);
+            response = await fetch(`https://asura-scans.com/wp-json/wp/v2/categories?page=${i}`);
+
+            // const client = new ZenRows("74a4f2fec85a4b8ed0ce4fd0db65b7fd0aa008d5");
+            // const url = `https://asuratoon.com/wp-json/wp/v2/manga?page=${i}`;
+
+            // response = await client.get(url, { "premium_proxy": "true" });
+            // const json = await response.json();
+            // console.log(response);
             if (i == 1)
                 totalManhwas = response.headers.get('x-wp-total');
-            let json = await response.json();
+            json = await response.json();
             if (Array.isArray(json)) {
                 for (let j of json)
                     if (typeof j.id != 'undefined')
@@ -22,10 +32,11 @@ export default async function manhwaCheckAsuraUpdate(req, res, next) {
             i++;
 
         } catch (error) {
+            console.log(error);
             res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
             res.end();
         }
-    } while (response.status == 200);
+    } while (response.status == 200 && json.length > 0);
     return manhwas;
 
     async function createSingle(manhwa) {
@@ -41,50 +52,41 @@ export default async function manhwaCheckAsuraUpdate(req, res, next) {
             }
             if (checkManhwa.length == 0)
                 return false;
-            let responseSingle = await fetch(`https://asuratoon.com/${manhwa.slug}`);
+            let responseSingle = await fetch(`https://asura-scans.com/manga/${manhwa.slug}`);
             let jsonSingle = await responseSingle.text();
-            //Get chapters
-            let chapterSlice = jsonSingle.slice(jsonSingle.search('epcurlast'), jsonSingle.search('epcurlast') + 30);
-            let chapter = chapterSlice.split('<', 2)[0].split(' ', 2);
-            let genreSlice = jsonSingle.slice(jsonSingle.search('Genres'), jsonSingle.search('<div class="bottom">'));
+            //Get genres
+            let genreSlice = jsonSingle.slice(jsonSingle.search('class="seriestugenre"'), jsonSingle.search('class="sharethis-inline-share-buttons"'));
             genreSlice = genreSlice.split('">')
             let genres = [];
             genreSlice.forEach(genre => genres.push(genre.split('</')[0]));
+            genres.splice(0, 2)
+            //Get description
+            let descriptionSlice = jsonSingle.slice(jsonSingle.search('itemprop="description">') + 23, jsonSingle.search('<div class="lastend">'));
+            let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
+            //Get image
+            let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('fetchpriority="high"'));
+            let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
             //Get status
-            let statusSlice = jsonSingle.slice(jsonSingle.search('Status <i>'), jsonSingle.search('Status <i>') + 30);
-            let status = statusSlice.split('>')[1].split('<')[0];
+            let statusSlice = jsonSingle.slice(jsonSingle.search('<td>Status</td>'), jsonSingle.search('<td>Status</td>') + 35);
+            let status = statusSlice.split('>')[3].split('<')[0];
             //Get chapters links
             let chapterLinks = [];
-            if (checkIfSaved.length > 0) {
-                let chapterLinkSlice;
-                chapterLinkSlice = jsonSingle.slice(jsonSingle.search('<div class="eplister" id="chapterlist">'), jsonSingle.search('var chapterSearchNotFound'));
-                let splitted = chapterLinkSlice.split('<li data-num="');
-                splitted.shift();
-                for (let splits of splitted) {
-                    try {
-                        let link = splits.split('href=')[1].split('"')[1];
-                        let number = parseFloat(splits.split(' ')[0].split('"')[0])
-                        let findChapter = await manhwaModel.findChapterByMidAndLink("asura-" + manhwa.id, link);
-                        if (findChapter.length == 0)
-                            chapterLinks.push({ link, number })
-                    } catch (e) {
-                        console.log(e);
-                    }
-                }
-            }
+            if (checkIfSaved.length > 0 && manhwa.count != checkManhwa[0].chapters)
+                chapterLinks = await searchChapters(manhwa.id);
 
-            manhwa.chapters = parseFloat(chapter[1]).toFixed(1);
-            manhwa.content.rendered = manhwa.content.rendered.replace(/(<([^>]+)>)/gi, "");
+            manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : manhwa.count;
+            manhwa.description = description;
             manhwa.genres = genres.slice(2);
-            manhwa.baseurl = "https://asuratoon.com/";
+            manhwa.image = "https://" + image;
+            manhwa.baseurl = "https://asura-scans.com/";
             manhwa.status = status;
             let newObj = {
-                title: manhwa.title.rendered,
+                title: manhwa.name,
                 mid: "asura-" + manhwa.id,
-                description: manhwa.content.rendered,
+                description: manhwa.description,
                 slug: manhwa.slug,
-                media: manhwa.featured_media,
-                image: manhwa.images.large,
+                media: 404,
+                image: manhwa.image,
                 chapters: manhwa.chapters,
                 baseurl: manhwa.baseurl,
                 genres: manhwa.genres,
@@ -105,5 +107,27 @@ export default async function manhwaCheckAsuraUpdate(req, res, next) {
         if (fetchManhwa.chapters == existManhwa[0].chapters && fetchManhwa.status == existManhwa[0].status)
             return false;
         return fetchManhwa;
+    }
+    async function searchChapters(id) {
+        //Get chapters links
+        let chaptersFromManhwas;
+        let chapterChunkOfManhwa;
+        let page = 1;
+        let chapterLinks = [];
+        do {
+            try {
+                chaptersFromManhwas = await fetch(`https://asura-scans.com/wp-json/wp/v2/posts?categories=${id}&page=${page}`)
+                chapterChunkOfManhwa = await chaptersFromManhwas.json();
+                if (chapterChunkOfManhwa.length > 0)
+                    for (let chunk of chapterChunkOfManhwa) {
+                        let number = chunk.title.rendered.split(' ').pop();
+                        chapterLinks.push({ link: chunk.link, number })
+                    }
+            } catch (e) {
+                console.log(e);
+            }
+            page++;
+        } while (chaptersFromManhwas.status == 200 && chapterChunkOfManhwa.length > 0);
+        return chapterLinks;
     }
 }
