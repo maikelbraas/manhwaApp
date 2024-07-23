@@ -1,5 +1,4 @@
 import manhwaModel from '../models/Manhwa.js';
-import { ZenRows } from 'zenrows';
 export default async function manhwaCheckAsuraUpdate(req, res, next) {
     let i = 1;
     let nextManhwa = 0;
@@ -11,13 +10,6 @@ export default async function manhwaCheckAsuraUpdate(req, res, next) {
     do {
         try {
             response = await fetch(`https://asura-scans.com/wp-json/wp/v2/categories?page=${i}`);
-
-            // const client = new ZenRows("74a4f2fec85a4b8ed0ce4fd0db65b7fd0aa008d5");
-            // const url = `https://asuratoon.com/wp-json/wp/v2/manga?page=${i}`;
-
-            // response = await client.get(url, { "premium_proxy": "true" });
-            // const json = await response.json();
-            // console.log(response);
             if (i == 1)
                 totalManhwas = response.headers.get('x-wp-total');
             json = await response.json();
