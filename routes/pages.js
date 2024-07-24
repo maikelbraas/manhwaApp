@@ -21,17 +21,21 @@ router.get('/manhwa', async (req, res, next) => {
 
 
 router.get('/manhwa/:id', async (req, res, next) => {
-    let manhwa = await manhwaController.getManhwa(req, res, next);
-    if (!manhwa) {
-        await manhwaController.getManhwas(req, res, next);
-        manhwa = await manhwaController.getManhwa(req, res, next);
+    try {
+        let manhwa = await manhwaController.getManhwa(req, res, next);
+        if (!manhwa) {
+            await manhwaController.getManhwas(req, res, next);
+            manhwa = await manhwaController.getManhwa(req, res, next);
+        }
+        if (typeof req.session.user != 'undefined')
+            manhwa.saved = await manhwaController.getSavedManhwaChapter(req, res, next);
+
+        manhwa.genres = await genreModel.getAllGenresOfManhwa(req.params.id);
+
+        res.render('layout', { template: 'pages/manhwa.ejs', manhwa });
+    } catch (error) {
+        console.log(error);
     }
-    if (typeof req.session.user != 'undefined')
-        manhwa.saved = await manhwaController.getSavedManhwaChapter(req, res, next);
-
-    manhwa.genres = await genreModel.getAllGenresOfManhwa(req.params.id);
-
-    res.render('layout', { template: 'pages/manhwa.ejs', manhwa });
 });
 
 router.get('/api/manhwa', async (req, res, next) => {
