@@ -45,11 +45,13 @@ export default async function manhwaCheck(req, res, next) {
             if (responseSingle.status == 200) {
                 let jsonSingle = await responseSingle.text();
                 //Get genres
-                let genreSlice = jsonSingle.slice(jsonSingle.search('class="seriestugenre"'), jsonSingle.search('class="sharethis-inline-share-buttons"'));
-                genreSlice = genreSlice.split('">')
+                let genreSlice = jsonSingle.slice(jsonSingle.search('class="seriestugenre"'), jsonSingle.search('<div class="entry-content entry-content-single" itemprop="description">'));
+                genreSlice = genreSlice.split('">');
                 let genres = [];
                 genreSlice.forEach(genre => genres.push(genre.split('</')[0]));
-                genres.splice(0, 2)
+                if (genres[genres.length - 1].startsWith('\n')) {
+                    genres.splice(genres.length - 1, 1);
+                }
                 //Get description
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('itemprop="description">') + 23, jsonSingle.search('<div class="lastend">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
@@ -65,7 +67,7 @@ export default async function manhwaCheck(req, res, next) {
                     chapterLinks = await searchChapters(manhwa.id);
 
                 manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : manhwa.count;
-                manhwa.genres = genres;
+                manhwa.genres = genres.slice(2);
                 manhwa.image = "https://" + image;
                 manhwa.description = description;
                 manhwa.baseurl = "https://asura-scans.com/";
