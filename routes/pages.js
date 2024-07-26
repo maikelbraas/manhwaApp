@@ -24,8 +24,8 @@ router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
         if (!manhwa) {
-            await manhwaController.getManhwas(req, res, next);
-            manhwa = await manhwaController.getManhwa(req, res, next);
+            res.redirect('/manhwa?page=1');
+            return false;
         }
         if (typeof req.session.user != 'undefined')
             manhwa.saved = await manhwaController.getSavedManhwaChapter(req, res, next);
