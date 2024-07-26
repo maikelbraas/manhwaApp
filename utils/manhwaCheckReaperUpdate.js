@@ -59,8 +59,8 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
                 let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('fetchpriority="high"'));
                 let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
                 //Get status
-                let statusSlice = jsonSingle.slice(jsonSingle.search('<td>Status</td>'), jsonSingle.search('<td>Status</td>') + 35);
-                let status = statusSlice.split('>')[3].split('<')[0];
+                let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
+                let status = statusSlice.split('>')[1].split('<')[0];
                 //Get chapters links
                 let chapterLinks = [];
                 if (checkIfSaved.length > 0 && manhwa.count != checkManhwa[0].chapters)
