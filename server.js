@@ -30,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'))
+app.set('trust proxy', true);
 
 app.use(session({ secret: 'fd8s9f6sd@#$@fdsf23r23', resave: false, saveUninitialized: false }));
 app.use(flashMessage);
