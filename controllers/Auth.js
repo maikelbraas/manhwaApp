@@ -9,23 +9,25 @@ class Auth {
             let errors = [];
             const { username, password, confpassword, email } = req.body;
             if (password != confpassword)
-                errors.push('Wachtwoorden komen niet overeen.');
+                errors.push('Passwords are not the same.');
 
             const existingUser = await user.findByUsernameOrEmail(username, email);
 
             if (existingUser.length > 0)
-                errors.push('Account bestaat al.')
+                errors.push('Account already exists.')
 
-            if (errors.length > 0)
+            if (errors.length > 0) {
+                res.flash(errors);
                 return res.render('layout', { template: 'pages/register.ejs', errors })
+            }
 
             const userId = await user.create(username, password, email);
             res.flash('Registratie succesvol!');
-            return res.redirect('/auth/login');
+            return res.redirect('/login');
         } catch (err) {
             console.log(err);
             // return res.render('layout', { template: 'pages/register.ejs', errors: ['Er is iets fout gegaan met het aanmaken van je account.'] })
-            return res.redirect('/auth/register')
+            return res.redirect('/register')
         }
     }
 
