@@ -1,16 +1,14 @@
 import express from 'express';
-import checkAuth from '../utils/checkAuth.js';
 import manhwaController from '../controllers/Manhwa.js';
 import genreModel from '../models/Genre.js';
 import passport from 'passport';
-import local from '../utils/Strategy.js';
 import auth from '../controllers/Auth.js';
 import readFromJson from '../utils/getFromJson.js';
 
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    console.log(req.ip);
+    console.log(req.session.counter);
     res.render('layout', { template: 'pages/index.ejs' });
 });
 
