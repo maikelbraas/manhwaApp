@@ -48,7 +48,7 @@ class Manhwa {
                 }
             }
         }
-        res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100 }, done: true, createdRows: manhwas.length + manhwasReaper.length + manhwasFlame.length })}\n\n`);
+        res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100 }, done: true, createdRows: manhwasReaper.length + manhwasFlame.length })}\n\n`);
         return;
     }
 
@@ -96,7 +96,7 @@ class Manhwa {
             }
         }
 
-        res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: 100, demon: 100 }, done: true, updatedRows: manhwas.length + manhwasReaper.length + manhwasFlame.length + manhwasDemon.length })}\n\n`);
+        res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: 100, demon: 100 }, done: true, updatedRows: manhwasReaper.length + manhwasFlame.length + manhwasDemon.length })}\n\n`);
         return;
     }
 
