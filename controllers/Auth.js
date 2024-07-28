@@ -2,6 +2,7 @@ import user from '../models/User.js';
 import isAuthenticated from '../utils/checkAuth.js';
 import manhwaModel from '../models/Manhwa.js';
 import checkSingle from '../utils/getAllChapterLinks.js';
+import checkSingleDemon from '../utils/getAllChapterLinksDemon.js';
 
 class Auth {
     static async register(req, res, next) {
@@ -44,7 +45,12 @@ class Auth {
             await user.updateChapter(chapter, req.params.id, userid);
         } else {
             await user.saveChapter(chapter, req.params.id, req.session.user.id);
-            let chapters = await checkSingle(req.params.id);
+            let chapters;
+            if (req.params.id.includes('mgdemon')) {
+                chapters = await checkSingleDemon(req.params.id);
+            } else {
+                chapters = await checkSingle(req.params.id);
+            }
             if (!chapters)
                 this.removeSaved(req, res, next)
             for (let chapter of chapters) {

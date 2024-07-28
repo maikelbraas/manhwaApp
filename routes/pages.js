@@ -8,12 +8,12 @@ import readFromJson from '../utils/getFromJson.js';
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    console.log(req.session.counter);
     res.render('layout', { template: 'pages/index.ejs' });
 });
 
 
 router.get('/manhwa', async (req, res, next) => {
+    console.log(req.session.counter);
     const manhwas = await manhwaController.getManhwas(req, res, next);
     res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.url });
 });
@@ -44,7 +44,17 @@ router.get('/api/manhwa', async (req, res, next) => {
         'Connection': 'keep-alive'
     });
     await manhwaController.checkInsert(req, res, next);
+});
 
+
+
+router.get('/api/specific/:id', async (req, res, next) => {
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+    });
+    await manhwaController.checkSpecific(req, res, next);
 });
 
 router.get('/api/manhwas', async (req, res, next) => {

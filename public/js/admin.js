@@ -4,9 +4,11 @@ document.getElementById("startUpdate").addEventListener("click", () => {
     createBar("asura");
     createBar("reaper");
     createBar("flame");
+    createBar("demon");
     const asura = document.getElementById('asura');
     const reaper = document.getElementById('reaper');
     const flame = document.getElementById('flame');
+    const demon = document.getElementById('demon');
 
     const eventSource = new EventSource("/api/manhwaUpdate");
 
@@ -29,6 +31,12 @@ document.getElementById("startUpdate").addEventListener("click", () => {
                 data.progress.flame
             )}%`;
             flame.style.width = data.progress.flame + "%";
+        }
+        if (data.progress.demon <= 100) {
+            demon.innerHTML = `${Math.round(
+                data.progress.demon
+            )}%`;
+            demon.style.width = data.progress.demon + "%";
         }
         if (data.done) {
             progressDiv.innerHTML +=
@@ -99,8 +107,7 @@ function buildJson() {
     const progressDiv = document.getElementById("progress");
     createBar("json-build");
     const asura = document.getElementById('json-build');
-
-    const eventSource = new EventSource("/api/jsonWrite");
+    const eventSource = new EventSource("/api/jsonWrite/");
 
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -123,6 +130,7 @@ function buildJson() {
     };
 }
 
+
 function createBar(name) {
     let container = document.getElementById('progress');
     container.innerHTML += "<br>" + name;
@@ -132,3 +140,42 @@ function createBar(name) {
     let last = all[all.length - 1];
     last.setAttribute('id', name)
 }
+
+document.getElementById("findSpecific").addEventListener("click", () => {
+    const progressDiv = document.getElementById("progress");
+    progressDiv.innerHTML = "Starting fetch...";
+    createBar("get-single");
+    const asura = document.getElementById('get-single');
+    let promptAnswer = prompt('what manhwa do you want to get?');
+    const eventSource = new EventSource("/api/specific/" + promptAnswer);
+
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.progress <= 100) {
+            asura.innerHTML = `${Math.round(
+                data.progress
+            )}%`;
+            asura.style.width = data.progress + "%";
+        }
+        if (data.done) {
+            progressDiv.innerHTML +=
+                "<br>Build completed! Manhwa done: <br>";
+            for (let part in JSON.parse(data.manhwa)) {
+                console.log(part);
+                progressDiv.innerHTML += `<br> ${part}: ${JSON.parse(data.manhwa)[part]}`;
+            }
+            eventSource.close();
+        }
+        if (data.error) {
+            progressDiv.innerHTML +=
+                data.error;
+            eventSource.close();
+        }
+    };
+
+    eventSource.onerror = () => {
+        progressDiv.innerHTML += "<br>Error occurred";
+        eventSource.close();
+        buildJson();
+    };
+});

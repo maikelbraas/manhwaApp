@@ -9,6 +9,12 @@ class Manhwa {
         return rows;
     }
 
+    static async getDemonManhwa() {
+        const query = "SELECT * FROM manhwas WHERE mid LIKE 'mgdemon%'";
+        const [rows] = await connect.execute(query);
+        return rows;
+    }
+
     static async findManhwaBySlug(slug) {
         const query = "SELECT * FROM manhwas WHERE slug = ?";
         const [rows] = await connect.execute(query, [slug]);
