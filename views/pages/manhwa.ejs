@@ -23,11 +23,19 @@
             <% } %>
           </div>
           <div class="manhwa-chapters">
+            <% if(manhwa.baseurl.includes('flame')){ %>
+            <a
+              href="<%- manhwa.baseurl %>series/<%- manhwa.slug %>"
+              target="_blank"
+              >Manhwa site</a
+            >
+            <% }else{ %>
             <a
               href="<%- manhwa.baseurl %>manga/<%- manhwa.slug %>"
               target="_blank"
               >Manhwa site</a
             >
+            <% } %>
           </div>
 
           <div class="d-grid gap-3">
