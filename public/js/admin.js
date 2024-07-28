@@ -1,11 +1,11 @@
 document.getElementById("startUpdate").addEventListener("click", () => {
     const progressDiv = document.getElementById("progress");
     progressDiv.innerHTML = "Starting fetch...";
-    createBar("asura");
+    // createBar("asura");
     createBar("reaper");
     createBar("flame");
     createBar("demon");
-    const asura = document.getElementById('asura');
+    // const asura = document.getElementById('asura');
     const reaper = document.getElementById('reaper');
     const flame = document.getElementById('flame');
     const demon = document.getElementById('demon');
@@ -14,12 +14,12 @@ document.getElementById("startUpdate").addEventListener("click", () => {
 
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        if (data.progress.asura <= 100) {
-            asura.innerHTML = `${Math.round(
-                data.progress.asura
-            )}%`;
-            asura.style.width = data.progress.asura + "%";
-        }
+        // if (data.progress.asura <= 100) {
+        //     asura.innerHTML = `${Math.round(
+        //         data.progress.asura
+        //     )}%`;
+        //     asura.style.width = data.progress.asura + "%";
+        // }
         if (data.progress.reaper <= 100) {
             reaper.innerHTML = `${Math.round(
                 data.progress.reaper
@@ -55,10 +55,10 @@ document.getElementById("startUpdate").addEventListener("click", () => {
 document.getElementById("startCreate").addEventListener("click", () => {
     const progressDiv = document.getElementById("progress");
     progressDiv.innerHTML = "Starting fetch...";
-    createBar("asura");
+    // createBar("asura");
     createBar("reaper");
     createBar("flame");
-    const asura = document.getElementById('asura');
+    // const asura = document.getElementById('asura');
     const reaper = document.getElementById('reaper');
     const flame = document.getElementById('flame');
 
@@ -66,12 +66,12 @@ document.getElementById("startCreate").addEventListener("click", () => {
 
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        if (data.progress.asura <= 100) {
-            asura.innerHTML = `${Math.round(
-                data.progress.asura
-            )}%`;
-            asura.style.width = data.progress.asura + "%";
-        }
+        // if (data.progress.asura <= 100) {
+        //     asura.innerHTML = `${Math.round(
+        //         data.progress.asura
+        //     )}%`;
+        //     asura.style.width = data.progress.asura + "%";
+        // }
         if (data.progress.reaper <= 100) {
             reaper.innerHTML = `${Math.round(
                 data.progress.reaper

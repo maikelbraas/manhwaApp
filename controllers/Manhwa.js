@@ -16,16 +16,16 @@ import buildJson from '../utils/buildJson.js';
 
 class Manhwa {
     static async checkInsert(req, res, next) {
-        let manhwas = await manhwaCheck(req, res, next);
-        if (manhwas.length > 0) {
-            for (let manhwa of manhwas) {
-                await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
-                for (let chapter of manhwa.manhwaChapters) {
-                    await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-                }
-            }
-        }
+        // let manhwas = await manhwaCheck(req, res, next);
+        // if (manhwas.length > 0) {
+        //     for (let manhwa of manhwas) {
+        //         await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+        //         await genreCheck(req, res, next, manhwa);
+        //         for (let chapter of manhwa.manhwaChapters) {
+        //             await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+        //         }
+        //     }
+        // }
         let manhwasReaper = await manhwaCheckReaper(req, res, next);
         // console.log(manhwasReaper);
         if (manhwasReaper.length > 0) {
@@ -54,15 +54,15 @@ class Manhwa {
 
     static async checkUpdate(req, res, next) {
         // let manhwas = [];
-        let manhwas = await manhwaCheckAsuraUpdate(req, res, next);
-        if (manhwas.length > 0) {
-            for (let manhwa of manhwas) {
-                await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                for (let chapter of manhwa.manhwaChapters) {
-                    await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-                }
-            }
-        }
+        // let manhwas = await manhwaCheckAsuraUpdate(req, res, next);
+        // if (manhwas.length > 0) {
+        //     for (let manhwa of manhwas) {
+        //         await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+        //         for (let chapter of manhwa.manhwaChapters) {
+        //             await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+        //         }
+        //     }
+        // }
         // let manhwasReaper = [];
         let manhwasReaper = await manhwaCheckReaperUpdate(req, res, next);
         if (manhwasReaper.length > 0) {
