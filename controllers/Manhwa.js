@@ -130,7 +130,8 @@ class Manhwa {
             res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
         }
         await buildJson(manhwas);
-
+        req.session.manhwas = manhwas;
+        req.session.save();
         res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);
         return;
     }
