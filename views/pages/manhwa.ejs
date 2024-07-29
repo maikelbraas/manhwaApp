@@ -49,18 +49,19 @@
               method="POST">
               <input
                 class="form-control bg-dark m-2 sm-4 text-light"
-                type="number"
+                type="hidden"
                 pattern="[0-9]*"
                 inputmode="numeric"
                 name="chapternumber"
                 id=""
+                value="1"
                 max="<%- manhwa.chapters %>"
-                min="0"
+                min="1"
                 required />
               <button
                 type="submit"
                 class="btn btn-primary form-control m-2 text-white">
-                <i class="fas fa-bookmark me-2">Log chapter</i>
+                <i class="fas fa-bookmark me-2">Try manhwa</i>
               </button>
             </form>
 
