@@ -165,6 +165,7 @@ document.getElementById("findSpecific").addEventListener("click", () => {
                 progressDiv.innerHTML += `<br> ${part}: ${JSON.parse(data.manhwa)[part]}`;
             }
             eventSource.close();
+            buildJson();
         }
         if (data.error) {
             progressDiv.innerHTML +=
@@ -176,6 +177,5 @@ document.getElementById("findSpecific").addEventListener("click", () => {
     eventSource.onerror = () => {
         progressDiv.innerHTML += "<br>Error occurred";
         eventSource.close();
-        buildJson();
     };
 });
