@@ -118,6 +118,7 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
                 chapterChunkOfManhwa = await chaptersFromManhwas.json();
                 if (chapterChunkOfManhwa.length > 0)
                     for (let chunk of chapterChunkOfManhwa) {
+                        console.log(chunk);
                         let number = chunk.title.rendered.split(' ').pop();
                         chapterLinks.push({ link: chunk.link, number })
                     }

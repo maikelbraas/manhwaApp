@@ -3,16 +3,16 @@ import bcrypt from 'bcryptjs';
 
 class User {
 
-    static async findByUsernameOrEmail(username, email) {
-        const query = "SELECT * FROM users WHERE username = ? OR email = ?";
-        const [rows] = await connect.execute(query, [username, email]);
+    static async findByUsernameOrEmail(username) {
+        const query = "SELECT * FROM users WHERE username = ?";
+        const [rows] = await connect.execute(query, [username]);
         return rows;
     }
 
-    static async create(username, password, email) {
+    static async create(username, password) {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
-        const [result] = await connect.execute(query, [username, hashedPassword, email]);
+        const query = "INSERT INTO users (username, password) VALUES (?, ?)";
+        const [result] = await connect.execute(query, [username, hashedPassword]);
         return result.insertId;
     }
 

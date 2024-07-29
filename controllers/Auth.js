@@ -8,11 +8,11 @@ class Auth {
     static async register(req, res, next) {
         try {
             let errors = [];
-            const { username, password, confpassword, email } = req.body;
+            const { username, password, confpassword } = req.body;
             if (password != confpassword)
                 errors.push('Passwords are not the same.');
 
-            const existingUser = await user.findByUsernameOrEmail(username, email);
+            const existingUser = await user.findByUsernameOrEmail(username);
 
             if (existingUser.length > 0)
                 errors.push('Account already exists.')
@@ -22,8 +22,8 @@ class Auth {
                 return res.render('layout', { template: 'pages/register.ejs', errors })
             }
 
-            const userId = await user.create(username, password, email);
-            res.flash('Registratie succesvol!');
+            const userId = await user.create(username, password);
+            res.flash('Account created!');
             return res.redirect('/login');
         } catch (err) {
             console.log(err);
