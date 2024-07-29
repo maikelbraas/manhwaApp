@@ -66,11 +66,22 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
                 let status = statusSlice.split('>')[1].split('<')[0];
                 //Get chapters links
                 let chapterLinks = [];
-                if (checkIfSaved.length > 0 && manhwa.count != checkManhwa[0].chapters)
+                let chapter;
+                let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
+                chapter = chapterSlice.split(' ')[3].split('<')[0];
+                if (checkIfSaved.length > 0 && chapter != checkManhwa[0].chapters) {
                     chapterLinks = await searchChapters(manhwa.id);
+                }
+                if (status == 'Dropped')
+                    return false;
+                if ((chapterLinks.length < 1 && isNaN(chapter)))
+                    chapter = 0;
+                if (chapter % 1 !== 0 || (chapterLinks.length > 0 && chapterLinks[0].number % 1 !== 0))
+                    status = 'Hiatus'
+                if (chapter == 0)
+                    status = 'Comming Soon'
 
-
-                manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : manhwa.count;
+                manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : chapter;
                 manhwa.genres = genres.slice(2);
                 manhwa.image = "https://" + image;
                 manhwa.description = description;
@@ -118,7 +129,6 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
                 chapterChunkOfManhwa = await chaptersFromManhwas.json();
                 if (chapterChunkOfManhwa.length > 0)
                     for (let chunk of chapterChunkOfManhwa) {
-                        console.log(chunk);
                         let number = chunk.title.rendered.split(' ').pop();
                         chapterLinks.push({ link: chunk.link, number })
                     }

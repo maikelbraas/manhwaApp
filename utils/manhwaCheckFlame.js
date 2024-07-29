@@ -61,10 +61,22 @@ export default async function manhwaCheckFlame(req, res, next) {
                 let status = statusSlice.split('>')[4].split('<')[0];
                 //Get chapters links
                 let chapterLinks = [];
-                if (checkIfSaved.length > 0)
+                let chapter;
+                let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
+                chapter = chapterSlice.split(' ')[3].split('<')[0];
+                if (checkIfSaved.length > 0) {
                     chapterLinks = await searchChapters(manhwa.id);
+                }
+                if (status == 'Dropped')
+                    return false;
+                if ((chapterLinks.length < 1 && isNaN(chapter)))
+                    chapter = 0;
+                if (chapter % 1 !== 0 || (chapterLinks.length > 0 && chapterLinks[0].number % 1 !== 0))
+                    status = 'Hiatus'
+                if (chapter == 0)
+                    status = 'Comming Soon'
 
-                manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : manhwa.count;
+                manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : chapter;
                 manhwa.genres = genres.slice(2);
                 manhwa.image = "https://" + image;
                 manhwa.description = description;
