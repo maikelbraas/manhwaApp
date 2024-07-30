@@ -64,7 +64,8 @@ class Auth {
 
     static async updateSavedManhwa(req, res, next) {
         let chapters = [];
-        let nextManhwa = 0;
+        let nextManhwa = 1;
+        let totalUpdated = 0;
         const userid = req.session.user.id;
         let manhwas = await manhwaModel.getSavedManhwas(userid);
         for (let manhwa of manhwas) {
@@ -79,11 +80,12 @@ class Auth {
             let inter = (nextManhwa / manhwas.length) * 100;
             res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
             if (chapters.length > 0) {
-                nextManhwa++;
+                totalUpdated++;
                 await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.content, manhwa.media, manhwa.image, chapters[0].number, manhwa.baseurl, manhwa.status);
             }
+            nextManhwa++;
         }
-        res.write(`data: ${JSON.stringify({ progress: 100, updatedRows: nextManhwa, done: true })}\n\n`);
+        res.write(`data: ${JSON.stringify({ progress: 100, updatedRows: totalUpdated, done: true })}\n\n`);
         res.end();
     }
 
