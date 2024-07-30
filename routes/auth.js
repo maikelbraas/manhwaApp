@@ -19,6 +19,15 @@ router.get('/savedmanhwas', async (req, res, next) => {
     res.render('layout', { template: 'pages/savedmanhwas.ejs', manhwas });
 });
 
+router.get('/updatesavedmanhwa', async (req, res, next) => {
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+    });
+    await auth.updateSavedManhwa(req, res, next);
+})
+
 
 router.post('/chapter/:id', async (req, res, next) => {
     await auth.saveOrUpdateChapter(req, res, next);

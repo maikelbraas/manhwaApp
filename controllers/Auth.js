@@ -61,6 +61,31 @@ class Auth {
         // next();
     }
 
+
+    static async updateSavedManhwa(req, res, next) {
+        let chapters = [];
+        let nextManhwa = 0;
+        const userid = req.session.user.id;
+        let manhwas = await manhwaModel.getSavedManhwas(userid);
+        for (let manhwa of manhwas) {
+            if (manhwa.mid.includes('mgdemon')) {
+                chapters = await checkSingleDemon(manhwa.mid);
+            } else {
+                chapters = await checkSingle(manhwa.mid);
+            }
+            for (let chapter of chapters) {
+                await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+            }
+            let inter = (nextManhwa / manhwas.length) * 100;
+            res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
+            if (chapters.length > 0)
+                nextManhwa++;
+        }
+        console.log(manhwas);
+        res.write(`data: ${JSON.stringify({ progress: 100, updatedRows: nextManhwa, done: true })}\n\n`);
+        res.end();
+    }
+
     static async removeSaved(req, res, next) {
         const mid = req.params.mid;
         const uid = req.session.user.id;

@@ -62,7 +62,6 @@ router.get('/api/manhwas', async (req, res, next) => {
 });
 
 router.get('/api/manhwaUpdate', async (req, res, next) => {
-
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',

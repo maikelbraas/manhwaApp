@@ -28,3 +28,71 @@ document.querySelector('.manhwa-rows').addEventListener('click', async (event) =
         getComputedStyle(event.target.nextElementSibling).display == 'grid' ? event.target.nextElementSibling.style.display = "none" : event.target.nextElementSibling.style.display = "grid";
     }
 });
+
+document.getElementById("updateSaved").addEventListener("click", () => {
+    const progressDiv = document.getElementById("progress");
+    progressDiv.innerHTML = "Starting fetch...";
+    createBar("savedManhwas");
+    const reaper = document.getElementById('savedManhwas');
+
+    const eventSource = new EventSource("/auth/updatesavedmanhwa");
+
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.progress <= 100) {
+            reaper.innerHTML = `${Math.round(
+                data.progress
+            )}%`;
+            reaper.style.width = data.progress + "%";
+        }
+        if (data.done) {
+            progressDiv.innerHTML +=
+                "<br>Fetch completed! Updated rows: " + data.updatedRows;
+            eventSource.close();
+            buildJson();
+        }
+    };
+
+    eventSource.onerror = () => {
+        progressDiv.innerHTML += "<br>Error occurred";
+        eventSource.close();
+    };
+});
+
+
+function createBar(name) {
+    let container = document.getElementById('progress');
+    container.innerHTML += "<br>" + name;
+    let bar = document.getElementById('progress-site').content.cloneNode(true);
+    container.appendChild(bar);
+    let all = container.querySelectorAll('.progress-bar');
+    let last = all[all.length - 1];
+    last.setAttribute('id', name)
+}
+
+function buildJson() {
+    const progressDiv = document.getElementById("progress");
+    createBar("json-build");
+    const asura = document.getElementById('json-build');
+    const eventSource = new EventSource("/api/jsonWrite/");
+
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.progress <= 100) {
+            asura.innerHTML = `${Math.round(
+                data.progress
+            )}%`;
+            asura.style.width = data.progress + "%";
+        }
+        if (data.done) {
+            progressDiv.innerHTML +=
+                "<br>Build completed!";
+            eventSource.close();
+        }
+    };
+
+    eventSource.onerror = () => {
+        progressDiv.innerHTML += "<br>Error occurred";
+        eventSource.close();
+    };
+}

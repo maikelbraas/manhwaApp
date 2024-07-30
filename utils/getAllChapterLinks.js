@@ -3,17 +3,18 @@ export default async function checkSingle(mid) {
     try {
         let [manhwa] = await manhwaModel.findManhwaById(mid);
         let jsonSingle;
-        let responseSingleOr = await fetch(`${manhwa.baseurl}series/${manhwa.slug}`);
-        let responseSingle = await fetch(`${manhwa.baseurl}manga/${manhwa.slug}`);
+        let responseSingleOr;
+        let responseSingle;
         if (manhwa.baseurl.includes('flame')) {
+            responseSingleOr = await fetch(`${manhwa.baseurl}series/${manhwa.slug}`);
             jsonSingle = await responseSingleOr.text();
         } else {
+            responseSingle = await fetch(`${manhwa.baseurl}manga/${manhwa.slug}`);
             jsonSingle = await responseSingle.text();
         }
         //Get chapters links
         let chapterLinks = [];
-        let chapterLinkSlice;
-        chapterLinkSlice = jsonSingle.slice(jsonSingle.search('<div class="eplister" id="chapterlist">'), jsonSingle.search('var chapterSearchNotFound'));
+        let chapterLinkSlice = jsonSingle.slice(jsonSingle.search('<div class="eplister" id="chapterlist">'), jsonSingle.search('var chapterSearchNotFound'));
         let splitted = chapterLinkSlice.split('<li data-num="');
         splitted.shift();
         for (let splits of splitted) {
