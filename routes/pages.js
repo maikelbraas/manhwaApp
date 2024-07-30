@@ -10,7 +10,8 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     await manhwaController.getManhwas(req, res, next);
-    res.render('layout', { template: 'pages/index.ejs' });
+    let manhwas = await manhwaController.getLastUpdated(req, res, next);
+    res.render('layout', { template: 'pages/index.ejs', manhwas });
 });
 
 

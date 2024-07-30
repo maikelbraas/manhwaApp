@@ -183,6 +183,11 @@ class Manhwa {
         return await readFromJson();
     }
 
+    static async getLastUpdated(req, res, next) {
+        const manhwas = await manhwaModel.getLastUpdated();
+        return manhwas;
+    }
+
 }
 
 export default Manhwa;

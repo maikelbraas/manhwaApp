@@ -9,6 +9,23 @@ class Manhwa {
         return rows;
     }
 
+
+    static async getLastUpdated() {
+        const query = `SELECT * FROM manhwas WHERE status != 'Dropped' ORDER BY lastUpdate DESC LIMIT 10`;
+        const [rows] = await connect.execute(query);
+        for (let row of rows) {
+            const queryGenres = 'SELECT * FROM manhwa_genre WHERE manhwaid = ?';
+            const [genres] = await connect.execute(queryGenres, [row.mid]);
+            row.genres = [];
+            for (let genre of genres) {
+                const queryGenresName = 'SELECT * FROM genres WHERE id = ?';
+                const [genresName] = await connect.execute(queryGenresName, [genre.genreid]);
+                row.genres.push(genresName[0].name);
+            }
+        }
+        return rows;
+    }
+
     static async getDemonManhwa() {
         const query = "SELECT * FROM manhwas WHERE mid LIKE 'mgdemon%'";
         const [rows] = await connect.execute(query);
@@ -99,10 +116,6 @@ class Manhwa {
         const query = "SELECT * FROM runJson WHERE site = ? ORDER BY id DESC LIMIT 1";
         const [rows] = await connect.execute(query, [site]);
         return rows;
-    }
-
-    static async getLastUpdated() {
-
     }
 
     static async deleteSaved(mid, uid) {
