@@ -28,7 +28,8 @@ export default async function manhwaCheck(req, res, next) {
 
             let src = checkSingleManhwa.split('href="')[1].split('>')[0].slice(0, -1);
             let name = checkSingleManhwa.split('>')[2].split('<')[0].slice(1);
-            let slug = name.replaceAll(' ', '-') + "-VA54";
+            let nameencoded = encodeURIComponent(name.replaceAll("(", "%28").replaceAll(")", "%29").replaceAll("'", "%27"));
+            let slug = nameencoded.replaceAll('%20', '-') + "-VA54";
             let mid = name.replaceAll(' ', '-');
             // console.log(name);
             // console.log(src);
