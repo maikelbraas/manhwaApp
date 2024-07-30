@@ -47,7 +47,7 @@
 
   <body class="d-flex flex-column vh-100">
     <header><%- include('./partials/header') %></header>
-    <main>
+    <main class="container">
       <% const message = getFlashMessage(); if(message){ %>
       <div class="alert alert-primary"><%= message %></div>
       <% } %> <%- include(`../${template}`) %>
