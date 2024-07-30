@@ -23,7 +23,8 @@ router.get('/updatesavedmanhwa', async (req, res, next) => {
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive'
+        'Connection': 'keep-alive',
+        'Content-Encoding': 'none'
     });
     await auth.updateSavedManhwa(req, res, next);
 })
