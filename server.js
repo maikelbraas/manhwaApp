@@ -7,6 +7,7 @@ import initializePassport from './utils/Strategy.js';
 import flashMessage from './utils/flashMessage.js';
 import checkRole from './utils/checkRole.js';
 import expressVisitorCounter from 'express-visitor-counter';
+import compression from 'compression';
 
 //Routes
 import pages from './routes/pages.js';
@@ -26,7 +27,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
 app.use(session({ secret: 'fd8s9f6sd@#$@fdsf23r23', resave: false, saveUninitialized: false }));

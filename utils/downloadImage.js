@@ -16,8 +16,6 @@ export default async function downloadImage(mid, url) {
         console.log(error);
     }
     imagename = mid + '.webp'
-    console.log(imagename);
-    console.log(image);
 
     try {
         fs.writeFile(path.join(dirPath, imagename), image, (err) => {
