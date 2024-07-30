@@ -78,13 +78,11 @@ class Auth {
             }
             let inter = (nextManhwa / manhwas.length) * 100;
             res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
-            console.log(chapters[0]);
             if (chapters.length > 0) {
                 nextManhwa++;
                 await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.content, manhwa.media, manhwa.image, chapters[0].number, manhwa.baseurl, manhwa.status);
             }
         }
-        console.log(manhwas);
         res.write(`data: ${JSON.stringify({ progress: 100, updatedRows: nextManhwa, done: true })}\n\n`);
         res.end();
     }

@@ -11,8 +11,12 @@ export default async function checkSingle(mid) {
         let allNumber = content.split('data-chapterno="');
         for (let number of allNumber) {
             let chapterNum = number.split('"')[0];
-            if (!isNaN(parseFloat(chapterNum)))
-                chapterLinks.push({ link: `https://mgdemon.org/manga/${name}/chapter/${chapterNum}-VA54`, number: chapterNum })
+            let link = `https://mgdemon.org/manga/${name}/chapter/${chapterNum}-VA54`;
+            let findChapter = await manhwaModel.findChapterByMidAndLink(manhwa.mid, link);
+            if (findChapter.length == 0) {
+                if (!isNaN(parseFloat(chapterNum)))
+                    chapterLinks.push({ link: `https://mgdemon.org/manga/${name}/chapter/${chapterNum}-VA54`, number: chapterNum })
+            }
         }
         return chapterLinks;
     } catch (e) {
