@@ -7,14 +7,15 @@ import readFromJson from '../utils/getFromJson.js';
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
+    await manhwaController.getManhwas(req, res, next);
     res.render('layout', { template: 'pages/index.ejs' });
 });
 
 
 router.get('/manhwa', async (req, res, next) => {
     console.log(req.session.counter);
-    const manhwas = await manhwaController.getManhwas(req, res, next);
+    let manhwas = await manhwaController.getManhwas(req, res, next);
     res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.url });
 });
 

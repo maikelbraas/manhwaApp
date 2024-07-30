@@ -97,6 +97,12 @@ class Manhwa {
     static async deleteSaved(mid, uid) {
         const query = "DELETE FROM chaptersSaved WHERE manhwaid = ? AND userid = ?";
         const [rows] = await connect.execute(query, [mid, uid]);
+        const querySelect = "SELECT manhwaid FROM chaptersSaved WHERE manhwaid = ?";
+        const [selectedRows] = await connect.execute(querySelect, [mid]);
+        if (selectedRows.length < 1) {
+            const queryDelete = "DELETE FROM manhwa_chapter WHERE manhwamid = ?";
+            await connect.execute(queryDelete, [mid]);
+        }
         return rows;
     }
 
