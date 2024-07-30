@@ -46,7 +46,7 @@ document.getElementById("updateSaved").addEventListener("click", () => {
         }
         if (data.done) {
             progressDiv.innerHTML +=
-                "<br>Fetch completed! Updated rows: " + data.updatedRows + data.updatedRows > 0 ? " Refresh required." : " No refresh required.";
+                `<br>Fetch completed! Updated rows: ${data.updatedRows} ${data.updatedRows > 0 ? " Refresh required." : " No refresh required."}`;
             eventSource.close();
             buildJson();
         }
