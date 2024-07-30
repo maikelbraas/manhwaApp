@@ -4,7 +4,6 @@ export default async function manhwaCheck(req, res, next) {
     let response;
     let text;
     let manga = req.params.id;
-    console.log(manga);
     let manhwa = false;
     try {
         response = await fetch(`https://mgdemon.org/search.php?manga=${manga}`);

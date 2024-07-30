@@ -85,10 +85,8 @@ class Manhwa {
         }
         let savedDemonManhwa = await manhwaModel.getDemonManhwa();
         let manhwasDemon = await manhwaCheckSpecificUpdate(req, res, next, savedDemonManhwa);
-        console.log(manhwasDemon)
         if (manhwasDemon.length > 0) {
             for (let manhwa of manhwasDemon) {
-                console.log(manhwa);
                 await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
                 for (let chapter of manhwa.manhwaChapters) {
                     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);

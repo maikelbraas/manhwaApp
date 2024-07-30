@@ -16,7 +16,6 @@ export default async function writeToJson(manhwaAsura, manhwaReaper) {
         }
         fs.writeFile('public/json/manhwas.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
             if (err) throw err
-            console.log('complete');
         });
     });
 

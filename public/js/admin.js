@@ -142,40 +142,41 @@ function createBar(name) {
 }
 
 document.getElementById("findSpecific").addEventListener("click", () => {
-    const progressDiv = document.getElementById("progress");
-    progressDiv.innerHTML = "Starting fetch...";
-    createBar("get-single");
-    const asura = document.getElementById('get-single');
     let promptAnswer = prompt('what manhwa do you want to get?');
-    const eventSource = new EventSource("/api/specific/" + promptAnswer);
+    if (promptAnswer != '' && promptAnswer != false && promptAnswer != null) {
+        const progressDiv = document.getElementById("progress");
+        progressDiv.innerHTML = "Starting fetch...";
+        createBar("get-single");
+        const asura = document.getElementById('get-single');
+        const eventSource = new EventSource("/api/specific/" + promptAnswer);
 
-    eventSource.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.progress <= 100) {
-            asura.innerHTML = `${Math.round(
-                data.progress
-            )}%`;
-            asura.style.width = data.progress + "%";
-        }
-        if (data.done) {
-            progressDiv.innerHTML +=
-                "<br>Build completed! Manhwa done: <br>";
-            for (let part in JSON.parse(data.manhwa)) {
-                console.log(part);
-                progressDiv.innerHTML += `<br> ${part}: ${JSON.parse(data.manhwa)[part]}`;
+        eventSource.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.progress <= 100) {
+                asura.innerHTML = `${Math.round(
+                    data.progress
+                )}%`;
+                asura.style.width = data.progress + "%";
             }
-            eventSource.close();
-            buildJson();
-        }
-        if (data.error) {
-            progressDiv.innerHTML +=
-                data.error;
-            eventSource.close();
-        }
-    };
+            if (data.done) {
+                progressDiv.innerHTML +=
+                    "<br>Build completed! Manhwa done: <br>";
+                for (let part in JSON.parse(data.manhwa)) {
+                    progressDiv.innerHTML += `<br> ${part}: ${JSON.parse(data.manhwa)[part]}`;
+                }
+                eventSource.close();
+                buildJson();
+            }
+            if (data.error) {
+                progressDiv.innerHTML +=
+                    data.error;
+                eventSource.close();
+            }
+        };
 
-    eventSource.onerror = () => {
-        progressDiv.innerHTML += "<br>Error occurred";
-        eventSource.close();
-    };
+        eventSource.onerror = () => {
+            progressDiv.innerHTML += "<br>Error occurred";
+            eventSource.close();
+        };
+    }
 });
