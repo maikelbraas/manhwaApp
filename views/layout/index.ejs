@@ -2,8 +2,14 @@
 <html data-bs-theme="dark" lang="en">
   <head>
     <title>Manhwa saver</title>
-    <link rel="stylesheet" href="/css/global.css" type="text/css" />
+    <link
+      rel="preload"
+      onload="this.onload=null;this.rel='stylesheet'"
+      as="style"
+      href="/css/global.css"
+      type="text/css" />
     <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+    <noscript><link rel="stylesheet" href="/css/global.css" /></noscript>
     <link rel="apple-touch-icon" href="/favicon_io/apple-touch-icon.png" />
     <meta
       name="google-site-verification"
