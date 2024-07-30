@@ -81,7 +81,7 @@ function createCard(manhwas) {
             clone.querySelector('.card-link').href += manhwas[i].mid;
             clone.querySelector('.card-title').innerHTML = manhwas[i].title;
             clone.querySelector('.manhwa-row-content').innerHTML = manhwas[i].content;
-            clone.querySelector('.manga-image').src = manhwas[i].image;
+            clone.querySelector('.manga-image').dataset.src = manhwas[i].image;
             clone.querySelector('.card-chapter').textContent += " " + manhwas[i].chapters;
             clone.querySelector('.card-status').innerHTML += " " + manhwas[i].status + ` <i class="bi bi-circle-fill ${manhwas[i].status.toLowerCase().replace(/\s/g, "")}"></i>`;
             clone.querySelector('.card-source').textContent += " " + manhwas[i].baseurl.split('/')[2].split('.')[0];
