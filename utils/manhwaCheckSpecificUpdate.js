@@ -44,8 +44,6 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
             let statusSlice = single.slice(single.search('<small>Status</small>'), single.search('<small>Status</small>') + 80);
             let status = statusSlice.replace(/<[^>]*>?/gm, '').split('\n')[1];
             // console.log(status);
-            let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);
-            let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];
             // console.log(image);
             let baseurl = "https://mgdemon.org/";
             // console.log(slug);
@@ -63,7 +61,7 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
                 description: description,
                 slug: slug,
                 media: 404,
-                image: image,
+                image: checkSingleManhwa.image,
                 chapters: parseFloat(chapter),
                 baseurl: baseurl,
                 genres: genres,

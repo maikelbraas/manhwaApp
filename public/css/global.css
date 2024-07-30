@@ -100,7 +100,6 @@ input[type=number] {
       .manga-image {
         width: 100% !important;
         height: 100% !important;
-        object-fit: cover !important;
       }
       .card-title {
         color: #ffffff !important;
@@ -172,7 +171,6 @@ input[type=number] {
     }
     .manga-image {
       height: 280px !important;
-      object-fit: fill !important;
     }
 
     .navbar{

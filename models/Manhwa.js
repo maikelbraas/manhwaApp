@@ -15,6 +15,17 @@ class Manhwa {
         return rows;
     }
 
+    static async updateImageOfManhwa(mid, imagename) {
+        try {
+            const query = "UPDATE manhwas SET image = ? WHERE mid = ?";
+            const [result] = await connect.execute(query, [imagename, mid]);
+
+            return result.insertId;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     static async findManhwaBySlug(slug) {
         const query = "SELECT * FROM manhwas WHERE slug = ?";
         const [rows] = await connect.execute(query, [slug]);

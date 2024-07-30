@@ -13,6 +13,7 @@ import writeToJson from '../utils/writeToJson.js';
 import updateToJson from '../utils/updateToJson.js';
 import readFromJson from '../utils/getFromJson.js';
 import buildJson from '../utils/buildJson.js';
+import downloadImage from '../utils/downloadImage.js';
 
 class Manhwa {
     static async checkInsert(req, res, next) {
@@ -27,10 +28,11 @@ class Manhwa {
         //     }
         // }
         let manhwasReaper = await manhwaCheckReaper(req, res, next);
-        // console.log(manhwasReaper);
+        // let manhwasReaper = [];
         if (manhwasReaper.length > 0) {
             for (let manhwa of manhwasReaper) {
-                await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+                let image = await downloadImage(manhwa.mid, manhwa.image);
+                await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
                 await genreCheck(req, res, next, manhwa);
                 for (let chapter of manhwa.manhwaChapters) {
                     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
@@ -41,7 +43,8 @@ class Manhwa {
         // console.log(manhwasReaper);
         if (manhwasFlame.length > 0) {
             for (let manhwa of manhwasFlame) {
-                await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+                let image = await downloadImage(manhwa.mid, manhwa.image);
+                await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
                 await genreCheck(req, res, next, manhwa);
                 for (let chapter of manhwa.manhwaChapters) {
                     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
@@ -132,6 +135,10 @@ class Manhwa {
         req.session.save();
         res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);
         return;
+    }
+
+    static async updateImageOfManhwa(mid, imagename) {
+        await manhwaModel.updateImageOfManhwa(mid, imagename);
     }
 
     static async getManhwas(req, res, next) {

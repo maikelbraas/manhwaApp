@@ -4,6 +4,7 @@ import genreModel from '../models/Genre.js';
 import passport from 'passport';
 import auth from '../controllers/Auth.js';
 import readFromJson from '../utils/getFromJson.js';
+import downloadImage from '../utils/downloadImage.js'
 
 const router = express.Router();
 
@@ -22,6 +23,16 @@ router.get('/manhwa', async (req, res, next) => {
 
 router.get('/privacypolicy', async (req, res, next) => {
     res.render('layout', { template: 'pages/privacypolicy.ejs' });
+});
+
+
+router.get('/getimages', async (req, res, next) => {
+    let manhwas = await manhwaController.getManhwas(req, res, next);
+    for (let manhwa of manhwas) {
+        let imagename = await downloadImage(manhwa.mid, manhwa.image);
+        await manhwaController.updateImageOfManhwa(manhwa.mid, imagename);
+    }
+    res.end();
 });
 
 

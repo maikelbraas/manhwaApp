@@ -56,9 +56,6 @@ export default async function manhwaCheckFlameUpdate(req, res, next) {
                 //Get description
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('<div class="entry-content entry-content-single" itemprop="description">'), jsonSingle.search('<div class="see-more">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
-                //Get image
-                let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('decoding="async"'));
-                let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
                 //Get status
                 let statusSlice = jsonSingle.slice(jsonSingle.search('class="status"'), jsonSingle.search('class="status"') + 100);
                 let status = statusSlice.split('>')[4].split('<')[0];
@@ -82,7 +79,6 @@ export default async function manhwaCheckFlameUpdate(req, res, next) {
 
                 manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : chapter;
                 manhwa.genres = genres.slice(2);
-                manhwa.image = "https://" + image;
                 manhwa.description = description;
                 manhwa.baseurl = "https://flamecomics.me/";
                 manhwa.status = status;

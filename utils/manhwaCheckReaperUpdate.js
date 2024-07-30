@@ -58,9 +58,6 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
                 //Get description
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('itemprop="description">') + 23, jsonSingle.search('<div class="lastend">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
-                //Get image
-                let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('fetchpriority="high"'));
-                let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
                 //Get status
                 let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
                 let status = statusSlice.split('>')[1].split('<')[0];
@@ -83,7 +80,6 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
 
                 manhwa.chapters = chapterLinks.length != 0 ? chapterLinks[0].number : chapter;
                 manhwa.genres = genres.slice(2);
-                manhwa.image = "https://" + image;
                 manhwa.description = description;
                 manhwa.baseurl = "https://reaper-scans.com/";
                 manhwa.status = status;
