@@ -104,7 +104,8 @@ class Manhwa {
     static async checkSpecific(req, res, next) {
         let manhwa = await manhwaCheckSpecific(req, res, next);
         if (manhwa != false) {
-            await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+            let image = await downloadImage(manhwa.mid, manhwa.image);
+            await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
             await genreCheck(req, res, next, manhwa);
 
             for (let chapter of manhwa.manhwaChapters) {

@@ -101,6 +101,10 @@ input[type=number] {
         width: 100% !important;
         height: 100% !important;
       }
+      .manga-single-place{
+        place-content: center;
+        text-align: center;
+      }
       .card-title {
         color: #ffffff !important;
       }
