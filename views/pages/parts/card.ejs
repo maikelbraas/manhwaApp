@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="row g-0">
+  <div class="row">
     <div class="col-md-4">
       <img
         data-src="/manhwaImages/<%-manhwa.image%>"
@@ -8,7 +8,9 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title"><%- manhwa.title %></h5>
+        <a href="/manhwa/<%- manhwa.mid %>" class="card-link">
+          <h5 class="card-title"><%- manhwa.title %></h5></a
+        >
         <p class="card-title">
           <small
             >Chapters <%- manhwa.chapter % 1 !== 0 ? manhwa.chapter.toFixed(1) :
