@@ -22,13 +22,14 @@ export default async function downloadImage(mid, url) {
         fs.writeFile(path.join(dirPath, imagename), image, (err) => {
             if (err)
                 console.error(err);
-            else
+            else {
                 console.log('image downloaded');
+                return imagename;
+            }
         });
     } catch (err) {
         console.error(err);
     }
 
-    return imagename;
 
 }

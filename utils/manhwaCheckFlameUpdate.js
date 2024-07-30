@@ -89,7 +89,7 @@ export default async function manhwaCheckFlameUpdate(req, res, next) {
                     description: manhwa.description,
                     slug: manhwa.slug,
                     media: 404,
-                    image: manhwa.image,
+                    image: checkManhwa[0].image,
                     chapters: manhwa.chapters,
                     baseurl: manhwa.baseurl,
                     genres: manhwa.genres,
