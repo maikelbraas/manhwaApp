@@ -29,9 +29,9 @@
       content="black-translucent" />
   </head>
 
-  <body>
+  <body class="d-flex flex-column vh-100">
     <header><%- include('./partials/header') %></header>
-    <main class="container">
+    <main class="container mb-4">
       <% const message = getFlashMessage(); if(message){ %>
       <div class="alert alert-primary"><%= message %></div>
       <% } %> <%- include(`../${template}`) %>

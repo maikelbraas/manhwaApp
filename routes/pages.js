@@ -20,6 +20,11 @@ router.get('/manhwa', async (req, res, next) => {
 });
 
 
+router.get('/privacypolicy', async (req, res, next) => {
+    res.render('layout', { template: 'pages/privacypolicy.ejs' });
+});
+
+
 router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
