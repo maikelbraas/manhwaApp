@@ -6,7 +6,8 @@
       <p class="card-body">
         <% let visitors = 0; for(let count in counter){
         if(count.includes('new-visitors')){ visitors += parseInt(counter[count])
-        %> <%- `<br />${count} - Total visitors: ${visitors}` %> <% }} %>
+        %> <%- `<br />Total visitors ${count.includes('mobile') ? 'mobile' :
+        'desktop'}: ${visitors}` %> <% }} %>
       </p>
     </div>
     <a href="/admin/newUpdate" class="col"> <button>new update</button></a>
