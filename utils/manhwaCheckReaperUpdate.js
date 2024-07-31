@@ -44,7 +44,7 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
             }
             if (checkManhwa.length == 0)
                 return false;
-            let responseSingle = await fetch(`https://reaper-scans.com/manga/${manhwa.slug}/`);
+            let responseSingle = await fetch(`https://reaper-scans.com/series/${manhwa.slug}/`);
             if (responseSingle.status === 200) {
                 let jsonSingle = await responseSingle.text();
                 //Get genres
@@ -60,6 +60,8 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
                 //Get status
                 let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
+
+                console.log(manhwa.name, statusSlice);
                 let status = statusSlice.split('>')[1].split('<')[0];
                 //Get chapters links
                 let chapterLinks = [];

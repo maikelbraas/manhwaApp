@@ -41,7 +41,7 @@ export default async function manhwaCheckReaper(req, res, next) {
             }
             if (checkManhwa.length > 0)
                 return false;
-            let responseSingle = await fetch(`https://reaper-scans.com/manga/${manhwa.slug}/`);
+            let responseSingle = await fetch(`https://reaper-scans.com/series/${manhwa.slug}/`);
             if (responseSingle.status == 200) {
                 let jsonSingle = await responseSingle.text();
                 //Get genres
