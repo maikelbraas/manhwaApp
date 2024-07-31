@@ -11,6 +11,24 @@ class Auth {
             const { username, password, confpassword } = req.body;
             if (password != confpassword)
                 errors.push('Passwords are not the same.');
+            if (password.length < 8) {
+                errors.push('password needs to be between 8 and 20 characters.');
+            }
+            if (!/[a-z]/g.test(password)) {
+                errors.push('password needs atleast 1 lowercase.');
+            }
+            if (!/[A-Z]/g.test(password)) {
+                errors.push('password needs atleast 1 UPPERCASE.');
+            }
+            if (!/\d/g.test(password)) {
+                errors.push('password needs atleast 1 number.');
+            }
+            if (!/[#$@!%&*?]/g.test(password)) {
+                errors.push('password needs atleast 1 special character.');
+            }
+            // if (!/^(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z]{8,20}$/.test(password)) {
+            //     errors.push('password needs to be between 8 and 20 characters, atleast 1 number and 1 special character.');
+            // }
 
             const existingUser = await user.findByUsernameOrEmail(username);
 
@@ -18,7 +36,6 @@ class Auth {
                 errors.push('Account already exists.')
 
             if (errors.length > 0) {
-                res.flash(errors);
                 return res.render('layout', { template: 'pages/register.ejs', errors })
             }
 

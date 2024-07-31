@@ -9,12 +9,12 @@ export default function initializePassport(app) {
                 const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
                 if (rows.length === 0) {
 
-                    return done(null, false, { message: 'Ongeldige gebruikersnaam.' });
+                    return done(null, false, { message: 'Password or username incorrect.' });
                 }
                 const user = rows[0];
                 const isValid = await bcrypt.compare(password, user.password);
                 if (!isValid) {
-                    return done(null, false, { message: 'Ongeldig wachtwoord.' });
+                    return done(null, false, { message: 'Password or username incorrect.' });
                 }
                 return done(null, user);
             } catch (error) {

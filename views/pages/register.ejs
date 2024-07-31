@@ -8,8 +8,11 @@
     <input type="password" class="form-control" name="confpassword" id="" />
     <input
       type="submit"
-      class="btn btn-primary"
+      class="btn btn-primary mt-2"
       name="register"
       value="Register" />
   </form>
 </div>
+<% if(errors.length > 0){ for(let message of errors){ %>
+<div class="alert alert-warning mt-2"><%= message %></div>
+<% }} %>

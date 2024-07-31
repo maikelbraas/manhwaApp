@@ -32,7 +32,6 @@ class Manhwa {
         if (manhwasReaper.length > 0) {
             for (let manhwa of manhwasReaper) {
                 let image = await downloadImage(manhwa.mid, manhwa.image);
-                console.log(image);
                 await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
                 await genreCheck(req, res, next, manhwa);
                 for (let chapter of manhwa.manhwaChapters) {
