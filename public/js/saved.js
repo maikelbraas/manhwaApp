@@ -63,7 +63,6 @@ document.getElementById("updateSaved").addEventListener("click", () => {
 });
 
 function waitTimer() {
-    console.log((new Date() - new Date(localStorage.getItem('timer'))) / 1000);
     if (timer == null && (new Date() - new Date(localStorage.getItem('timer'))) / 1000 < 600) {
         let timeSeconds = Math.floor(600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000));
         let timeMinutes = Math.floor((600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000)) / 60);
