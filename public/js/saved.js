@@ -46,9 +46,9 @@ document.getElementById("updateSaved").addEventListener("click", () => {
         }
         if (data.done) {
             progressDiv.innerHTML +=
-                `<br>Fetch completed! Updated rows: ${data.updatedRows} ${data.updatedRows > 0 ? " Refresh required." : " No refresh required."}`;
+                `<br>Fetch completed! Updated rows: ${data.updatedRows} ${data.updatedRows > 0 ? " Refresh required, reloading in 2 seconds." : " No refresh required."}`;
             eventSource.close();
-            buildJson();
+            buildJson(data.updatedRows);
         }
     };
 
@@ -69,7 +69,7 @@ function createBar(name) {
     last.setAttribute('id', name)
 }
 
-function buildJson() {
+function buildJson(refresh) {
     const progressDiv = document.getElementById("progress");
     createBar("json-build");
     const asura = document.getElementById('json-build');
@@ -86,6 +86,12 @@ function buildJson() {
         if (data.done) {
             progressDiv.innerHTML +=
                 "<br>Build completed!";
+            setTimeout(() => {
+                progressDiv.innerHTML = "";
+                if (refresh > 0)
+                    location.reload();
+            }, 2000)
+
             eventSource.close();
         }
     };
