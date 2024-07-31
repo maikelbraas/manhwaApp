@@ -5,6 +5,7 @@ import passport from 'passport';
 import auth from '../controllers/Auth.js';
 import readFromJson from '../utils/getFromJson.js';
 import downloadImage from '../utils/downloadImage.js'
+import pageModel from '../models/Page.js';
 
 const router = express.Router();
 
@@ -23,6 +24,11 @@ router.get('/manhwa', async (req, res, next) => {
 
 router.get('/privacypolicy', async (req, res, next) => {
     res.render('layout', { template: 'pages/privacypolicy.ejs' });
+});
+
+router.get('/siteUpdates', async (req, res, next) => {
+    let updates = await pageModel.getUpdates();
+    res.render('layout', { template: 'pages/siteUpdates.ejs', updates });
 });
 
 

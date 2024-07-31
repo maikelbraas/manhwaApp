@@ -1,0 +1,27 @@
+<div class="accordion" id="siteUpdates">
+  <% for(let update of updates){ %>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading<%-update.id%>">
+      <button
+        class="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse<%-update.id%>"
+        aria-expanded="true"
+        aria-controls="collapse<%-update.id%>">
+        <%- update.title %> - <%- new Date(update.date).toLocaleString('nl-NL',
+        { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).slice(0,
+        -3) %>
+      </button>
+    </h2>
+    <div
+      id="collapse<%-update.id%>"
+      class="accordion-collapse collapse collapsed"
+      aria-labelledby="heading<%-update.id%>"
+      data-bs-parent="#siteUpdates">
+      <div class="accordion-body"><%- update.content %></div>
+      <div class="accordion-body"></div>
+    </div>
+  </div>
+  <% } %>
+</div>

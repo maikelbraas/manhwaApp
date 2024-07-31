@@ -1,13 +1,15 @@
 <script type="module" src="/js/admin.js"></script>
 <div class="container">
-  <div>
-    <h2>Unique total visitors</h2>
-    <div class="card mb-3" style="max-width: 18rem">
-      <% let visitors = 0; for(let count in counter){
-      if(count.includes('new-visitors')){ visitors += parseInt(counter[count])
-      %> <%- `<br />
-      Total visitors: ${visitors}` %> <% }} %>
+  <div class="row">
+    <div class="card mb-3 col" style="max-width: 18rem">
+      <h2 class="card-header">Unique total visitors</h2>
+      <p class="card-body">
+        <% let visitors = 0; for(let count in counter){
+        if(count.includes('new-visitors')){ visitors += parseInt(counter[count])
+        %> <%- ` Total visitors: ${visitors}` %> <% }} %>
+      </p>
     </div>
+    <a href="/admin/newUpdate" class="col"> <button>new update</button></a>
   </div>
   <div class="admin-rows">
     <div class="card mb-3" style="max-width: 18rem">
