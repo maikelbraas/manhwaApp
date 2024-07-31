@@ -60,8 +60,6 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
                 //Get status
                 let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
-
-                console.log(manhwa.name, statusSlice);
                 let status = statusSlice.split('>')[1].split('<')[0];
                 //Get chapters links
                 let chapterLinks = [];
