@@ -51,7 +51,9 @@ class Manhwa {
                 }
             }
         }
+        res.flash(`New manhwas added: ${manhwasReaper.length + manhwasFlame.length}`);
         res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100 }, done: true, createdRows: manhwasReaper.length + manhwasFlame.length })}\n\n`);
+        res.end();
         return;
     }
 
@@ -97,7 +99,9 @@ class Manhwa {
             }
         }
 
+        res.flash(`Manhwas updated: ${manhwasReaper.length + manhwasFlame.length + manhwasDemon.length}`);
         res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: 100, demon: 100 }, done: true, updatedRows: manhwasReaper.length + manhwasFlame.length + manhwasDemon.length })}\n\n`);
+        res.end();
         return;
     }
 

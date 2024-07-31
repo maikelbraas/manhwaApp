@@ -104,8 +104,10 @@ class Auth {
             }
             nextManhwa++;
         }
+        res.flash(`Saved updated: ${totalUpdated}`);
         res.write(`data: ${JSON.stringify({ progress: 100, updatedRows: totalUpdated, done: true })}\n\n`);
         res.end();
+        return;
     }
 
     static async removeSaved(req, res, next) {
