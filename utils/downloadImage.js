@@ -24,12 +24,12 @@ export default async function downloadImage(mid, url) {
                 console.error(err);
             else {
                 console.log('image downloaded');
-                return imagename;
             }
         });
     } catch (err) {
         console.error(err);
     }
+    return imagename;
 
 
 }

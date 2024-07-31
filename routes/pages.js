@@ -16,7 +16,6 @@ router.get('/', async (req, res, next) => {
 
 
 router.get('/manhwa', async (req, res, next) => {
-    console.log(req.session.counter);
     let manhwas = await manhwaController.getManhwas(req, res, next);
     res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.url });
 });
