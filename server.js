@@ -18,9 +18,11 @@ import isAuthenticated from './utils/checkAuth.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+let allVisitors = [];
 const PORT = process.env.PORT;
 const counters = {};
 const app = express();
+let visitors = 0;
 
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs')
@@ -38,6 +40,11 @@ initializePassport(app);
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     req.session.counter = counters;
+    req.session.visitors = visitors;
+    if (!allVisitors.includes(req.ip)) {
+        visitors++;
+        allVisitors.push(req.ip);
+    }
     if (req.user != undefined) {
         req.session.user = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };
         res.locals.currentUser = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };

@@ -7,7 +7,8 @@
         <% let visitors = 0; for(let count in counter){
         if(count.includes('new-visitors')){ visitors += parseInt(counter[count])
         %> <%- `<br />Total visitors ${count.includes('mobile') ? 'mobile' :
-        'desktop'}: ${visitors}` %> <% }} %>
+        'desktop'}: ${visitors}` %> <% }} %> <%- `<br />Total visitors
+        non-unique: ${visitorsTotal}` %>
       </p>
     </div>
     <div class="col">
