@@ -40,9 +40,12 @@
   <body class="d-flex flex-column vh-100">
     <header><%- include('./partials/header') %></header>
     <main class="container mb-4">
-      <% const message = getFlashMessage(); if(message){ %>
+      <% const message = getFlashMessage(); if(message){
+      if(Array.isArray(message)){ for(let messag of message){ %>
+      <div class="alert alert-warning"><%= messag %></div>
+      <% }}else { %>
       <div class="alert alert-primary"><%= message %></div>
-      <% } %> <%- include(`../${template}`) %>
+      <% }} %> <%- include(`../${template}`) %>
     </main>
 
     <%- include('./partials/footer') %>

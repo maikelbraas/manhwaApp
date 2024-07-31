@@ -3,16 +3,34 @@
     <label for="username">Username: </label>
     <input type="text" class="form-control" name="username" id="" />
     <label for="password">Password: </label>
-    <input type="password" class="form-control" name="password" id="" />
+    <input type="password" class="form-control pass" name="password" id="" />
     <label for="password">Password Confirm: </label>
-    <input type="password" class="form-control" name="confpassword" id="" />
+    <input
+      type="password"
+      class="form-control pass"
+      name="confpassword"
+      id="" />
     <input
       type="submit"
       class="btn btn-primary mt-2"
       name="register"
       value="Register" />
   </form>
+  <button id="showOrHide" class="btn btn-primary mt-2">Show</button>
 </div>
-<% if(errors.length > 0){ for(let message of errors){ %>
-<div class="alert alert-warning mt-2"><%= message %></div>
-<% }} %>
+<script>
+  const passwordFields = document.querySelectorAll(".pass");
+  document.getElementById("showOrHide").addEventListener("click", (event) => {
+    if (event.target.innerHTML == "Show") {
+      event.target.innerHTML = "Hide";
+      for (let pass of passwordFields) {
+        pass.type = "text";
+      }
+    } else if (event.target.innerHTML == "Hide") {
+      event.target.innerHTML = "Show";
+      for (let pass of passwordFields) {
+        pass.type = "password";
+      }
+    }
+  });
+</script>

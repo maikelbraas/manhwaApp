@@ -36,7 +36,9 @@ class Auth {
                 errors.push('Account already exists.')
 
             if (errors.length > 0) {
-                return res.render('layout', { template: 'pages/register.ejs', errors })
+                res.flash(errors);
+                return res.redirect('/register');
+                // return res.render('layout', { template: 'pages/register.ejs', errors })
             }
 
             const userId = await user.create(username, password);
