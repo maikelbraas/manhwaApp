@@ -9,7 +9,7 @@
         data-bs-target="#collapse<%-update.id%>"
         aria-expanded="false"
         aria-controls="collapse<%-update.id%>">
-        <%- update.title %> - <%- new Date(update.date).toLocaleString('nl-NL',
+        <%= update.title %> - <%- new Date(update.date).toLocaleString('nl-NL',
         { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).slice(0,
         -3) %>
       </button>
@@ -19,7 +19,7 @@
       class="accordion-collapse collapse"
       aria-labelledby="heading<%-update.id%>"
       data-bs-parent="#siteUpdates">
-      <div class="accordion-body"><%- update.content %></div>
+      <div class="accordion-body"><%= update.content %></div>
     </div>
   </div>
   <% } %>
