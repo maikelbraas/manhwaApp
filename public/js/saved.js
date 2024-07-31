@@ -33,7 +33,7 @@ document.querySelector('.manhwa-rows').addEventListener('click', async (event) =
 document.getElementById("updateSaved").addEventListener("click", () => {
     if ((new Date() - new Date(localStorage.getItem('timer'))) / 1000 > 600) {
         localStorage.setItem('timer', new Date());
-        progressDiv.innerHTML = "Starting fetch...";
+        progressDiv.innerHTML = "Starting update, <strong>you don't have to be on the page to get the updates.</strong>";
         createBar("savedManhwas");
         const reaper = document.getElementById('savedManhwas');
 
