@@ -6,7 +6,12 @@
     class="form-control bg-dark text-light mb-2"
     placeholder="Search"
     autocomplete="off" />
-  <% if(page == "/manhwa"){ %>
+  <% if(parseInt(page.split('=', 2)[1]) > Math.ceil(manhwas.length/6) ||
+  parseInt(page.split('=', 2)[1]) <= 0){ %>
+  <script>
+    location.href = "/manhwa?page=1";
+  </script>
+  <% } %> <% if(page == "/manhwa"){ %>
   <a href="/manhwa?page=1" class="text-info">Show less</a>
   <% }else{ %>
   <a href="/manhwa" class="text-info">Show all</a>
@@ -21,10 +26,7 @@
       <span class="visually-hidden">Loading...</span></span
     >
   </div>
-  <div
-    class="row row-cols-1 row-cols-md-2 g-4"
-    id="manhwas"
-    style="min-height: 100vh"></div>
+  <div class="row row-cols-1 row-cols-md-2 g-4" id="manhwas"></div>
 </div>
 <nav aria-label="Page navigation" class="pagination-manhwas">
   <input
@@ -52,11 +54,15 @@
     <li class="page-item page-link-number">
       <a class="page-link" href="/manhwa?page=<%- pages %>">...</a>
     </li>
-    <% }else{ if(pages == parseInt(page.split('=', 2)[1])) continue;%>
+    <% }else{ if(pages == parseInt(page.split('=', 2)[1])) {%>
+    <li class="page-item page-link-number mobile-number">
+      <p class="page-link" href="/manhwa?page=<%- pages %>"><%- pages %></p>
+    </li>
+    <% }else{ %>
     <li class="page-item page-link-number">
       <a class="page-link" href="/manhwa?page=<%- pages %>"><%- pages %></a>
     </li>
-    <% } %> <% } %>
+    <% }} %> <% } %>
     <li class="page-item">
       <a
         class="page-link"

@@ -97,6 +97,9 @@ height: 280px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
+    .mobile-number{
+      display: none;
+    }
     .manga-image {
       width: 100% !important;
       height: 100% !important;
@@ -188,6 +191,9 @@ height: 280px;
   }
   .devider:nth-child(n+3){
     display: none;
+  }
+  .mobile-number{
+    display: block !important;
   }
   
 }
