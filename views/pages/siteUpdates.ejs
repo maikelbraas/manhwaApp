@@ -3,7 +3,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading<%-update.id%>">
       <button
-        class="accordion-button"
+        class="accordion-button collapsed"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapse<%-update.id%>"
@@ -16,7 +16,7 @@
     </h2>
     <div
       id="collapse<%-update.id%>"
-      class="accordion-collapse collapse collapsed"
+      class="accordion-collapse collapse"
       aria-labelledby="heading<%-update.id%>"
       data-bs-parent="#siteUpdates">
       <div class="accordion-body"><%- update.content %></div>
