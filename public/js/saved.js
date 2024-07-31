@@ -1,4 +1,6 @@
-
+let timer = null;
+const progressDiv = document.getElementById("progress");
+waitTimer();
 document
     .querySelectorAll(".input-number")
     .forEach((x) => (x.autofocus = false));
@@ -29,34 +31,57 @@ document.querySelector('.manhwa-rows').addEventListener('click', async (event) =
 });
 
 document.getElementById("updateSaved").addEventListener("click", () => {
-    const progressDiv = document.getElementById("progress");
-    progressDiv.innerHTML = "Starting fetch...";
-    createBar("savedManhwas");
-    const reaper = document.getElementById('savedManhwas');
+    if ((new Date() - new Date(localStorage.getItem('timer'))) / 1000 > 600) {
+        localStorage.setItem('timer', new Date());
+        progressDiv.innerHTML = "Starting fetch...";
+        createBar("savedManhwas");
+        const reaper = document.getElementById('savedManhwas');
 
-    const eventSource = new EventSource("/auth/updatesavedmanhwa");
+        const eventSource = new EventSource("/auth/updatesavedmanhwa");
 
-    eventSource.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.progress <= 100) {
-            reaper.innerHTML = `${Math.round(
-                data.progress
-            )}%`;
-            reaper.style.width = data.progress + "%";
-        }
-        if (data.done) {
-            progressDiv.innerHTML +=
-                `<br>Fetch completed! Updated rows: ${data.updatedRows} ${data.updatedRows > 0 ? " Refresh required, reloading in 2 seconds." : " No refresh required."}`;
+        eventSource.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.progress <= 100) {
+                reaper.innerHTML = `${Math.round(
+                    data.progress
+                )}%`;
+                reaper.style.width = data.progress + "%";
+            }
+            if (data.done) {
+                progressDiv.innerHTML +=
+                    `<br>Fetch completed! Updated rows: ${data.updatedRows} ${data.updatedRows > 0 ? " Refresh required, reloading in 2 seconds." : " No refresh required."}`;
+                eventSource.close();
+                buildJson(data.updatedRows);
+            }
+        };
+
+        eventSource.onerror = () => {
+            progressDiv.innerHTML += "<br>Error occurred";
             eventSource.close();
-            buildJson(data.updatedRows);
-        }
-    };
-
-    eventSource.onerror = () => {
-        progressDiv.innerHTML += "<br>Error occurred";
-        eventSource.close();
-    };
+        };
+    }
 });
+
+function waitTimer() {
+    console.log((new Date() - new Date(localStorage.getItem('timer'))) / 1000);
+    if (timer == null && (new Date() - new Date(localStorage.getItem('timer'))) / 1000 < 600) {
+        let timeSeconds = Math.floor(600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000));
+        let timeMinutes = Math.floor((600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000)) / 60);
+        progressDiv.innerHTML = `Time left until refresh available: 0${timeMinutes}:${timeSeconds - timeMinutes * 60}`;
+        timer = setInterval(() => {
+            let timeSeconds = Math.floor(600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000));
+            let timeMinutes = Math.floor((600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000)) / 60);
+            progressDiv.innerHTML = `Time left until refresh available: 0${timeMinutes}:${timeSeconds - timeMinutes * 60}`;
+            if (timeSeconds <= 0) {
+                clearInterval(timer);
+                progressDiv.innerHTML = `Ready to update!`
+                timer = null;
+            }
+        }, 1000);
+    } else {
+        progressDiv.innerHTML = `Ready to update!`
+    }
+}
 
 
 function createBar(name) {
@@ -88,10 +113,10 @@ function buildJson(refresh) {
                 "<br>Build completed!";
             setTimeout(() => {
                 progressDiv.innerHTML = "";
+                waitTimer();
                 if (refresh > 0)
                     location.reload();
             }, 2000)
-
             eventSource.close();
         }
     };
