@@ -4,7 +4,10 @@
   grid-template-rows: auto;
   gap: 10px;
   text-overflow: ellipsis;
-  padding-top: 20px;
+}
+
+.card-body{
+  padding: 5px !important;
 }
 
 .card-height-dis > div:first-child{
@@ -17,7 +20,6 @@ grid-template-columns: repeat(2, 1fr);
 grid-template-rows: auto;
 gap: 10px;
 text-overflow: ellipsis;
-padding-top: 20px;
 }
 
 .devider-label{
@@ -167,8 +169,12 @@ input[type=number] {
     color: gold;
     font-size: 10px;
   }
-@media only screen AND (max-width: 768px){
+@media only screen AND (max-width: 767px){
   
+  .d-flex-home{
+  flex-direction: row;
+}
+
 .navbar-nav > li{
   text-align: center;
   border: 1px solid #c1c1c1;
@@ -209,6 +215,9 @@ input[type=number] {
 
 @media only screen AND (min-width: 768px) AND (max-width: 1024px){
 
+  .d-flex-home{
+    flex-direction: column;
+  }
   .manga-image {
     height: 280px !important;
   }
@@ -226,6 +235,9 @@ input[type=number] {
 
 @media only screen AND (min-width: 968px) AND (max-width: 1200px){
 
+  .d-flex-home{
+    flex-direction: row;
+  }
   .manga-image {
     height: 280px !important;
   }

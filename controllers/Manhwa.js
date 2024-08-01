@@ -73,7 +73,6 @@ class Manhwa {
         if (manhwasReaper.length > 0) {
             for (let manhwa of manhwasReaper) {
                 await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
                 for (let chapter of manhwa.manhwaChapters) {
                     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
                 }
@@ -84,7 +83,6 @@ class Manhwa {
         if (manhwasFlame.length > 0) {
             for (let manhwa of manhwasFlame) {
                 await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
                 for (let chapter of manhwa.manhwaChapters) {
                     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
                 }

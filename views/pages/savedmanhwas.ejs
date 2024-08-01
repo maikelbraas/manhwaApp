@@ -28,7 +28,7 @@
     include('parts/card.ejs', {manhwa}) %> <% manhwa.used = true;}} %>
   </div>
   <label class="devider-label" for="">Hiatus</label>
-  <div class="devider" id="hiatus">
+  <div class="devider card-group" id="hiatus">
     <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
     '') == 'hiatus' && manhwa.chapter.toFixed(1) == manhwa.chapters.toFixed(1) && !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa})
     %> <% manhwa.used = true;}} %>
