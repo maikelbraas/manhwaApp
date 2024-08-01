@@ -5,7 +5,7 @@ import page from '../models/Page.js';
 const router = express.Router();
 
 router.get('/dashboard', (req, res, next) => {
-    res.render('layout', { template: 'admin/dashboard.ejs', counter: req.session.counter, visitorsTotal: req.session.visitors })
+    res.render('layout', { template: 'admin/dashboard.ejs', counter: req.session.counter, visitorsTotal: req.session.visitorsTotal })
 });
 
 router.get('/newUpdate', (req, res, next) => {

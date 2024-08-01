@@ -22,7 +22,7 @@ let allVisitors = [];
 const PORT = process.env.PORT;
 const counters = {};
 const app = express();
-let visitors = 0;
+let visitorsTotal = 0;
 let visitedPages = [];
 
 app.set('views', path.join(__dirname, './views'));
@@ -41,12 +41,12 @@ initializePassport(app);
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     req.session.counter = counters;
-    req.session.visitors = visitors;
+    req.session.visitorsTotal = visitorsTotal;
     if (req.headers.referer != undefined && !req.headers.referer.includes('login'))
         visitedPages.push(req.headers.referer);
     req.session.visitedPages = visitedPages;
     if (!allVisitors.includes(req.ip)) {
-        visitors++;
+        visitorsTotal++;
         allVisitors.push(req.ip);
     }
     if (req.user != undefined) {

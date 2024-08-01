@@ -4,11 +4,13 @@
     <div class="card mb-3 col" style="max-width: 18rem">
       <h2 class="card-header">Unique total visitors</h2>
       <p class="card-body">
-        <% let visitors = 0; for(let count in counter){
-        if(count.includes('new-visitors')){ visitors += parseInt(counter[count])
-        %> <%- `<br />Total visitors ${count.includes('mobile') ? 'mobile' :
-        'desktop'}: ${visitors}` %> <% }} %> <%- `<br />Total visitors
-        non-unique: ${visitorsTotal}` %>
+        <% let visitors = 0; let visitorsMob = 0; for(let count in counter){
+        if(count.includes('new-visitors')){ %> <% count.includes('mobile') ?
+        visitorsMob += parseInt(counter[count]) : visitors +=
+        parseInt(counter[count]) %> <%- `<br />Total visitors
+        ${count.includes('mobile') ? 'mobile: ' + visitorsMob : 'desktop: ' +
+        visitors}` %> <% }} %> <%- `<br />Total visitors non-unique:
+        ${visitorsTotal}` %>
       </p>
     </div>
     <div class="col">
