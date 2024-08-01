@@ -40,7 +40,9 @@
           <div class="d-inline-flex gap-4">
             <% if(typeof currentUser != 'undefined'){ %> <% if(typeof
             manhwa.saved != 'undefined'){ %>
-            <p>Your last saved manhwa chapter: <%= manhwa.saved.chapter %></p>
+            <p class="m-auto">
+              Your last saved manhwa chapter: <%= manhwa.saved.chapter %>
+            </p>
             <% }else{ %>
             <form
               action="/auth/chapter/<%- manhwa.mid %>"
