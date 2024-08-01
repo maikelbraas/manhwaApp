@@ -22,9 +22,6 @@ export default async function downloadImage(mid, url) {
         fs.writeFile(path.join(dirPath, imagename), image, (err) => {
             if (err)
                 console.error(err);
-            else {
-                console.log('image downloaded');
-            }
         });
     } catch (err) {
         console.error(err);

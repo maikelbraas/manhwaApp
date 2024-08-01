@@ -157,10 +157,8 @@ class Manhwa {
 
     static async getManhwa(req, res, next) {
         const id = req.params.id;
-        let manhwa = false;
-        if (req.session.hasOwnProperty('manhwas'))
-            manhwa = req.session.manhwas.find(x => x.mid == id);
-        if (!manhwa)
+        let manhwa = await manhwaModel.findManhwaById(id);
+        if (manhwa.length == 0)
             return false;
         return manhwa;
     }

@@ -49,6 +49,7 @@ router.get('/manhwa/:id', async (req, res, next) => {
             res.redirect('/manhwa?page=1');
             return false;
         }
+        [manhwa] = manhwa;
         if (typeof req.session.user != 'undefined')
             manhwa.saved = await manhwaController.getSavedManhwaChapter(req, res, next);
 
@@ -107,16 +108,25 @@ router.get('/api/jsonWrite', async (req, res, next) => {
 });
 
 router.get('/register', (req, res, next) => {
-    res.render('layout', { template: 'pages/register.ejs', errors: [] });
+    if (req.session.user == undefined)
+        res.render('layout', { template: 'pages/register.ejs', errors: [] });
+    else
+        res.redirect('/auth/savedmanhwas');
 })
 
 router.post('/register', async (req, res, next) => {
     await auth.register(req, res, next);
 })
 
-router.get('/login', auth.showLoginForm);
+router.get('/login', (req, res, next) => {
+    if (req.session.user == undefined)
+        auth.showLoginForm(req, res, next);
+    else
+        res.redirect('/auth/savedmanhwas');
+});
 
 router.post('/login', (req, res, next) => {
+    let pages = req.session.visitedPages;
     passport.authenticate('local', (err, user, info) => {
         if (err) { return next(err); }
         if (!user) {
@@ -125,8 +135,13 @@ router.post('/login', (req, res, next) => {
             return res.redirect('/login');
         }
         req.logIn(user, (err) => {
+            let goback = pages[pages.length - 1] == undefined || pages[pages.length - 1].split('/')[3] != 'manhwa' ? pages[pages.length - 1] = '/auth/savedmanhwas' : pages[pages.length - 1].split('/')
             if (err) { return next(err); }
-            return res.redirect('/auth/savedmanhwas');
+            if (goback[3] == 'manhwa')
+                return res.redirect(`/manhwa/${goback.pop()}`);
+            else
+                return res.redirect(`${goback}`);
+
         });
     })(req, res, next);
 });
