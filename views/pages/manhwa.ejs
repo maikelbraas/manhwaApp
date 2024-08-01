@@ -9,11 +9,10 @@
     <div class="col-md-8">
       <div class="card-body p-4">
         <h1 class="card-title mb-3"><%- manhwa.title %></h1>
-        <h6 class="card-subtitle mb-3">Chapters: <%- manhwa.chapters %></h6>
-        <p class="card-text">
-          <small class="card-status">Status: <%- manhwa.status %></small>
-        </p>
-        <p class="card-text mb-4">Description: <br /><%- manhwa.content %></p>
+        <h6 class="card-subtitle mb-2">Chapters: <%- manhwa.chapters %></h6>
+        <p class="card-subtitle mb-2">Status: <%- manhwa.status %></p>
+        <h6 class="card-subtitle">Description:</h6>
+        <p class="card-text mb-2"><%- manhwa.content %></p>
         <div class="mb-4">
           Genres: <% for(let genre of manhwa.genres){ %>
           <span class="badge genre-badge me-2"
@@ -21,55 +20,57 @@
           >
           <% } %>
         </div>
-        <div class="manhwa-chapters my-2">
-          <% if(!manhwa.baseurl.includes('mgdemon')){ %>
-          <a
-            href="<%- manhwa.baseurl %>series/<%- manhwa.slug %>"
-            target="_blank"
-            >Manhwa site</a
-          >
-          <% }else{ %>
-          <a
-            href="<%- manhwa.baseurl %>manga/<%- manhwa.slug %>"
-            target="_blank"
-            >Manhwa site</a
-          >
-          <% } %>
-        </div>
+        <div class="d-inline-flex gap-4">
+          <div class="m-auto">
+            <% if(!manhwa.baseurl.includes('mgdemon')){ %>
+            <a
+              href="<%- manhwa.baseurl %>series/<%- manhwa.slug %>"
+              target="_blank"
+              >Manhwa site</a
+            >
+            <% }else{ %>
+            <a
+              href="<%- manhwa.baseurl %>manga/<%- manhwa.slug %>"
+              target="_blank"
+              >Manhwa site</a
+            >
+            <% } %>
+          </div>
 
-        <div class="d-grid gap-3">
-          <% if(typeof currentUser != 'undefined'){ %> <% if(typeof manhwa.saved
-          != 'undefined'){ %>
-          <p>Your last saved manhwa chapter: <%= manhwa.saved.chapter %></p>
-          <% }else{ %>
-          <form
-            action="/auth/chapter/<%- manhwa.mid %>"
-            class="d-flex flex-row col-12 col-md-4"
-            method="POST">
-            <input
-              class="form-control bg-dark m-2 sm-4 text-light"
-              type="hidden"
-              pattern="[0-9]*"
-              inputmode="numeric"
-              name="chapternumber"
-              id=""
-              value="1"
-              max="<%- manhwa.chapters %>"
-              min="1"
-              required />
+          <div class="d-inline-flex gap-4">
+            <% if(typeof currentUser != 'undefined'){ %> <% if(typeof
+            manhwa.saved != 'undefined'){ %>
+            <p>Your last saved manhwa chapter: <%= manhwa.saved.chapter %></p>
+            <% }else{ %>
+            <form
+              action="/auth/chapter/<%- manhwa.mid %>"
+              class=""
+              method="POST">
+              <input
+                class="form-control bg-dark text-light"
+                type="hidden"
+                pattern="[0-9]*"
+                inputmode="numeric"
+                name="chapternumber"
+                id=""
+                value="1"
+                max="<%- manhwa.chapters %>"
+                min="1"
+                required />
+              <button
+                type="submit"
+                class="btn btn-primary form-control text-white">
+                <i class="fas fa-bookmark me-2">Try manhwa</i>
+              </button>
+            </form>
+
+            <% }} %>
             <button
-              type="submit"
-              class="btn btn-primary form-control m-2 text-white">
-              <i class="fas fa-bookmark me-2">Try manhwa</i>
+              class="btn btn-success"
+              onclick="window.history.go(-1); return faslse;">
+              Return
             </button>
-          </form>
-
-          <% }} %>
-          <button
-            class="btn btn-success col-4"
-            onclick="window.history.go(-1); return faslse;">
-            Return
-          </button>
+          </div>
         </div>
       </div>
     </div>
