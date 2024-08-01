@@ -81,12 +81,15 @@
 <template id="manhwa-card-template">
   <div class="card">
     <div class="g-0 d-flex d-flex-home h-100">
-      <img
-        data-src=""
-        class="rounded-start manga-image m-auto lazyload"
-        style="width: 200px !important"
-        alt=""
-        loading="lazy" />
+      <div class="d-flex flex-column">
+        <img
+          data-src=""
+          class="rounded-start manga-image m-auto lazyload"
+          style="width: 200px !important"
+          alt=""
+          loading="lazy" />
+        <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p>
+      </div>
       <div class="card-body">
         <a href="/manhwa/" class="card-link text-decoration-none text-reset">
           <h5 class="card-title text-decoration-underline"></h5>
@@ -99,14 +102,21 @@
           <small class="card-source">Source: </small>
         </p>
         <p class="card-text manhwa-row-content"></p>
-        <div class="gap-2 p-1 g-0 mb-1 w-100">
+        <div class="gap-2 p-1 g-0 mb-1 w-100 phone-invis">
           Genres:
           <div class="genres-manhwa">
-            <span class="badge genre-badge me-1"
+            <span class="badge genre-badge me-1 mb-1"
               ><i class="fas fa-fist-raised"></i
             ></span>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="gap-2 p-1 g-0 w-100 phone-vis">
+      <div class="genres-manhwa d-flex flex-wrap">
+        <span class="badge genre-badge me-1 mb-1"
+          ><i class="fas fa-fist-raised"></i>
+        </span>
       </div>
     </div>
   </div>
