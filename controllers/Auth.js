@@ -43,6 +43,7 @@ class Auth {
 
             const userId = await user.create(username, password);
             res.flash('Account created!');
+            console.log('Acount created');
             return res.redirect('/login');
         } catch (err) {
             console.log(err);
