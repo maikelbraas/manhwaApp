@@ -177,7 +177,11 @@ height: 280px;
     height: 100%;
   }
   .manga-image {
-    height: 280px !important;
+    max-height: 200px !important;
+    max-width: 150px;
+  }
+  .card-height-dis > div:first-child{
+    text-align: center;
   }
 
   .navbar{
@@ -196,4 +200,42 @@ height: 280px;
     display: block !important;
   }
   
+}
+
+@media only screen AND (min-width: 768px) AND (max-width: 1024px){
+
+  .manga-image {
+    height: 280px !important;
+  }
+  .card-height-dis{
+    height: 390px;
+  }
+
+  .card-height-dis > div:first-child{
+    place-content: center;
+  }
+
+  .card-height-dis > div:last-child > div:first-child{
+
+    place-content: center;
+  }
+}
+
+@media only screen AND (min-width: 968px) AND (max-width: 1200px){
+
+  .manga-image {
+    height: 280px !important;
+  }
+  .card-height-dis{
+    height: 360px;
+  }
+
+  .card-height-dis > div:first-child{
+    place-content: center;
+  }
+
+  .card-height-dis > div:last-child > div:first-child{
+
+    place-content: center;
+  }
 }
