@@ -36,10 +36,36 @@
         </small>
       </p>
       <p class="card-text manhwa-row-content"><%- manhwa.content %></p>
+      <div class="w-100 g-0 p-1 phone-invis-save">
+        <form
+          action="/auth/chapter/<%- manhwa.mid %>"
+          class="d-flex flex-row gap-2"
+          method="POST">
+          <input
+            class="input-number form-control my-2 bg-dark text-light"
+            type="number"
+            name="chapternumber"
+            id=""
+            step="0.1"
+            pattern="[0-9]*"
+            style="font-size: 20px"
+            inputmode="numeric"
+            tabindex="-1"
+            max="<%- manhwa.chapters.toFixed(1) %>"
+            min="1"
+            required />
+          <button
+            type="submit"
+            class="btn btn-primary my-2 form-control"
+            value="Log chapter">
+            Log chapter
+          </button>
+        </form>
+      </div>
     </div>
     <!-- </div> -->
   </div>
-  <div class="w-100 g-0 p-1">
+  <div class="w-100 g-0 p-1 phone-vis-save">
     <form
       action="/auth/chapter/<%- manhwa.mid %>"
       class="d-flex flex-row gap-2"

@@ -6,6 +6,14 @@
   text-overflow: ellipsis;
 }
 
+.phone-invis-save{
+  display: block;
+}
+
+.phone-vis-save{
+  display: none;
+}
+
 .phone-vis{
   display: none;
 }
@@ -221,11 +229,17 @@ input[type=number] {
 
 @media only screen AND (max-width: 767px){
   
+  .phone-invis-save{
+    display: none;
+  }
+.phone-vis-save{
+  display: block;
+}
 .phone-invis{
   display: none;
 }
 .phone-vis{
-  display: flex;
+  display: block;
 }
   .d-flex-home{
   flex-direction: row ;
@@ -277,4 +291,14 @@ input[type=number] {
 .phone-vis{
   display: none;
 }
+}
+
+@media only screen AND (min-width: 450px) AND (max-width: 940px){
+  
+  .phone-invis-save{
+    display: none;
+  }
+  .phone-vis-save{
+    display: block;
+  }
 }

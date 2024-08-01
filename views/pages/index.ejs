@@ -12,7 +12,7 @@
             alt="" />
           <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p>
         </div>
-        <div class="card-body pb-0">
+        <div class="card-body pb-0 d-flex flex-column h-100">
           <a
             href="/manhwa/<%- manhwa.mid %>"
             class="card-link text-decoration-none text-reset">
@@ -20,7 +20,7 @@
               <%- manhwa.title %>
             </h5></a
           >
-          <p class="card-text">
+          <p class="card-text mb-1">
             <small class="card-chapter">Chapters <%- manhwa.chapters %></small>
             |
             <small class="card-time"
@@ -39,12 +39,15 @@
               >Source: <%- manhwa.baseurl.split('/')[2].split('.')[0]; %></small
             >
           </p>
-          <p class="card-text manhwa-row-content mb-0"><%- manhwa.content %></p>
-          <div class="gap-2 p-1 g-0 mb-1 w-100 phone-invis">
+          Description:
+          <p class="card-text manhwa-row-content mb-1 h-100">
+            <%- manhwa.content %>
+          </p>
+          <div class="gap-2 p-0 g-0 mb-1 w-100 phone-invis">
             Genres:
             <div class="genres-manhwa">
               <% for(let genre of manhwa.genres){ %>
-              <span class="badge genre-badge me-1"
+              <span class="badge genre-badge me-1 mb-1"
                 ><i class="fas fa-fist-raised"><%- genre %></i>
               </span>
               <% } %>
