@@ -2,10 +2,10 @@
 <div class="row" id="manhwas">
   <% for(let manhwa of manhwas){ %>
   <div class="col-md-6 mt-2 d-flex align-items-stretch">
-    <div class="card">
-      <a
-        href="/manhwa/<%- manhwa.mid %>"
-        class="card-link text-decoration-none text-reset">
+    <a
+      href="/manhwa/<%- manhwa.mid %>"
+      class="card-link text-decoration-none text-reset">
+      <div class="card">
         <div class="row card-height-dis">
           <div class="col-md-4">
             <img
@@ -51,9 +51,9 @@
               </div>
             </div>
           </div>
-        </div></a
-      >
-    </div>
+        </div>
+      </div></a
+    >
   </div>
   <% } %>
 </div>
