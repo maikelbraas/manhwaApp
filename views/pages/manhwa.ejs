@@ -13,7 +13,7 @@
         <p class="card-text">
           <small class="card-status">Status: <%- manhwa.status %></small>
         </p>
-        <p class="card-text mb-4"><%- manhwa.content %></p>
+        <p class="card-text mb-4">Description: <br /><%- manhwa.content %></p>
         <div class="mb-4">
           Genres: <% for(let genre of manhwa.genres){ %>
           <span class="badge genre-badge me-2"
@@ -21,7 +21,7 @@
           >
           <% } %>
         </div>
-        <div class="manhwa-chapters">
+        <div class="manhwa-chapters my-2">
           <% if(!manhwa.baseurl.includes('mgdemon')){ %>
           <a
             href="<%- manhwa.baseurl %>series/<%- manhwa.slug %>"
