@@ -20,63 +20,56 @@
           </span>
           <% } %>
         </div>
-        <div class="d-inline-flex gap-4">
-          <div class="m-auto">
-            <% if(!manhwa.baseurl.includes('mgdemon')){ %>
-            <a
-              href="<%- manhwa.baseurl %>series/<%- manhwa.slug %>"
-              target="_blank"
-              >Manhwa site</a
-            >
-            <% }else{ %>
-            <a
-              href="<%- manhwa.baseurl %>manga/<%- manhwa.slug %>"
-              target="_blank"
-              >Manhwa site</a
-            >
-            <% } %>
-          </div>
-
-          <div class="d-inline-flex gap-4">
-            <% if(typeof currentUser != 'undefined'){ %> <% if(typeof
-            manhwa.saved != 'undefined'){ %>
-            <p class="m-auto">
-              Your last saved manhwa chapter: <%= manhwa.saved.chapter %>
-            </p>
-            <% }else{ %>
-            <form
-              action="/auth/chapter/<%- manhwa.mid %>"
-              class=""
-              method="POST">
-              <input
-                class="form-control bg-dark text-light"
-                type="hidden"
-                pattern="[0-9]*"
-                inputmode="numeric"
-                name="chapternumber"
-                id=""
-                value="1"
-                max="<%- manhwa.chapters %>"
-                min="1"
-                required />
-              <button
-                type="submit"
-                class="btn btn-primary form-control text-white">
-                <i class="fas fa-bookmark me-2">Try manhwa</i>
-              </button>
-            </form>
-
-            <% }}else{ %>
-            <a href="/login" class="m-auto btn btn-warning"
-              >Login to save manhwa</a
-            >
-            <% } %>
+        <div class="d-flex w-100 h-100 gap-2">
+          <% if(!manhwa.baseurl.includes('mgdemon')){ %>
+          <a
+            href="<%- manhwa.baseurl %>series/<%- manhwa.slug %>"
+            target="_blank"
+            class="btn btn-info"
+            >Manhwa site</a
+          >
+          <% }else{ %>
+          <a
+            href="<%- manhwa.baseurl %>manga/<%- manhwa.slug %>"
+            target="_blank"
+            class="btn btn-info"
+            >Manhwa site</a
+          >
+          <% } %> <% if(typeof currentUser != 'undefined'){ %> <% if(typeof
+          manhwa.saved != 'undefined'){ %>
+          <p class="w-100">
+            Your last saved manhwa chapter: <%= manhwa.saved.chapter %>
+          </p>
+          <% }else{ %>
+          <form action="/auth/chapter/<%- manhwa.mid %>" class="" method="POST">
+            <input
+              class="form-control bg-dark text-light w-100"
+              type="hidden"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              name="chapternumber"
+              id=""
+              value="1"
+              max="<%- manhwa.chapters %>"
+              min="1"
+              required />
             <button
-              class="btn btn-success"
-              onclick="window.history.go(-1); return faslse;">
-              Return
+              type="submit"
+              class="btn btn-primary form-control text-white">
+              <i class="fas fa-bookmark me-2">Try manhwa</i>
             </button>
-          </div>
+          </form>
+
+          <% }}else{ %>
+          <a href="/login" class="btn btn-warning w-100"
+            >Login to save manhwa</a
+          >
+          <% } %>
+          <button
+            class="btn btn-success w-100"
+            onclick="window.history.go(-1); return faslse;">
+            Return
+          </button>
         </div>
       </div>
     </div>
