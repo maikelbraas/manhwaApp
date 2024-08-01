@@ -50,9 +50,13 @@ class Manhwa {
     }
 
     static async findManhwaByTitle(title) {
-        const query = "SELECT * FROM manhwas WHERE title = ?";
-        const [rows] = await connect.execute(query, [title]);
-        return rows;
+        try {
+            const query = "SELECT * FROM manhwas WHERE title = ?";
+            const [rows] = await connect.execute(query, [title]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async create(title, mid, slug, content, media, image, chapters, baseurl, status) {
@@ -78,27 +82,43 @@ class Manhwa {
     }
 
     static async getAllManhwas() {
-        const query = `SELECT * FROM manhwas WHERE status != 'Dropped' ORDER BY title ASC`;
-        const [rows] = await connect.execute(query);
-        return rows;
+        try {
+            const query = `SELECT * FROM manhwas WHERE status != 'Dropped' ORDER BY title ASC`;
+            const [rows] = await connect.execute(query);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async getManhwa(id) {
-        const query = "SELECT * FROM manhwas WHERE id = ?";
-        const [rows] = await connect.execute(query, [id]);
-        return rows;
+        try {
+            const query = "SELECT * FROM manhwas WHERE id = ?";
+            const [rows] = await connect.execute(query, [id]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async getSavedManhwaChapter(manhwaid, userid) {
-        const query = "SELECT * FROM chaptersSaved WHERE manhwaid = ? AND userid = ?";
-        const [rows] = await connect.execute(query, [manhwaid, userid]);
-        return rows;
+        try {
+            const query = "SELECT * FROM chaptersSaved WHERE manhwaid = ? AND userid = ?";
+            const [rows] = await connect.execute(query, [manhwaid, userid]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async getSavedManhwas(userid) {
-        const query = `SELECT manhwas.id, title, mid, slug, media, image, content, chapters, chapter, baseurl, manhwas.lastUpdate, status, reading FROM manhwas INNER JOIN chaptersSaved ON chaptersSaved.manhwaid = manhwas.mid WHERE userid = ? ORDER BY manhwas.lastUpdate DESC, chaptersSaved.lastUpdate DESC`;
-        const [rows] = await connect.execute(query, [userid]);
-        return rows;
+        try {
+            const query = `SELECT manhwas.id, title, mid, slug, media, image, content, chapters, chapter, baseurl, manhwas.lastUpdate, status, reading FROM manhwas INNER JOIN chaptersSaved ON chaptersSaved.manhwaid = manhwas.mid WHERE userid = ? ORDER BY manhwas.lastUpdate DESC, chaptersSaved.lastUpdate DESC`;
+            const [rows] = await connect.execute(query, [userid]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async saveLastRun(lastPage, site) {
@@ -132,9 +152,13 @@ class Manhwa {
 
 
     static async patchSaved(mid, uid) {
-        const query = "UPDATE chaptersSaved SET reading = CASE WHEN reading = 0 THEN 1 ELSE 0 END WHERE manhwaid = ? AND userid = ?";
-        const [rows] = await connect.execute(query, [mid, uid]);
-        return rows;
+        try {
+            const query = "UPDATE chaptersSaved SET reading = CASE WHEN reading = 0 THEN 1 ELSE 0 END WHERE manhwaid = ? AND userid = ?";
+            const [rows] = await connect.execute(query, [mid, uid]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async saveManhwaChapters(mid, link, number) {
@@ -153,21 +177,33 @@ class Manhwa {
     }
 
     static async findChapterByMidAndLink(mid, link) {
-        const query = "SELECT * FROM manhwa_chapter WHERE manhwamid = ? AND chapter_link = ?";
-        const [rows] = await connect.execute(query, [mid, link]);
-        return rows;
+        try {
+            const query = "SELECT * FROM manhwa_chapter WHERE manhwamid = ? AND chapter_link = ?";
+            const [rows] = await connect.execute(query, [mid, link]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async findSavedManhwa(mid, uid) {
-        const query = "SELECT * FROM chaptersSaved WHERE manhwaid = ? AND userid = ?";
-        const [rows] = await connect.execute(query, [mid, uid]);
-        return rows;
+        try {
+            const query = "SELECT * FROM chaptersSaved WHERE manhwaid = ? AND userid = ?";
+            const [rows] = await connect.execute(query, [mid, uid]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static async getCurrentChapter(mid, chapter) {
-        const query = "SELECT * FROM manhwa_chapter WHERE manhwamid = ? AND chapter = ?";
-        const [rows] = await connect.execute(query, [mid, chapter]);
-        return rows;
+        try {
+            const query = "SELECT * FROM manhwa_chapter WHERE manhwamid = ? AND chapter = ?";
+            const [rows] = await connect.execute(query, [mid, chapter]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 }
