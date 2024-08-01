@@ -26,7 +26,7 @@
       <span class="visually-hidden">Loading...</span></span
     >
   </div>
-  <div class="row row-cols-1 row-cols-md-2 g-4" id="manhwas"></div>
+  <div class="row" id="manhwas"></div>
 </div>
 <nav aria-label="Page navigation" class="pagination-manhwas">
   <input
@@ -79,11 +79,11 @@
 </nav>
 
 <template id="manhwa-card-template">
-  <div class="col">
+  <div class="col-md-6 mt-2 card-group">
     <div class="card">
       <a href="/manhwa/" class="card-link text-decoration-none text-reset">
         <div class="row g-0 card-height-dis">
-          <div class="col-md-4 h-100">
+          <div class="col-md-4">
             <img
               data-src=""
               class="rounded-start manga-image lazyload"

@@ -1,13 +1,13 @@
 <h1>Latest update</h1>
-<div class="row row-cols-1 row-cols-md-2 g-4" id="manhwas">
+<div class="row" id="manhwas">
   <% for(let manhwa of manhwas){ %>
-  <div class="col">
+  <div class="col-md-6 mt-2 d-flex align-items-stretch">
     <div class="card">
       <a
         href="/manhwa/<%- manhwa.mid %>"
         class="card-link text-decoration-none text-reset">
-        <div class="row g-0 card-height-dis">
-          <div class="col-md-4 h-100">
+        <div class="row card-height-dis">
+          <div class="col-md-4">
             <img
               data-src="manhwaImages/<%- manhwa.image %>"
               class="rounded-start manga-image lazyload"
