@@ -66,11 +66,11 @@ function waitTimer() {
     if (timer == null && (new Date() - new Date(localStorage.getItem('timer'))) / 1000 < 600) {
         let timeSeconds = Math.floor(600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000));
         let timeMinutes = Math.floor((600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000)) / 60);
-        progressDiv.innerHTML = `Time left until refresh available: 0${timeMinutes}:${(timeSeconds - timeMinutes * 60) < 10 ? "0" + (timeSeconds - timeMinutes * 60) : timeSeconds - timeMinutes * 60}`;
+        progressDiv.innerHTML = `Time left until update available: 0${timeMinutes}:${(timeSeconds - timeMinutes * 60) < 10 ? "0" + (timeSeconds - timeMinutes * 60) : timeSeconds - timeMinutes * 60}`;
         timer = setInterval(() => {
             let timeSeconds = Math.floor(600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000));
             let timeMinutes = Math.floor((600 - ((new Date() - new Date(localStorage.getItem('timer'))) / 1000)) / 60);
-            progressDiv.innerHTML = `Time left until refresh available: 0${timeMinutes}:${(timeSeconds - timeMinutes * 60) < 10 ? "0" + (timeSeconds - timeMinutes * 60) : timeSeconds - timeMinutes * 60}`;
+            progressDiv.innerHTML = `Time left until update available: 0${timeMinutes}:${(timeSeconds - timeMinutes * 60) < 10 ? "0" + (timeSeconds - timeMinutes * 60) : timeSeconds - timeMinutes * 60}`;
             if (timeSeconds <= 0) {
                 clearInterval(timer);
                 progressDiv.innerHTML = `Ready to update!`
