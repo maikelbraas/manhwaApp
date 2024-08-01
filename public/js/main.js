@@ -91,8 +91,8 @@ function createCard(manhwas) {
             for (let genreContainer of genreContainers)
                 genreContainer.innerHTML = "";
             for (let genre of manhwas[i].genres) {
-                genrePart.querySelector('.fa-fist-raised').textContent = genre;
                 for (let genreContainer of genreContainers) {
+                    genrePart.querySelector('.fa-fist-raised').textContent = genre;
                     genreContainer.appendChild(genrePart)
                     genrePart = clone.querySelector('.me-1').cloneNode(true);
                 }
