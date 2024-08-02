@@ -86,6 +86,8 @@ input[type=number] {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: '...';
+  max-height: 100px;
+  border-radius: 5px;
 }
 
 .search-manhwa, .pagination-manhwas{
