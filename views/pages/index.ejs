@@ -19,27 +19,29 @@
             <h5 class="card-title text-decoration-underline">
               <%- manhwa.title %>
             </h5>
-            <p class="card-text mb-1">
+            <span class="d-flex phone-col">
               <small class="card-chapter"
                 >Chapters <%- manhwa.chapters %></small
               >
-              |
+              <span class="phone-invis-div px-1">|</span>
               <small class="card-time"
                 >Update: <%- new Date(manhwa.lastUpdate).toLocaleString('nl-NL',
                 { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
                 }).slice(0, -3) %>
               </small>
-              <br />
-              <small class="card-status"
-                >Status: <%- manhwa.status.replace(/\s/g, '') %>
-                <i
-                  class="bi bi-circle-fill <%- manhwa.status.toLowerCase().replace(/\s/g, '') %>"></i
-              ></small>
-              |
-              <small class="card-source"
-                >Source: <%- manhwa.baseurl.split('/')[2].split('.')[0];
-                %></small
-              >
+              </span>
+              <span class="d-flex phone-col">
+                <small class="card-status"
+                  >Status: <%- manhwa.status.replace(/\s/g, '') %>
+                  <i
+                    class="bi bi-circle-fill <%- manhwa.status.toLowerCase().replace(/\s/g, '') %>"></i
+                ></small>
+                <span class="phone-invis-div px-1">|</span>
+                <small class="card-source"
+                  >Source: <%- manhwa.baseurl.split('/')[2].split('.')[0];
+                  %></small
+                >
+              </span>
             </p>
             Description:
             <p class="card-text manhwa-row-content mb-1 h-100">
