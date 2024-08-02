@@ -44,7 +44,10 @@
       if(Array.isArray(message)){ for(let messag of message){ %>
       <div class="alert alert-warning"><%= messag %></div>
       <% }}else { %>
-      <div class="alert alert-primary removePopup"><%= message %></div>
+      <div
+        class="alert alert-primary removePopup position-absolute z-3 mt- top-0 start-50 translate-middle-x">
+        <%= message %>
+      </div>
       <script>
         setTimeout(() => {
           document.querySelector(".removePopup").style.display = "none";
