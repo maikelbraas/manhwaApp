@@ -222,7 +222,7 @@ input[type=number] {
   }
 }
 
-@media only screen AND (min-width: 768px) AND (max-width: 1024px){
+@media only screen AND (min-width: 768px) AND (max-width: 1056px){
   .phone-invis{
     display: none;
   }
@@ -256,10 +256,10 @@ input[type=number] {
 
 @media only screen AND (max-width: 767px){
   .phone-col{
-    flex-direction: column;
+    /* flex-direction: column; */
   }
   .phone-invis-div{
-    display: none;
+    /* display: none; */
   }
   .manga-single-place{
     justify-content: center;
@@ -322,7 +322,7 @@ input[type=number] {
 }
 
 
-@media only screen AND (min-width: 450px) AND (max-width: 940px){
+@media only screen AND (min-width: 760px) AND (max-width: 895px){
 .phone-invis{
   display: none;
 }
@@ -344,5 +344,15 @@ input[type=number] {
 }
 .phone-vis-save{
   display: block;
+}
+}
+
+@media only screen and (max-width: 485px){
+
+.phone-invis-div{
+  display: none;
+}
+.phone-col{
+  flex-direction: column;
 }
 }
