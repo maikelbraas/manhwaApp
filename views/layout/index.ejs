@@ -8,7 +8,171 @@
     <meta
       name="google-site-verification"
       content="JtsQ5nRTczPakit51XXCEg4Lxxp-fkcE4fuGvq6zJXw" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <style>
+      .nav-link {
+        display: block;
+        padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+        font-size: var(--bs-nav-link-font-size);
+        font-weight: var(--bs-nav-link-font-weight);
+        color: var(--bs-nav-link-color);
+        text-decoration: none;
+        background: 0 0;
+        border: 0;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .nav-link {
+          transition: none;
+        }
+      }
+      .nav-link:focus,
+      .nav-link:hover {
+        color: var(--bs-nav-link-hover-color);
+      }
+      .nav-link:focus-visible {
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+      .nav-link:disabled {
+        color: var(--bs-nav-link-disabled-color);
+        pointer-events: none;
+        cursor: default;
+      }
+      .navbar {
+        --bs-navbar-padding-x: 0;
+        --bs-navbar-padding-y: 0.5rem;
+        --bs-navbar-color: rgba(var(--bs-emphasis-color-rgb), 0.65);
+        --bs-navbar-hover-color: rgba(var(--bs-emphasis-color-rgb), 0.8);
+        --bs-navbar-disabled-color: rgba(var(--bs-emphasis-color-rgb), 0.3);
+        --bs-navbar-active-color: rgba(var(--bs-emphasis-color-rgb), 1);
+        --bs-navbar-brand-padding-y: 0.3125rem;
+        --bs-navbar-brand-margin-end: 1rem;
+        --bs-navbar-brand-font-size: 1.25rem;
+        --bs-navbar-brand-color: rgba(var(--bs-emphasis-color-rgb), 1);
+        --bs-navbar-brand-hover-color: rgba(var(--bs-emphasis-color-rgb), 1);
+        --bs-navbar-nav-link-padding-x: 0.5rem;
+        --bs-navbar-toggler-padding-y: 0.25rem;
+        --bs-navbar-toggler-padding-x: 0.75rem;
+        --bs-navbar-toggler-font-size: 1.25rem;
+        --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        --bs-navbar-toggler-border-color: rgba(
+          var(--bs-emphasis-color-rgb),
+          0.15
+        );
+        --bs-navbar-toggler-border-radius: var(--bs-border-radius);
+        --bs-navbar-toggler-focus-width: 0.25rem;
+        --bs-navbar-toggler-transition: box-shadow 0.15s ease-in-out;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+      }
+      .navbar-brand {
+        padding-top: var(--bs-navbar-brand-padding-y);
+        padding-bottom: var(--bs-navbar-brand-padding-y);
+        margin-right: var(--bs-navbar-brand-margin-end);
+        font-size: var(--bs-navbar-brand-font-size);
+        color: var(--bs-navbar-brand-color);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .navbar-brand:focus,
+      .navbar-brand:hover {
+        color: var(--bs-navbar-brand-hover-color);
+      }
+      .navbar-nav {
+        --bs-nav-link-padding-x: 0;
+        --bs-nav-link-padding-y: 0.5rem;
+        --bs-nav-link-font-weight: ;
+        --bs-nav-link-color: var(--bs-navbar-color);
+        --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
+        --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+      }
+      .navbar-collapse {
+        flex-basis: 100%;
+        flex-grow: 1;
+        align-items: center;
+      }
+      .navbar-toggler {
+        padding: var(--bs-navbar-toggler-padding-y)
+          var(--bs-navbar-toggler-padding-x);
+        font-size: var(--bs-navbar-toggler-font-size);
+        line-height: 1;
+        color: var(--bs-navbar-color);
+        background-color: transparent;
+        border: var(--bs-border-width) solid
+          var(--bs-navbar-toggler-border-color);
+        border-radius: var(--bs-navbar-toggler-border-radius);
+        transition: var(--bs-navbar-toggler-transition);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .navbar-toggler {
+          transition: none;
+        }
+      }
+      .navbar-toggler:hover {
+        text-decoration: none;
+      }
+      .navbar-toggler:focus {
+        text-decoration: none;
+        outline: 0;
+        box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width);
+      }
+      .navbar-toggler-icon {
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+        background-image: var(--bs-navbar-toggler-icon-bg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+      }
+      @media (min-width: 992px) {
+        .navbar-expand-lg {
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+        }
+        .navbar-expand-lg .navbar-nav {
+          flex-direction: row;
+        }
+        .navbar-expand-lg .navbar-nav .nav-link {
+          padding-right: var(--bs-navbar-nav-link-padding-x);
+          padding-left: var(--bs-navbar-nav-link-padding-x);
+        }
+        .navbar-expand-lg .navbar-collapse {
+          display: flex !important;
+          flex-basis: auto;
+        }
+        .navbar-expand-lg .navbar-toggler {
+          display: none;
+        }
+      }
+      .navbar-dark {
+        --bs-navbar-color: rgba(255, 255, 255, 0.55);
+        --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
+        --bs-navbar-disabled-color: rgba(255, 255, 255, 0.25);
+        --bs-navbar-active-color: #fff;
+        --bs-navbar-brand-color: #fff;
+        --bs-navbar-brand-hover-color: #fff;
+        --bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.1);
+        --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+      [data-bs-theme="dark"] .navbar-toggler-icon {
+        --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+    </style>
+    <link href="/css/bootstrap.min.css" rel="preload"
+    onload="this.onload=null;this.rel='stylesheet'" as="style"" />
+    <noscript><link rel="stylesheet" href="/css/bootstrap.min.css" /></noscript>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
