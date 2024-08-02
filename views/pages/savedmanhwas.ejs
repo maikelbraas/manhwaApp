@@ -18,7 +18,7 @@
       style="width: 0%"></div>
   </div>
 </template>
-<div class="accordion mb-2" id="siteUpdates">
+<div class="accordion mb-2" id="ongoing">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOngoing">
       <button
@@ -35,9 +35,9 @@
       id="collapseOngoing"
       class="accordion-collapse collapse mt-2 show"
       aria-labelledby="headingOngoing"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#ongoing">
       <div class="manhwa-rows" tabindex="0">
-        <div class="devider card-group" id="hiatus">
+        <div class="devider card-group" id="ongoing">
           <% for(let manhwa of manhwas){ if(manhwa.chapter.toFixed(1) !=
           manhwa.chapters.toFixed(1) && manhwa.chapter != 1 && manhwa.reading !=
           1){ %> <%- include('parts/card.ejs', {manhwa}) %> <% manhwa.used =
@@ -47,7 +47,7 @@
     </div>
   </div>
 </div>
-<div class="accordion mb-2" id="siteUpdates">
+<div class="accordion mb-2" id="hiatus">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingHiatus">
       <button
@@ -64,7 +64,7 @@
       id="collapseHiatus"
       class="accordion-collapse collapse mt-2 show"
       aria-labelledby="headingHiatus"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#hiatus">
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="hiatus">
           <% for(let manhwa of manhwas){
@@ -77,7 +77,7 @@
     </div>
   </div>
 </div>
-<div class="accordion mb-2" id="siteUpdates">
+<div class="accordion mb-2" id="try">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingTry">
       <button
@@ -94,7 +94,7 @@
       id="collapseTry"
       class="accordion-collapse collapse mt-2 show"
       aria-labelledby="headingTry"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#try">
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="try">
           <% for(let manhwa of manhwas){ if(manhwa.chapter == 1 &&
@@ -105,7 +105,7 @@
     </div>
   </div>
 </div>
-<div class="accordion mb-2" id="siteUpdates">
+<div class="accordion mb-2" id="completed">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingCompleted">
       <button
@@ -122,7 +122,7 @@
       id="collapseCompleted"
       class="accordion-collapse collapse mt-2 show"
       aria-labelledby="headingCompleted"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#completed">
       <div class="manhwa-rows tabindex="0">
         <div class="devider card-group" id="completed">
           <% for(let manhwa of manhwas){
@@ -135,7 +135,7 @@
     </div>
   </div>
 </div>
-<div class="accordion mb-2" id="siteUpdates">
+<div class="accordion mb-2" id="dropped">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingDropped">
       <button
@@ -152,7 +152,7 @@
       id="collapseDropped"
       class="accordion-collapse collapse mt-2 show"
       aria-labelledby="headingDropped"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#dropped">
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="dropped">
           <% for(let manhwa of manhwas){
@@ -164,7 +164,7 @@
     </div>
   </div>
 </div>
-<div class="accordion mb-2" id="siteUpdates">
+<div class="accordion mb-2" id="readLater">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingLater">
       <button
@@ -181,7 +181,7 @@
       id="collapseLater"
       class="accordion-collapse collapse mt-2 show"
       aria-labelledby="headingLater"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#readLater">
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="later">
           <% for(let manhwa of manhwas){ if(manhwa.reading == 1 &&
@@ -192,7 +192,7 @@
     </div>
   </div>
 </div>
-<div class="accordion mb-2" id="siteUpdates">
+<div class="accordion mb-2" id="uptodate">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingUpToDate">
       <button
@@ -209,7 +209,7 @@
       id="collapseUpToDate"
       class="accordion-collapse collapse mt-2 show"
       aria-labelledby="headingUpToDate"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#uptodate">
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="uptodate">
           <% for(let manhwa of manhwas){ if(manhwa.chapter.toFixed(1) ==
