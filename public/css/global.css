@@ -6,6 +6,15 @@
   text-overflow: ellipsis;
 }
 
+.card-title-elip{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  height: auto;
+}
+
 .phone-invis-save{
   display: block;
 }
@@ -82,7 +91,7 @@ input[type=number] {
 
 .manhwa-row-content{
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: '...';
@@ -234,6 +243,9 @@ input[type=number] {
     place-content: center;
     margin-bottom: 0;
   }
+  .card-title-elip{
+    /* height: 2.8vh; */
+  }
 }
 
 @media only screen AND (max-width: 767px){
@@ -317,14 +329,14 @@ input[type=number] {
 .phone-col{
   flex-direction: column;
 }
-}
 
-@media only screen AND (min-width: 450px) AND (max-width: 940px){
-  
-  .phone-invis-save{
-    display: none;
-  }
-  .phone-vis-save{
-    display: block;
-  }
+.card-title-elip{
+  /* height: 2.8vh */
+}
+.phone-invis-save{
+  display: none;
+}
+.phone-vis-save{
+  display: block;
+}
 }
