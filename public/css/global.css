@@ -223,6 +223,12 @@ input[type=number] {
 }
 
 @media only screen AND (min-width: 768px) AND (max-width: 1024px){
+  .phone-invis{
+    display: none;
+  }
+  .phone-vis{
+    display: block;
+  }
   .container{
     min-width: 100%;
   }
