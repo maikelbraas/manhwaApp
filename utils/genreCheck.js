@@ -17,7 +17,8 @@ export default async function genreCheck(req, res, next, manhwa) {
     async function createGenreManhwa(manhwa) {
         for (let genre of manhwa.genres) {
             let [genreid] = await genreModel.findGenreByName(genre);
-            await genreModel.createGenreManhwa(manhwa.mid, genreid.id);
+            if (!await genreModel.checkIfGenreManhwaExists(manhwa.mid, genreid.id))
+                await genreModel.createGenreManhwa(manhwa.mid, genreid.id);
         }
     }
 }

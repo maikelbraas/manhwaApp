@@ -20,6 +20,16 @@ class Genre {
         return result.insertId;
     }
 
+    static async checkIfGenreManhwaExists(manhwaid, genreid) {
+
+        const query = "SELECT * FROM manhwa_genre WHERE manhwaid = ? AND genreid = ?";
+        const [rows] = await connect.execute(query, [manhwaid, genreid]);
+        if (rows.length > 0)
+            return true;
+        else
+            return false;
+    }
+
     static async getAllGenresOfManhwa(id) {
         const query =
             "SELECT name FROM manhwa_genre JOIN manhwas ON manhwaid = mid JOIN genres ON genreid = genres.id WHERE manhwaid = ?";

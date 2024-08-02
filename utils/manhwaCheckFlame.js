@@ -47,7 +47,6 @@ export default async function manhwaCheckFlame(req, res, next) {
                 //Get genres
                 let genreSlice = jsonSingle.slice(jsonSingle.search('class="mgen"'), jsonSingle.search('<div class="summary">'));
                 genreSlice = genreSlice.split('">')
-                genreSlice.splice(0, 2)
                 let genres = [];
                 genreSlice.forEach(genre => genres.push(genre.split('</')[0]));
                 //Get description
