@@ -318,10 +318,10 @@ input[type=number] {
 
 @media only screen AND (min-width: 450px) AND (max-width: 940px){
 .phone-invis{
-  display: block;
+  display: none;
 }
 .phone-vis{
-  display: none;
+  display: block;
 }
 .phone-invis-div{
   display: none;
