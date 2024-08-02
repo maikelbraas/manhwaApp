@@ -5,6 +5,10 @@
     gap: 10px;
     text-overflow: ellipsis;
   }
+
+  .admin-rows{
+    height: auto;
+  }
   
   .card-title-elip{
     overflow: hidden;
