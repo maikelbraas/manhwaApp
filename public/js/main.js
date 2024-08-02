@@ -83,7 +83,14 @@ function createCard(manhwas) {
             clone.querySelector('.manhwa-row-content').innerHTML = manhwas[i].content;
             clone.querySelector('.manga-image').dataset.src = "manhwaImages/" + manhwas[i].image;
             clone.querySelector('.card-chapter').textContent += " " + manhwas[i].chapters;
-            clone.querySelector('.card-status').innerHTML += " " + manhwas[i].status + ` <i class="bi bi-circle-fill ${manhwas[i].status.toLowerCase().replace(/\s/g, "")}"></i>`;
+            clone.querySelector('.card-status').innerHTML += " " + manhwas[i].status + ` <i class="${manhwas[i].status.toLowerCase().replace(/\s/g, "")}"><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="currentColor"
+                    class="bi bi-circle-fill"
+                    viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8" /></svg></i>`;
             clone.querySelector('.card-source').textContent += " " + manhwas[i].baseurl.split('/')[2].split('.')[0];
             clone.querySelector('.card-time').textContent += " " + new Date(manhwas[i].lastUpdate).toLocaleString('nl-NL', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).slice(0, -3);
             let genreContainers = clone.querySelectorAll('.genres-manhwa');

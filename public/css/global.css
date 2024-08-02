@@ -183,6 +183,12 @@ input[type=number] {
       max-width: 500px;
       margin: 2rem auto;
   }
+  .icon-round{
+    background-image: url('/icons/circle-fill.svg');
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+  }
   .ongoing{
     color: green;
     font-size: 10px;
