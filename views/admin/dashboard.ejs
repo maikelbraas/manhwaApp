@@ -14,42 +14,43 @@
       </p>
     </div>
     <div class="col">
-      <a href="/admin/newUpdate"><button>new update</button></a>
+      <a href="/admin/newUpdate"><button class="mb-3">new update</button></a>
+      <div class="admin-rows d-flex">
+        <div class="card mb-3" style="max-width: 18rem">
+          <button id="startCreate">
+            <div class="card-header">Get new manhwas</div>
+          </button>
+        </div>
+        <div class="card mb-3 m-auto" style="max-width: 18rem">
+          <button id="startUpdate">
+            <div class="card-header">Update manhwa chapters</div>
+          </button>
+        </div>
+        <div class="card mb-3 m-auto" style="max-width: 18rem">
+          <button id="startBuild">
+            <div class="card-header">Build json file</div>
+          </button>
+        </div>
+        <div class="card mb-3 m-auto" style="max-width: 18rem">
+          <button id="findSpecific">
+            <div class="card-header">Find specific</div>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="admin-rows d-flex">
-    <div class="card mb-3 m-auto" style="max-width: 18rem">
-      <button id="startCreate">
-        <div class="card-header">Get new manhwas</div>
-      </button>
-    </div>
-    <div class="card mb-3 m-auto" style="max-width: 18rem">
-      <button id="startUpdate">
-        <div class="card-header">Update manhwa chapters</div>
-      </button>
-    </div>
-    <div class="card mb-3 m-auto" style="max-width: 18rem">
-      <button id="startBuild">
-        <div class="card-header">Build json file</div>
-      </button>
-    </div>
-    <div class="card mb-3 m-auto" style="max-width: 18rem">
-      <button id="findSpecific">
-        <div class="card-header">Find specific</div>
-      </button>
-    </div>
+    <h1>Fetch Progress</h1>
+    <div id="progress"></div>
   </div>
-  <h1>Fetch Progress</h1>
-  <div id="progress"></div>
+  <template id="progress-site">
+    <div class="progress">
+      <div
+        class="progress-bar progress-bar-striped progress-bar-animated"
+        role="progressbar"
+        aria-valuenow="10"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="width: 0%"></div>
+    </div>
+  </template>
 </div>
-<template id="progress-site">
-  <div class="progress">
-    <div
-      class="progress-bar progress-bar-striped progress-bar-animated"
-      role="progressbar"
-      aria-valuenow="10"
-      aria-valuemin="0"
-      aria-valuemax="100"
-      style="width: 0%"></div>
-  </div>
-</template>
