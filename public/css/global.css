@@ -127,8 +127,8 @@ input[type=number] {
       /* max-height: 280px !important; */
     }
     .manga-single-place{
-      place-content: center;
-      text-align: center;
+      display: flex;
+      width: 100%;
     }
     .card-title {
       color: #ffffff !important;
@@ -228,7 +228,12 @@ input[type=number] {
 }
 
 @media only screen AND (max-width: 767px){
-  
+  .manga-single-place{
+    justify-content: center;
+  }
+  .manga-card{
+    flex-direction: column;
+  }
   .phone-invis-save{
     display: none;
   }

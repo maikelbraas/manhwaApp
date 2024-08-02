@@ -39,7 +39,7 @@
 
   <body class="d-flex flex-column vh-100">
     <header><%- include('./partials/header') %></header>
-    <main class="container mb-4">
+    <main class="container mb-4 flex-grow-1">
       <% const message = getFlashMessage(); if(message){
       if(Array.isArray(message)){ for(let messag of message){ %>
       <div class="alert alert-warning"><%= messag %></div>
