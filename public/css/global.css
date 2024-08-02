@@ -13,6 +13,12 @@
 .phone-vis-save{
   display: none;
 }
+.card-text-single{
+  overflow-y: scroll;
+  height: 150px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 .phone-vis{
   display: none;
