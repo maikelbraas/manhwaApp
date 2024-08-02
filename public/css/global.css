@@ -155,9 +155,9 @@ input[type=number] {
       transition: transform 0.3s;
       /* height: 280px !important; */
   }
-  .card:hover {
+  /* .card:hover {
       transform: translateY(-5px);
-  }
+  } */
   .card-text {
       color: #b0b0b0;
   }

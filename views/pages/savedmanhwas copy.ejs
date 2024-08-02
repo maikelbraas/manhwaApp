@@ -220,4 +220,48 @@
     </div>
   </div>
 </div>
+<%/* %>
+<label class="devider-label btn btn-dark" for="">Reading - </label>
+<div class="devider" id="ongoing">
+  <% for(let manhwa of manhwas){ if(manhwa.chapter.toFixed(1) !=
+  manhwa.chapters.toFixed(1) && manhwa.chapter != 1 && manhwa.reading != 1){ %>
+  <%- include('parts/card.ejs', {manhwa}) %> <% manhwa.used = true;}} %>
+</div>
+<label class="devider-label btn btn-dark" for="">Hiatus - </label>
+<div class="devider card-group" id="hiatus">
+  <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
+  '') == 'hiatus' && manhwa.chapter.toFixed(1) == manhwa.chapters.toFixed(1) &&
+  !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <% manhwa.used =
+  true;}} %>
+</div>
+<label class="devider-label btn btn-dark" for="">Try - </label>
+<div class="devider" id="hiatus">
+  <% for(let manhwa of manhwas){ if(manhwa.chapter == 1 && !manhwa.used){ %> <%-
+  include('parts/card.ejs', {manhwa}) %> <% manhwa.used = true;}} %>
+</div>
+<label class="devider-label btn btn-dark" for="">Completed - </label>
+<div class="devider" id="completed">
+  <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
+  '') == 'completed' && manhwa.chapter.toFixed(1) != manhwa.chapters.toFixed(1)
+  && !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <% manhwa.used
+  = true;}} %>
+</div>
+<label class="devider-label btn btn-dark" for="">Dropped - </label>
+<div class="devider" id="dropped">
+  <% for(let manhwa of manhwas){ if(manhwa.status.toLowerCase().replace(/\s/g,
+  '') == 'dropped' && !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa})
+  %> <% manhwa.used = true;}} %>
+</div>
+<label class="devider-label btn btn-dark" for="">Later - </label>
+<div class="devider" id="hiatus">
+  <% for(let manhwa of manhwas){ if(manhwa.reading == 1 && !manhwa.used){ %> <%-
+  include('parts/card.ejs', {manhwa}) %> <% manhwa.used = true;}} %>
+</div>
+<label class="devider-label btn btn-dark" for="">Up to date - </label>
+<div class="devider" id="uptodate">
+  <% for(let manhwa of manhwas){ if(manhwa.chapter.toFixed(1) ==
+  manhwa.chapters.toFixed(1) && !manhwa.used){ %> <%- include('parts/card.ejs',
+  {manhwa}) %> <% manhwa.used = true;}} %>
+</div>
+<% */ %>
 <script src="/js/saved.js" type="module"></script>

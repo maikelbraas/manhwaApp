@@ -1,6 +1,7 @@
 let timer = null;
 const progressDiv = document.getElementById("progress");
 waitTimer();
+checkIfHiddenOrShow();
 document
     .querySelectorAll(".input-number")
     .forEach((x) => (x.autofocus = false));
@@ -25,10 +26,17 @@ document.querySelector('.manhwa-rows').addEventListener('click', async (event) =
             }
         }
     }
-    if (event.target.classList == "devider-label") {
-        getComputedStyle(event.target.nextElementSibling).display == 'grid' ? event.target.nextElementSibling.style.display = "none" : event.target.nextElementSibling.style.display = "grid";
-    }
 });
+
+function checkIfHiddenOrShow() {
+    if (isUserUsingMobile()) {
+        const labels = document.querySelectorAll('.accordion');
+        for (let i = 1; i < labels.length; i++) {
+            labels[i].querySelector('.accordion-button').classList.add('collapsed');
+            labels[i].querySelector('.accordion-collapse').classList.remove('show');
+        }
+    }
+}
 
 document.getElementById("updateSaved").addEventListener("click", () => {
     if ((new Date() - new Date(localStorage.getItem('timer'))) / 1000 > 600) {
@@ -124,4 +132,30 @@ function buildJson(refresh) {
         progressDiv.innerHTML += "<br>Error occurred";
         eventSource.close();
     };
+}
+
+function isUserUsingMobile() {
+
+    // User agent string method
+    let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    // Screen resolution method
+    if (!isMobile) {
+        let screenWidth = window.screen.width;
+        let screenHeight = window.screen.height;
+        isMobile = (screenWidth < 768 || screenHeight < 768);
+    }
+
+    // Touch events method
+    if (!isMobile) {
+        isMobile = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+    }
+
+    // CSS media queries method
+    if (!isMobile) {
+        let bodyElement = document.getElementsByTagName('body')[0];
+        isMobile = window.getComputedStyle(bodyElement).getPropertyValue('content').indexOf('mobile') !== -1;
+    }
+
+    return isMobile
 }
