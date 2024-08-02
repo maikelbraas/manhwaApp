@@ -36,7 +36,9 @@
           >Source: <%- manhwa.baseurl.split('/')[2].split('.')[0] %>
         </small></span
       >
-      <p class="card-text manhwa-row-content"><%- manhwa.content %></p>
+      <p class="card-text manhwa-row-content text-break">
+        <%- manhwa.content %>
+      </p>
       <div class="w-100 g-0 p-1 phone-invis-save">
         <form
           action="/auth/chapter/<%- manhwa.mid %>"
