@@ -82,7 +82,8 @@ function createCard(manhwas) {
             clone.querySelector('.card-title').innerHTML = manhwas[i].title;
             clone.querySelector('.manhwa-row-content').innerHTML = manhwas[i].content;
             clone.querySelector('.manga-image').dataset.src = "manhwaImages/" + manhwas[i].image;
-            clone.querySelector('.card-chapter').textContent += " " + manhwas[i].chapters;
+            let chapters = manhwas[i].chapters % 1 !== 0 ? manhwas[i].chapters.toFixed(1) : manhwas[i].chapters;
+            clone.querySelector('.card-chapter').textContent += " " + chapters;
             clone.querySelector('.card-status').innerHTML += " " + manhwas[i].status + ` <i class="${manhwas[i].status.toLowerCase().replace(/\s/g, "")}">&#9679;</i>`;
             clone.querySelector('.card-source').textContent += " " + manhwas[i].baseurl.split('/')[2].split('.')[0];
             clone.querySelector('.card-time').textContent += " " + new Date(manhwas[i].lastUpdate).toLocaleString('nl-NL', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).slice(0, -3);

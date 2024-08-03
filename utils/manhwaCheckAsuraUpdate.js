@@ -98,7 +98,7 @@ export default async function manhwaCheckAsuraUpdate(req, res, next) {
 
     async function checkUpdate(fetchManhwa, existManhwa) {
         // console.log(fetchManhwa.chapters, existManhwa[0].chapters);
-        if (fetchManhwa.chapters == existManhwa[0].chapters && fetchManhwa.status == existManhwa[0].status)
+        if (parseFloat(fetchManhwa.chapters).toFixed(1) == parseFloat(existManhwa[0].chapters).toFixed(1) && fetchManhwa.status == existManhwa[0].status)
             return false;
         return fetchManhwa;
     }

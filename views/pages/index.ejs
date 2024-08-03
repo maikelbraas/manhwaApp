@@ -21,7 +21,8 @@
             </h5>
             <span class="d-flex phone-col">
               <small class="card-chapter"
-                >Chapters <%- manhwa.chapters %></small
+                >Chapters <%- manhwa.chapters % 1 !== 0
+                ?manhwa.chapters.toFixed(1) : manhwa.chapters %></small
               >
               <span class="phone-invis-div px-1">|</span>
               <small class="card-time"

@@ -80,7 +80,7 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
 
     async function checkUpdate(fetchManhwa, existManhwa) {
         // console.log(fetchManhwa.chapters, existManhwa[0].chapters);
-        if (fetchManhwa.chapters == existManhwa.chapters && fetchManhwa.status == existManhwa.status)
+        if (parseFloat(fetchManhwa.chapters).toFixed(1) == parseFloat(existManhwa.chapters).toFixed(1) && fetchManhwa.status == existManhwa.status)
             return false;
         return fetchManhwa;
     }
