@@ -7,7 +7,7 @@ document
     .forEach((x) => (x.autofocus = false));
 
 
-document.querySelector('.manhwa-rows').addEventListener('click', async (event) => {
+document.querySelector('.manhwa-buttons-action').addEventListener('click', async (event) => {
     if (event.target.id.includes('reaper') || event.target.id.includes('asura') || event.target.id.includes('flame') || event.target.id.includes('mgdemon')) {
         if (event.target.value == "remove") {
             if (confirm('Are you sure you want to delete the saved manhwa?')) {
