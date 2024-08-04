@@ -19,8 +19,9 @@ router.get('/manhwas/:page', async (req, res, next) => {
 
     if (req.params.page > 0 && req.params.page <= Math.ceil(global.manhwas.totalManhwas / 6)) {
         let manhwas = await manhwaController.getManhwas(req, res, next);
-        res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.params.page, totalManhwas: manhwas[0].totalManhwas });
+        return res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.params.page, totalManhwas: manhwas[0].totalManhwas });
     }
+    return res.redirect('/manhwas/1');
 });
 
 router.get('/api/jsonWrite', async (req, res, next) => {
