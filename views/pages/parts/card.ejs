@@ -110,6 +110,7 @@
       value="later">
       <%- manhwa.reading == 0 ? "Read Later" : "Start reading" %>
     </button>
+    <% if(manhwa.reading == 0){ %>
     <a
       href="<%- manhwa.link %>"
       class="col btn btn-primary w-100"
@@ -122,5 +123,6 @@
       target="_blank"
       >Next Chapter</a
     >
+    <% } %>
   </div>
 </div>
