@@ -27,6 +27,7 @@ const app = express();
 let visitorsTotal = 0;
 let visitedPages = [];
 let autoFetchInter = null;
+global.manhwas;
 
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs')
@@ -41,13 +42,14 @@ app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counte
 app.use(flashMessage);
 initializePassport(app);
 
-
-
-
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     req.session.counter = counters;
     req.session.visitorsTotal = visitorsTotal;
+    if (global.manhwas) {
+        res.locals.manhwasSearch = global.manhwas.manhwas;
+        res.locals.totalManhwas = global.manhwas.totalManhwas;
+    }
     if (req.headers.referer != undefined && !req.headers.referer.includes('login'))
         visitedPages.push(req.headers.referer);
     req.session.visitedPages = visitedPages;

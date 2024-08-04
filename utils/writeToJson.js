@@ -9,6 +9,7 @@ export default async function writeToJson(manhwaAsura, manhwaReaper) {
         const manhwasData = jsonData.concat(manhwas);
         fs.writeFile('public/json/manhwas.json', JSON.stringify(manhwasData, null, 2), 'utf8', (err) => {
             if (err) throw err
+
         });
     });
 

@@ -91,6 +91,17 @@ class Manhwa {
         }
     }
 
+
+    static async getAllManhwasLimit(page) {
+        try {
+            const query = `SELECT mid, title, content, slug, chapters, baseurl, lastUpdate, status, COUNT(id) OVER() as totalManhwas  FROM manhwas WHERE status != 'Dropped' ORDER BY title ASC LIMIT ? OFFSET ?`;
+            const [rows] = await connect.execute(query, [6, (page * 6 - 6)]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     static async getManhwa(id) {
         try {
             const query = "SELECT * FROM manhwas WHERE id = ?";

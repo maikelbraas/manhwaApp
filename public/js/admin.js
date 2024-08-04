@@ -42,7 +42,8 @@ document.getElementById("startUpdate").addEventListener("click", () => {
             progressDiv.innerHTML +=
                 "<br>Fetch completed! Updated rows: " + data.updatedRows;
             eventSource.close();
-            buildJson();
+            if (data.updatedRows > 0)
+                buildJson();
         }
     };
 
@@ -88,7 +89,9 @@ document.getElementById("startCreate").addEventListener("click", () => {
             progressDiv.innerHTML +=
                 "<br>Fetch completed! Added rows: " + data.createdRows;
             eventSource.close();
-            buildJson();
+
+            if (data.updatedRows > 0)
+                buildJson();
         }
     };
 
@@ -107,7 +110,7 @@ function buildJson() {
     const progressDiv = document.getElementById("progress");
     createBar("json-build");
     const asura = document.getElementById('json-build');
-    const eventSource = new EventSource("/admin/api/jsonWrite/");
+    const eventSource = new EventSource("/api/jsonWrite");
 
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -165,7 +168,9 @@ document.getElementById("findSpecific").addEventListener("click", () => {
                     progressDiv.innerHTML += `<br> ${part}: ${JSON.parse(data.manhwa)[part]}`;
                 }
                 eventSource.close();
-                buildJson();
+
+                if (data.updatedRows > 0)
+                    buildJson();
             }
             if (data.error) {
                 progressDiv.innerHTML +=

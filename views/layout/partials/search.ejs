@@ -1,0 +1,73 @@
+<div
+  class="manhwa-search-container position-absolute"
+  style="
+    z-index: 2;
+    top: 80px;
+    width: 400px;
+    right: 20px;
+    height: 500px !important;
+    overflow-y: scroll;
+    background-color: #121212;
+  ">
+  <div
+    class="loading-spinner"
+    style="display: none; position: relative; z-index: 2">
+    <span class="spinner-border" style="margin-top: -3rem">
+      <span class="visually-hidden">Loading...</span></span
+    >
+  </div>
+  <div
+    class="card-group position-absolute admin-rows"
+    style="
+      z-index: 2;
+      max-height: 500px !important;
+      overflow-y: scroll;
+      background-color: #121212;
+      display: none;
+    "
+    id="manhwas-search"></div>
+</div>
+
+<template id="manhwa-card-template">
+  <a
+    href="/manhwa/"
+    class="card-link text-decoration-none text-reset w-100"
+    style="">
+    <div class="card h-100" style="border: 1px solid #c1c1c1">
+      <div class="g-0 d-flex h-100">
+        <div class="d-flex flex-column">
+          <img
+            data-src=""
+            class="rounded-start manga-image m-auto lazyload"
+            style="width: 100px !important; height: auto !important"
+            alt=""
+            loading="lazy" />
+          <!-- <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p> -->
+        </div>
+        <div class="card-body pb-0 d-flex flex-column h-100">
+          <h5 class="card-title card-title-elip text-decoration-underline"></h5>
+          <span class="d-flex phone-col">
+            <small class="card-chapter">Chapters </small>
+            <span class="phone-invis-div px-1">|</span>
+            <small class="card-status">Status </small>
+          </span>
+          <div class="gap-2 p-0 g-0 mb-1 w-100">
+            Genres:
+            <div class="genres-manhwa">
+              <span class="badge genre-badge me-1 mb-1"
+                ><i class="fas fa-fist-raised"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="gap-2 p-1 g-0 w-100 phone-vis">
+        <div class="genres-manhwa d-flex flex-wrap">
+          <span class="badge genre-badge me-1 mb-1"
+            ><i class="fas fa-fist-raised"></i>
+          </span>
+        </div>
+      </div> -->
+    </div>
+  </a>
+</template>

@@ -3,10 +3,15 @@
 <script src="/js/jquery-slim.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/lazysizes.min.js"></script>
+<script src="/js/search.js" type="module"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", (event) => {
-    window.scrollTo(0, 1);
-  });
+  let manhwas = <%- JSON.stringify(manhwasSearch) %>
+  console.log(JSON.stringify(manhwas));
+  localStorage.setItem("manhwas", JSON.stringify(manhwas));
+  //document.addEventListener("DOMContentLoaded", (event) => {
+    //window.scrollTo(0, 1);
+  //});
 </script>
 <footer class="bg-dark mt-auto align-items-center d-flex row py-2 me-0">
   <div class="row col-md-6 align-items-center">

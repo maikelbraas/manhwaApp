@@ -70,7 +70,8 @@ document.getElementById("updateSaved").addEventListener("click", () => {
                 progressDiv.innerHTML +=
                     `<br>Fetch completed! Updated rows: ${data.updatedRows} ${data.updatedRows > 0 ? " Refresh required, reloading in 2 seconds." : " No refresh required."}`;
                 eventSource.close();
-                buildJson(data.updatedRows);
+                if (data.updatedRows > 0)
+                    buildJson(data.updatedRows);
             }
         };
 

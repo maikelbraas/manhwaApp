@@ -17,17 +17,6 @@ import downloadImage from '../utils/downloadImage.js';
 
 class Manhwa {
     static async checkInsert(req, res, next) {
-        // let manhwas = await manhwaCheck(req, res, next);
-        // if (manhwas.length > 0) {
-        //     for (let manhwa of manhwas) {
-        //         await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-        //         await genreCheck(req, res, next, manhwa);
-        //         for (let chapter of manhwa.manhwaChapters) {
-        //             await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-        //         }
-        //     }
-        // }
-        console.log('running');
         let manhwasReaper = await manhwaCheckReaper(req, res, next);
         // let manhwasReaper = [];
         if (manhwasReaper.length > 0) {
@@ -59,18 +48,7 @@ class Manhwa {
     }
 
     static async checkUpdate(req, res, next) {
-        // let manhwas = [];
-        // let manhwas = await manhwaCheckAsuraUpdate(req, res, next);
-        // if (manhwas.length > 0) {
-        //     for (let manhwa of manhwas) {
-        //         await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-        //         for (let chapter of manhwa.manhwaChapters) {
-        //             await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-        //         }
-        //     }
-        // }
         // let manhwasReaper = [];
-        console.log('running');
         let manhwasReaper = await manhwaCheckReaperUpdate(req, res, next);
         if (manhwasReaper.length > 0) {
             for (let manhwa of manhwasReaper) {
@@ -142,10 +120,12 @@ class Manhwa {
                 res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
         }
         await buildJson(manhwas);
-        req.session.manhwas = manhwas;
+        global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
         req.session.save();
-        if (res != null)
+        if (res != null) {
             res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);
+            res.end();
+        }
         return;
     }
 
@@ -154,10 +134,16 @@ class Manhwa {
     }
 
     static async getManhwas(req, res, next) {
-        if (!req.session.hasOwnProperty('manhwas')) {
-            req.session.manhwas = await manhwaModel.getAllManhwas();
+        // if (!req.session.hasOwnProperty('manhwas')) {
+        //     req.session.manhwas = await manhwaModel.getAllManhwas();
+        // }
+        // return req.session.manhwas;
+        let manhwas = await manhwaModel.getAllManhwasLimit(req.params.page);
+        for (let manhwa of manhwas) {
+            let genres = await genreModel.getAllGenresOfManhwa(manhwa.mid);
+            manhwa.genres = genres;
         }
-        return req.session.manhwas;
+        return manhwas;
     }
 
     static async getManhwa(req, res, next) {
