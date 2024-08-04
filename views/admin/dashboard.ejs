@@ -7,9 +7,9 @@
         <% let visitors = 0; let visitorsMob = 0; for(let count in counter){
         if(count.includes('new-visitors')){ %> <% count.includes('mobile') ?
         visitorsMob += parseInt(counter[count]) : visitors +=
-        parseInt(counter[count]) %> <%- `<br />Total visitors
+        parseInt(counter[count])} %> <%- `<br />Total visitors
         ${count.includes('mobile') ? 'mobile: ' + visitorsMob : 'desktop: ' +
-        visitors}` %> <% }} %> <%- `<br />Total visitors non-unique:
+        visitors}` %> <% } %> <%- `<br />Total visitors non-unique:
         ${visitorsTotal}` %>
       </p>
     </div>
