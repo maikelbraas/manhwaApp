@@ -105,7 +105,7 @@
     </button>
     <button
       type="submit"
-      class="btn col w-100 <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-success' %>"
+      class="btn col w-100 <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-info' %>"
       id="<%- manhwa.mid %>"
       value="later">
       <%- manhwa.reading == 0 ? "Read Later" : "Start reading" %>
@@ -115,6 +115,12 @@
       class="col btn btn-primary w-100"
       target="_blank"
       >Current Chapter</a
+    >
+    <a
+      href="<%- manhwa.next %>"
+      class="col btn btn-success w-100 <%- manhwa.next == "" ? 'disabled' : '' %>"
+      target="_blank"
+      >Next Chapter</a
     >
   </div>
 </div>

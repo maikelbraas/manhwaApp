@@ -206,6 +206,26 @@ class Manhwa {
         }
     }
 
+    static async getCurrentChapter(mid, chapter) {
+        try {
+            const query = "SELECT * FROM manhwa_chapter WHERE manhwamid = ? AND chapter = ?";
+            const [rows] = await connect.execute(query, [mid, chapter]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static async getNextChapter(mid, chapter) {
+        try {
+            const query = "SELECT * FROM manhwa_chapter WHERE manhwamid = ? AND chapter > ? ORDER BY chapter ASC LIMIT 1";
+            const [rows] = await connect.execute(query, [mid, chapter]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 }
 
 export default Manhwa;

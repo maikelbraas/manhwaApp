@@ -177,6 +177,10 @@ class Manhwa {
             for (let manhwa of manhwas) {
                 const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
                 manhwa.link = link.chapter_link;
+                const next = await manhwaModel.getNextChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
+                manhwa.next = "";
+                if (next.length > 0)
+                    manhwa.next = next[0].chapter_link;
             }
             return manhwas;
         } catch (e) {
