@@ -41,6 +41,7 @@
         <%- manhwa.content %>
       </p>
       <div class="w-100 g-0 p-1 phone-invis-save">
+        <% if(manhwa.reading == 0){ %>
         <form
           action="/auth/chapter/<%- manhwa.mid %>"
           class="d-flex flex-row gap-2"
@@ -65,11 +66,13 @@
             Log chapter
           </button>
         </form>
+        <% } %>
       </div>
     </div>
     <!-- </div> -->
   </div>
   <div class="w-100 g-0 p-1 phone-vis-save">
+    <% if(manhwa.reading == 0){ %>
     <form
       action="/auth/chapter/<%- manhwa.mid %>"
       class="d-flex flex-row gap-2"
@@ -94,20 +97,21 @@
         Log chapter
       </button>
     </form>
+    <% } %>
   </div>
   <div class="row gap-2 p-1 g-0 mt-2 w-100">
     <button
-      type="submit"
-      class="col btn btn-danger w-100"
-      id="<%- manhwa.mid %>"
-      value="remove">
+      type="button"
+      data-bs-toggle="modal" data-bs-target="#modal-<%-manhwa.mid%>"
+      data-button="remove" data-id="<%- manhwa.mid %>"
+      class="col btn btn-danger w-100">
       Remove
     </button>
     <button
-      type="submit"
-      class="btn col w-100 <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-info' %>"
-      id="<%- manhwa.mid %>"
-      value="later">
+      type="button" 
+      data-bs-toggle="modal" data-bs-target="#modal-<%-manhwa.mid%>" 
+      data-button="later" data-id="<%- manhwa.mid %>"
+      class="btn col w-100 <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-info' %>">
       <%- manhwa.reading == 0 ? "Read Later" : "Start reading" %>
     </button>
     <% if(manhwa.reading == 0){ %>
@@ -126,3 +130,4 @@
     <% } %>
   </div>
 </div>
+<%- include('modal.ejs', {manhwa}) %>

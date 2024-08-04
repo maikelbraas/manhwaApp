@@ -8,22 +8,33 @@ document
 
 
 document.querySelector('.manhwa-buttons-action').addEventListener('click', async (event) => {
-    if (event.target.id.includes('reaper') || event.target.id.includes('asura') || event.target.id.includes('flame') || event.target.id.includes('mgdemon')) {
-        if (event.target.value == "remove") {
-            if (confirm('Are you sure you want to delete the saved manhwa?')) {
-                await fetch(`/auth/remove/${event.target.id}`, {
-                    method: "DELETE",
-                    headers: { "Content-Type": "application/html" }
-                }).then(() => { window.location.reload() })
-            }
+    if (event.target.dataset.button != undefined) {
+        const setButtonType = document.querySelector('#' + event.target.dataset.id).dataset;
+        const modalWindow = document.querySelector('#modal-' + event.target.dataset.id)
+        if (event.target.dataset.button.includes('later')) {
+            setButtonType.type = 'later'
+            modalWindow.querySelector('.modal-title').innerHTML = 'Read Later / Start Reading'
+            modalWindow.querySelector('.modal-body').innerHTML = event.target.classList.contains('btn-warning') ? "Are you sure you want to read manhwa later?"
+                : "Are you sure you want to start reading manhwa?";
         }
-        if (event.target.value == 'later') {
-            if (confirm(event.target.classList.contains('btn-warning') ? 'Are you sure you want to move the saved manhwa to try?' : 'Are you sure you want to move the saved manhwa to ongoing?')) {
-                await fetch(`/auth/patch/${event.target.id}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/html" }
-                }).then(() => { window.location.reload() })
-            }
+        else if (event.target.dataset.button.includes('remove')) {
+            setButtonType.type = 'remove'
+            modalWindow.querySelector('.modal-title').innerHTML = 'Remove'
+            modalWindow.querySelector('.modal-body').innerHTML = "Are you sure you want to remove manhwa?";
+        }
+    }
+    if (event.target.dataset.type != undefined) {
+        if (event.target.dataset.type == "remove") {
+            await fetch(`/auth/remove/${event.target.id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/html" }
+            }).then(() => { window.location.reload() })
+        }
+        if (event.target.dataset.type == 'later') {
+            await fetch(`/auth/patch/${event.target.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/html" }
+            }).then(() => { window.location.reload() })
         }
     }
 });
