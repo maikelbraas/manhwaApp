@@ -27,6 +27,7 @@ class Manhwa {
         //         }
         //     }
         // }
+        console.log('running');
         let manhwasReaper = await manhwaCheckReaper(req, res, next);
         // let manhwasReaper = [];
         if (manhwasReaper.length > 0) {
@@ -69,6 +70,7 @@ class Manhwa {
         //     }
         // }
         // let manhwasReaper = [];
+        console.log('running');
         let manhwasReaper = await manhwaCheckReaperUpdate(req, res, next);
         if (manhwasReaper.length > 0) {
             for (let manhwa of manhwasReaper) {
@@ -136,12 +138,14 @@ class Manhwa {
 
             i++;
             let inter = (i / manhwas.length) * 100;
-            res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
+            if (res != null)
+                res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
         }
         await buildJson(manhwas);
         req.session.manhwas = manhwas;
         req.session.save();
-        res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);
+        if (res != null)
+            res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);
         return;
     }
 

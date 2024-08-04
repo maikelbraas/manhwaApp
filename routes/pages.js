@@ -21,6 +21,15 @@ router.get('/manhwa', async (req, res, next) => {
     res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.url });
 });
 
+router.get('/api/jsonWrite', async (req, res, next) => {
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Content-Encoding': 'none'
+    });
+    await manhwaController.buildJson(req, res, next);
+});
 
 router.get('/privacypolicy', async (req, res, next) => {
     res.render('layout', { template: 'pages/privacypolicy.ejs' });
@@ -61,50 +70,9 @@ router.get('/manhwa/:id', async (req, res, next) => {
     }
 });
 
-router.get('/api/manhwa', async (req, res, next) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Content-Encoding': 'none'
-    });
-    await manhwaController.checkInsert(req, res, next);
-});
-
-
-
-router.get('/api/specific/:id', async (req, res, next) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Content-Encoding': 'none'
-    });
-    await manhwaController.checkSpecific(req, res, next);
-});
 
 router.get('/api/manhwas', async (req, res, next) => {
     await readFromJson(req, res, next);
-});
-
-router.get('/api/manhwaUpdate', async (req, res, next) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Content-Encoding': 'none'
-    });
-    await manhwaController.checkUpdate(req, res, next);
-});
-
-router.get('/api/jsonWrite', async (req, res, next) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Content-Encoding': 'none'
-    });
-    await manhwaController.buildJson(req, res, next);
 });
 
 router.get('/register', (req, res, next) => {

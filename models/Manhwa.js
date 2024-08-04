@@ -186,10 +186,10 @@ class Manhwa {
         }
     }
 
-    static async findSavedManhwa(mid, uid) {
+    static async findSavedManhwa(mid) {
         try {
-            const query = "SELECT * FROM chaptersSaved WHERE manhwaid = ? AND userid = ?";
-            const [rows] = await connect.execute(query, [mid, uid]);
+            const query = "SELECT * FROM chaptersSaved WHERE manhwaid = ?";
+            const [rows] = await connect.execute(query, [mid]);
             return rows;
         } catch (e) {
             console.log(e);

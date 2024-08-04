@@ -32,12 +32,13 @@ export default async function manhwaCheckFlame(req, res, next) {
             let checkIfSaved;
             nextManhwa++;
             let inter = (nextManhwa / totalManhwas) * 100;
-            res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: inter } })}\n\n`);
+            if (res != null)
+                res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: inter } })}\n\n`);
             if (manhwa.count == 0 || manhwa.slug == "uncategorized")
                 return false;
             if (manhwa.hasOwnProperty('id')) {
                 checkManhwa = await manhwaModel.findManhwaById("flame-" + manhwa.id);
-                checkIfSaved = await manhwaModel.findSavedManhwa("flame-" + manhwa.id, req.user.id)
+                checkIfSaved = await manhwaModel.findSavedManhwa("flame-" + manhwa.id);
             }
             if (checkManhwa.length > 0)
                 return false;

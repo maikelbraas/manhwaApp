@@ -10,7 +10,7 @@ document.getElementById("startUpdate").addEventListener("click", () => {
     const flame = document.getElementById('flame');
     const demon = document.getElementById('demon');
 
-    const eventSource = new EventSource("/api/manhwaUpdate");
+    const eventSource = new EventSource("/admin/api/manhwaUpdate");
 
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -62,7 +62,7 @@ document.getElementById("startCreate").addEventListener("click", () => {
     const reaper = document.getElementById('reaper');
     const flame = document.getElementById('flame');
 
-    const eventSource = new EventSource("/api/manhwa");
+    const eventSource = new EventSource("/admin/api/manhwa");
 
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -107,7 +107,7 @@ function buildJson() {
     const progressDiv = document.getElementById("progress");
     createBar("json-build");
     const asura = document.getElementById('json-build');
-    const eventSource = new EventSource("/api/jsonWrite/");
+    const eventSource = new EventSource("/admin/api/jsonWrite/");
 
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);

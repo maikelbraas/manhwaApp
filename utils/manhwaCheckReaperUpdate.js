@@ -35,12 +35,13 @@ export default async function manhwaCheckReaperUpdate(req, res, next) {
 
             nextManhwa++;
             let inter = (nextManhwa / totalManhwas) * 100;
-            res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: inter, flame: 0 } })}\n\n`);
+            if (res != null)
+                res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: inter, flame: 0 } })}\n\n`);
             if (manhwa.count == 0 || manhwa.slug == "uncategorized")
                 return false;
             if (manhwa.hasOwnProperty('id')) {
                 checkManhwa = await manhwaModel.findManhwaById("reaper-" + manhwa.id);
-                checkIfSaved = await manhwaModel.findSavedManhwa("reaper-" + manhwa.id, req.user.id)
+                checkIfSaved = await manhwaModel.findSavedManhwa("reaper-" + manhwa.id)
             }
             if (checkManhwa.length == 0)
                 return false;

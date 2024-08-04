@@ -21,12 +21,13 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
 
             nextManhwa++;
             let inter = (nextManhwa / totalManhwas) * 100;
-            res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: 100, demon: inter } })}\n\n`);
+            if (res != null)
+                res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: 100, demon: inter } })}\n\n`);
             let src = "manga/" + checkSingleManhwa.slug;
             let name = checkSingleManhwa.title;
             let slug = checkSingleManhwa.slug;
             let mid = checkSingleManhwa.mid;
-            checkIfSaved = await manhwaModel.findSavedManhwa("mgdemon-" + mid, req.user.id);
+            checkIfSaved = await manhwaModel.findSavedManhwa("mgdemon-" + mid);
 
             let responseSingle = await fetch(`https://mgdemon.org/${src}/`);
             let single = await responseSingle.text();
