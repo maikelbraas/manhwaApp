@@ -72,6 +72,12 @@ document.getElementById("updateSaved").addEventListener("click", () => {
                 eventSource.close();
                 if (data.updatedRows > 0)
                     buildJson(data.updatedRows);
+                else {
+                    setTimeout(() => {
+                        progressDiv.innerHTML = "";
+                        waitTimer();
+                    }, 2000)
+                }
             }
         };
 
