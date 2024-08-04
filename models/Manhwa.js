@@ -94,7 +94,7 @@ class Manhwa {
 
     static async getAllManhwasLimit(page) {
         try {
-            const query = `SELECT mid, title, content, slug, chapters, baseurl, lastUpdate, status, COUNT(id) OVER() as totalManhwas  FROM manhwas WHERE status != 'Dropped' ORDER BY title ASC LIMIT 6 OFFSET ${(page * 6 - 6)}`;
+            const query = `SELECT mid, title, content, slug, chapters, baseurl, lastUpdate, status, COUNT(id) OVER() as totalManhwas  FROM manhwas WHERE status != 'Dropped' ORDER BY title ASC LIMIT 6 OFFSET ${(parseInt(page) * 6 - 6)}`;
             const [rows] = await connect.execute(query);
             return rows;
         } catch (e) {
