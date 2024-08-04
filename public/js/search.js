@@ -1,4 +1,3 @@
-import fetchManhwaFromJson from './fetchJson.js';
 const search = document.getElementById('search');
 const manhwasElement = document.getElementById('manhwas-search');
 const template = document.getElementById('manhwa-card-template');
