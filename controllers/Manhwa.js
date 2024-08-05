@@ -109,15 +109,13 @@ class Manhwa {
         for (let manhwa of manhwas) {
             let genresOfManhwa = await genreModel.getAllGenresOfManhwa(manhwa.mid);
             manhwa.image = encodeURI(manhwa.image);
-            manhwa.genres = [];
-            for (let genre of genresOfManhwa) {
-                manhwa.genres.push(genre.name);
-            }
+            manhwa.genres = genresOfManhwa;
 
-            i++;
-            let inter = (i / manhwas.length) * 100;
-            if (res != null)
+            if (res != null) {
+                i++;
+                let inter = (i / manhwas.length) * 100;
                 res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
+            }
         }
         await buildJson(manhwas);
         global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
@@ -131,6 +129,16 @@ class Manhwa {
 
     static async updateImageOfManhwa(mid, imagename) {
         await manhwaModel.updateImageOfManhwa(mid, imagename);
+    }
+
+    static async getAllManhwas() {
+        let manhwas = await manhwaModel.getAllManhwas();
+        for (let manhwa of manhwas) {
+            let genresOfManhwa = await genreModel.getAllGenresOfManhwa(manhwa.mid);
+            manhwa.genres = genresOfManhwa;
+        }
+        global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
+        return;
     }
 
     static async getManhwas(req, res, next) {

@@ -47,7 +47,7 @@ initializePassport(app);
 
 app.use(async (req, res, next) => {
     if (!global.manhwas) {
-        await manhwaController.buildJson(req, null, next);
+        await manhwaController.getAllManhwas();
     }
     next();
 })
