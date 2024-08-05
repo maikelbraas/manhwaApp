@@ -3,9 +3,11 @@
   style="
     z-index: 2;
     top: 80px;
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
     right: 0;
-    height: 500px !important;
+    max-height: 470px !important;
+    block-size: fit-content;
     overflow-y: scroll;
     background-color: #121212;
   ">
@@ -17,10 +19,9 @@
     >
   </div>
   <div
-    class="card-group position-absolute admin-rows"
+    class="card-group admin-rows"
     style="
       z-index: 2;
-      max-height: 500px !important;
       overflow-y: scroll;
       background-color: #121212;
       display: none;
