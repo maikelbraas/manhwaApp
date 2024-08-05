@@ -10,7 +10,7 @@ import expressVisitorCounter from 'express-visitor-counter';
 import compression from 'compression';
 import scheduledFetch from './utils/scheduledFetch.js';
 import manhwaController from './controllers/Manhwa.js'
-
+import { v4 as uuidv4 } from 'uuid';
 //Routes
 import pages from './routes/pages.js';
 import auth from './routes/auth.js';
@@ -29,7 +29,12 @@ let visitorsTotal = 0;
 let visitedPages = [];
 let autoFetchInter = null;
 global.manhwas;
-
+global.buildDate = Date.now();
+const v4options = {
+    random: [
+        0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea, 0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36,
+    ],
+};
 
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs')
@@ -39,7 +44,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
-app.use(session({ secret: 'fd8s9f6sd@#$@fdsf23r23', resave: false, saveUninitialized: false }));
+app.use(session({ secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: true, cookie: { sameSite: 'lax' } }));
+// app.use(session(}))
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);
 initializePassport(app);
@@ -52,6 +58,7 @@ app.use(async (req, res, next) => {
     next();
 })
 
+
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     req.session.counter = counters;
@@ -60,8 +67,7 @@ app.use((req, res, next) => {
         res.locals.manhwasSearch = global.manhwas.manhwas;
         res.locals.totalManhwas = global.manhwas.totalManhwas;
     }
-    res.locals.newBuild = req.session.newBuild;
-    req.session.newBuild = false;
+
     if (req.headers.referer != undefined && !req.headers.referer.includes('login'))
         visitedPages.push(req.headers.referer);
     req.session.visitedPages = visitedPages;
@@ -73,17 +79,27 @@ app.use((req, res, next) => {
         req.session.user = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };
         res.locals.currentUser = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };
     }
+
     next();
 })
 
 
+app.use((req, res, next) => {
+    if (global.buildDate != undefined && req.headers?.cookie.indexOf(global.buildDate) == -1) {
+        res.cookie('newBuild', true, { sameSite: 'lax' });
+        res.cookie('dateBuild', global.buildDate, { sameSite: 'lax' });
+    }
+    next();
+})
 app.use('/', pages);
 app.use('/auth', isAuthenticated, auth)
 app.use('/admin', checkRole(2), admin);
 
 app.use('*', (req, res, next) => {
-    res.render('page_not_found.ejs')
+    res.render('page_not_found.ejs');
+
 })
+
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
     setInterval(async () => {
