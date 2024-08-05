@@ -7,6 +7,7 @@ import manhwaCheckFlameUpdate from './manhwaCheckFlameUpdate.js';
 import manhwaCheckSpecificUpdate from './manhwaCheckSpecificUpdate.js';
 import genreCheck from './genreCheck.js';
 import buildJson from './buildJson.js';
+import downloadImage from './downloadImage.js';
 
 export default async function scheduledFetch(req, res, next, hostname) {
     console.log('Start scheduled update at: ' + new Date());
