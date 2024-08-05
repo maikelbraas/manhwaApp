@@ -26,7 +26,6 @@ export default async function manhwaCheck(req, res, next) {
             let checkManhwa = ["fdsfdsdfs"];
             let checkIfSaved;
 
-            let src = checkSingleManhwa.split('href="')[1].split('>')[0].slice(0, -1);
             let name = manga.slice(0, -5).replaceAll('-', ' ');
             name = name.replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%27", "'").replaceAll("%2C", ",").replaceAll("%21", "!").replaceAll("%3F", "?").replaceAll("%252D", '-');
             let slug = manga;
