@@ -85,7 +85,7 @@ app.use((req, res, next) => {
 
 
 app.use((req, res, next) => {
-    if (global.buildDate != undefined && req.headers?.cookie.indexOf(global.buildDate) == -1) {
+    if (global.buildDate != undefined && req.headers.cookie.indexOf(global.buildDate) == -1) {
         res.cookie('newBuild', true, { sameSite: 'lax' });
         res.cookie('dateBuild', global.buildDate, { sameSite: 'lax' });
     }
