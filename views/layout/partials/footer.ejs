@@ -7,7 +7,6 @@
 
 <script>
   if(!localStorage.getItem('manhwas')){
-    console.log('yep');
   let manhwas = <%- JSON.stringify(manhwasSearch) %>
   localStorage.setItem("manhwas", JSON.stringify(manhwas));
   }
