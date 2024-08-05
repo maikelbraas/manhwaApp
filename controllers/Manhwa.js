@@ -104,19 +104,7 @@ class Manhwa {
     }
 
     static async buildJson(req, res, next) {
-        let manhwas = await manhwaModel.getAllManhwas();
-        let i = 0;
-        for (let manhwa of manhwas) {
-            let genresOfManhwa = await genreModel.getAllGenresOfManhwa(manhwa.mid);
-            manhwa.image = encodeURI(manhwa.image);
-            manhwa.genres = genresOfManhwa;
-
-            if (res != null) {
-                i++;
-                let inter = (i / manhwas.length) * 100;
-                res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
-            }
-        }
+        let manhwas = await manhwaModel.getAllManhwasAndGenres();
         await buildJson(manhwas);
         global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
         req.session.save();
