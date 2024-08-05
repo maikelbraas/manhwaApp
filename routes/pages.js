@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     let manhwas = await manhwaController.getLastUpdated(req, res, next);
-    res.render('layout', { template: 'pages/index.ejs', manhwas });
+    return res.render('layout', { template: 'pages/index.ejs', manhwas });
 });
 
 
@@ -19,7 +19,7 @@ router.get('/manhwas/:page', async (req, res, next) => {
 
     if (req.params.page > 0 && req.params.page <= Math.ceil(global.manhwas.totalManhwas / 6)) {
         let manhwas = await manhwaController.getManhwas(req, res, next);
-        return res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.params.page, totalManhwas: manhwas[0].totalManhwas });
+        return res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.params.page, totalManhwas: global.manhwas.totalManhwas });
     }
     return res.redirect('/manhwas/1');
 });

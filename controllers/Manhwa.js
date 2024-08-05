@@ -131,10 +131,6 @@ class Manhwa {
         // }
         // return req.session.manhwas;
         let manhwas = await manhwaModel.getAllManhwasLimit(req.params.page);
-        for (let manhwa of manhwas) {
-            let genres = await genreModel.getAllGenresOfManhwa(manhwa.mid);
-            manhwa.genres = genres;
-        }
         return manhwas;
     }
 

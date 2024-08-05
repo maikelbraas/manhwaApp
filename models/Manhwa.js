@@ -11,18 +11,15 @@ class Manhwa {
 
 
     static async getLastUpdated() {
-        const query = `SELECT * FROM manhwas WHERE status != 'Dropped' ORDER BY lastUpdate DESC LIMIT 10`;
+        const query = `SELECT 
+    m.*,
+    GROUP_CONCAT(g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
+FROM manhwas m
+LEFT JOIN manhwa_genre mg ON m.mid = mg.manhwaid
+LEFT JOIN genres g ON mg.genreid = g.id
+GROUP BY m.id
+ORDER BY m.title ASC LIMIT 10;`;
         const [rows] = await connect.execute(query);
-        for (let row of rows) {
-            const queryGenres = 'SELECT * FROM manhwa_genre WHERE manhwaid = ?';
-            const [genres] = await connect.execute(queryGenres, [row.mid]);
-            row.genres = [];
-            for (let genre of genres) {
-                const queryGenresName = 'SELECT * FROM genres WHERE id = ?';
-                const [genresName] = await connect.execute(queryGenresName, [genre.genreid]);
-                row.genres.push(genresName[0].name);
-            }
-        }
         return rows;
     }
 
@@ -113,7 +110,15 @@ ORDER BY m.title ASC;`;
     static async getAllManhwasLimit(page) {
         page = (parseInt(page) * 6 - 6);
         try {
-            const query = `SELECT mid, title, content, slug, chapters, baseurl, lastUpdate, status, COUNT(id) OVER() as totalManhwas  FROM manhwas WHERE status != 'Dropped' ORDER BY title ASC LIMIT 6 OFFSET ${page}`;
+            const query = `SELECT 
+    m.*,
+    GROUP_CONCAT(g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
+FROM manhwas m
+LEFT JOIN manhwa_genre mg ON m.mid = mg.manhwaid
+LEFT JOIN genres g ON mg.genreid = g.id
+WHERE m.status != 'Dropped'
+GROUP BY m.id
+ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             const [rows] = await connect.execute(query);
             return rows;
         } catch (e) {
