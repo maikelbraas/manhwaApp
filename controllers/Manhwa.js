@@ -132,11 +132,7 @@ class Manhwa {
     }
 
     static async getAllManhwas() {
-        let manhwas = await manhwaModel.getAllManhwas();
-        for (let manhwa of manhwas) {
-            let genresOfManhwa = await genreModel.getAllGenresOfManhwa(manhwa.mid);
-            manhwa.genres = genresOfManhwa;
-        }
+        let manhwas = await manhwaModel.getAllManhwasAndGenres();
         global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
         return;
     }

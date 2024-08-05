@@ -91,6 +91,24 @@ class Manhwa {
         }
     }
 
+    static async getAllManhwasAndGenres() {
+        try {
+            const query = `SELECT 
+    m.*,
+    GROUP_CONCAT(g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
+FROM manhwas m
+LEFT JOIN manhwa_genre mg ON m.mid = mg.manhwaid
+LEFT JOIN genres g ON mg.genreid = g.id
+WHERE m.status != 'Dropped'
+GROUP BY m.id
+ORDER BY m.title ASC;`;
+            const [rows] = await connect.execute(query);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 
     static async getAllManhwasLimit(page) {
         page = (parseInt(page) * 6 - 6);
