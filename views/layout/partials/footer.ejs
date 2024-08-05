@@ -4,9 +4,8 @@
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/lazysizes.min.js"></script>
 <script src="/js/search.js" type="module"></script>
-
 <script>
-  if(!localStorage.getItem('manhwas')){
+  if(!localStorage.getItem('manhwas') || <%- newBuild %>){
   let manhwas = <%- JSON.stringify(manhwasSearch) %>
   localStorage.setItem("manhwas", JSON.stringify(manhwas));
   }

@@ -107,6 +107,7 @@ class Manhwa {
         let manhwas = await manhwaModel.getAllManhwasAndGenres();
         await buildJson(manhwas);
         global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
+        req.session.newBuild = true;
         req.session.save();
         if (res != null) {
             res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);

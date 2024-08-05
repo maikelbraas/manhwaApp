@@ -151,7 +151,7 @@ document.getElementById("findSpecific").addEventListener("click", () => {
         progressDiv.innerHTML = "Starting fetch...";
         createBar("get-single");
         const asura = document.getElementById('get-single');
-        const eventSource = new EventSource("/api/specific/" + promptAnswer);
+        const eventSource = new EventSource("/admin/api/specific/" + promptAnswer);
 
         eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);

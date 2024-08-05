@@ -6,7 +6,7 @@ export default async function manhwaCheck(req, res, next) {
     let manga = req.params.id;
     let manhwa = false;
     try {
-        response = await fetch(`https://mgdemon.org/search.php?manga=${manga}`);
+        response = await fetch(`https://mgdemon.org/manga/${manga}`);
 
         text = await response.text();
         if (text.length > 1)
@@ -15,6 +15,7 @@ export default async function manhwaCheck(req, res, next) {
             res.write(`data: ${JSON.stringify({ error: 'could not find manhwa' })}\n\n`);
         i++;
     } catch (error) {
+        console.log(error);
         res.write(`data: ${JSON.stringify({ error: error.message, json })}\n\n`);
         res.end();
     }
@@ -26,10 +27,10 @@ export default async function manhwaCheck(req, res, next) {
             let checkIfSaved;
 
             let src = checkSingleManhwa.split('href="')[1].split('>')[0].slice(0, -1);
-            let name = checkSingleManhwa.split('>')[2].split('<')[0].slice(1);
-            let nameencoded = encodeURIComponent(name.replaceAll("(", "%28").replaceAll(")", "%29").replaceAll("'", "%27").replaceAll(",", "%2C").replaceAll("!", "%21").replaceAll("?", "%3F").replaceAll("-", '%252D'));
-            let slug = nameencoded.replaceAll('%20', '-') + "-VA54";
-            let mid = name.replaceAll(' ', '-');
+            let name = manga.slice(0, -5).replaceAll('-', ' ');
+            name = name.replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%27", "'").replaceAll("%2C", ",").replaceAll("%21", "!").replaceAll("%3F", "?").replaceAll("%252D", '-');
+            let slug = manga;
+            let mid = slug.slice(0, 5);
             // console.log(name);
             // console.log(src);
             checkManhwa = await manhwaModel.findManhwaById("mgdemon-" + mid);
@@ -38,8 +39,7 @@ export default async function manhwaCheck(req, res, next) {
                 return false;
 
 
-            let responseSingle = await fetch(`https://mgdemon.org/${src}/`);
-            let single = await responseSingle.text();
+            let single = checkSingleManhwa;
             // console.log(single);
 
             let genreSlice = single.slice(single.search('class="categories"'), single.search('class="author"'));

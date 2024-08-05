@@ -41,13 +41,14 @@ function createCard() {
             let genrePart = clone.querySelector('.me-1').cloneNode(true);
             for (let genreContainer of genreContainers)
                 genreContainer.innerHTML = "";
-            for (let genre of manhwas[i].genres) {
-                for (let genreContainer of genreContainers) {
-                    genrePart.querySelector('.fa-fist-raised').textContent = genre;
-                    genreContainer.appendChild(genrePart)
-                    genrePart = clone.querySelector('.me-1').cloneNode(true);
+            if (manhwas[i].genres != null)
+                for (let genre of manhwas[i].genres.split(',')) {
+                    for (let genreContainer of genreContainers) {
+                        genrePart.querySelector('.fa-fist-raised').textContent = genre;
+                        genreContainer.appendChild(genrePart)
+                        genrePart = clone.querySelector('.me-1').cloneNode(true);
+                    }
                 }
-            }
             manhwasElement.appendChild(clone);
         }
 

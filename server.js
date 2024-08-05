@@ -60,6 +60,8 @@ app.use((req, res, next) => {
         res.locals.manhwasSearch = global.manhwas.manhwas;
         res.locals.totalManhwas = global.manhwas.totalManhwas;
     }
+    res.locals.newBuild = req.session.newBuild;
+    req.session.newBuild = false;
     if (req.headers.referer != undefined && !req.headers.referer.includes('login'))
         visitedPages.push(req.headers.referer);
     req.session.visitedPages = visitedPages;
