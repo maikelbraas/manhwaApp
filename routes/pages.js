@@ -38,6 +38,10 @@ router.get('/privacypolicy', async (req, res, next) => {
     res.render('layout', { template: 'pages/privacypolicy.ejs' });
 });
 
+router.get('/cookiepolicy', async (req, res, next) => {
+    res.render('layout', { template: 'pages/cookiepolicy.ejs' });
+});
+
 router.get('/siteUpdates', async (req, res, next) => {
     let updates = await pageModel.getUpdates();
     res.render('layout', { template: 'pages/siteUpdates.ejs', updates });
