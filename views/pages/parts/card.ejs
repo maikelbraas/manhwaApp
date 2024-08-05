@@ -68,8 +68,8 @@
         </form>
         <% } %>
       </div>
-      <div class="row gap-2 p-1 g-0 mt-2 w-100">
-        <div class="d-flex gap-2">
+      <div class="gap-2 p-1 g-0 mt-2 w-100 d-flex flex-column" style="align-items: flex-end">
+        <div class="d-flex w-100 mb-3" style="gap: 20px;">
         <button
           type="button"
           data-bs-toggle="modal" data-bs-target="#modal-<%-manhwa.mid%>"
@@ -82,22 +82,23 @@
           data-bs-toggle="modal" data-bs-target="#modal-<%-manhwa.mid%>" 
           data-button="later" data-id="<%- manhwa.mid %>"
           class="btn col w-100 <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-info' %>">
-          <%- manhwa.reading == 0 ? "Read Later" : "Start reading" %>
+          <%- manhwa.reading == 0 ? "Later" : "Start" %>
         </button>
       </div>
-      <div class="d-flex gap-2">
+      <div class="d-flex w-100" style="gap: 20px;">
+        
         <% if(manhwa.reading == 0){ %>
         <a
           href="<%- manhwa.link %>"
           class="col btn btn-primary w-100"
           target="_blank"
-          >Current Chapter</a
+          >Current</a
         >
         <a
           href="<%- manhwa.next %>"
           class="col btn btn-success w-100 <%- manhwa.next == "" ? 'disabled' : '' %>"
           target="_blank"
-          >Next Chapter</a
+          >Next</a
         >
         <% } %>
       </div>
