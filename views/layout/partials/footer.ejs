@@ -6,8 +6,11 @@
 <script src="/js/search.js" type="module"></script>
 
 <script>
+  if(!localStorage.getItem('manhwas')){
+    console.log('yep');
   let manhwas = <%- JSON.stringify(manhwasSearch) %>
   localStorage.setItem("manhwas", JSON.stringify(manhwas));
+  }
   //document.addEventListener("DOMContentLoaded", (event) => {
     //window.scrollTo(0, 1);
   //});
