@@ -9,6 +9,7 @@ import checkRole from './utils/checkRole.js';
 import expressVisitorCounter from 'express-visitor-counter';
 import compression from 'compression';
 import scheduledFetch from './utils/scheduledFetch.js';
+import manhwaController from './controllers/Manhwa.js'
 
 //Routes
 import pages from './routes/pages.js';
@@ -29,6 +30,7 @@ let visitedPages = [];
 let autoFetchInter = null;
 global.manhwas;
 
+
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs')
 
@@ -41,6 +43,14 @@ app.use(session({ secret: 'fd8s9f6sd@#$@fdsf23r23', resave: false, saveUninitial
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);
 initializePassport(app);
+
+
+app.use(async (req, res, next) => {
+    if (!global.manhwas) {
+        await manhwaController.buildJson(req, null, next);
+    }
+    next();
+})
 
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
