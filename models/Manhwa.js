@@ -18,7 +18,7 @@ FROM manhwas m
 LEFT JOIN manhwa_genre mg ON m.mid = mg.manhwaid
 LEFT JOIN genres g ON mg.genreid = g.id
 GROUP BY m.id
-ORDER BY m.title ASC LIMIT 10;`;
+ORDER BY m.lastUpdate DESC LIMIT 10;`;
         const [rows] = await connect.execute(query);
         return rows;
     }
