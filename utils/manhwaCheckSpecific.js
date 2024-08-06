@@ -31,8 +31,6 @@ export default async function manhwaCheck(req, res, next) {
             name = name.replace("25", '').replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%27", "'").replaceAll("%2C", ",").replaceAll("%21", "!").replaceAll("%3F", "?").replaceAll("%2D", '-').replaceAll("%3A", ':');
             let slug = manga;
             let mid = name.replaceAll(' ', '-');
-            // console.log(name);
-            // console.log(src);
             checkManhwa = await manhwaModel.findManhwaById("mgdemon-" + mid);
             checkIfSaved = await manhwaModel.findSavedManhwa("mgdemon-" + mid, req.user.id)
             if (checkManhwa.length > 0)
@@ -40,32 +38,24 @@ export default async function manhwaCheck(req, res, next) {
 
 
             let single = checkSingleManhwa;
-            // console.log(single);
 
             let genreSlice = single.slice(single.search('class="categories"'), single.search('class="author"'));
             genreSlice = genreSlice.replace(/<[^>]*>?/gm, '').split('\n');
             let genres = [];
             genreSlice.forEach(genre => genre.length > 2 ? genres.push(genre) : false);
             genres.splice(0, 2)
-            // console.log(genres);
             let chapterSlice = single.slice(single.search('<strong class="chapter-title">'), single.search('<strong class="chapter-title">') + 80);
             let chapter = chapterSlice.replace(/[^0-9]/g, '');
-            // console.log(chapter);
             let statusSlice = single.slice(single.search('<small>Status</small>'), single.search('<small>Status</small>') + 80);
             let status = statusSlice.replace(/<[^>]*>?/gm, '').split('\n')[1];
-            // console.log(status);
             let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);
             let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];
-            // console.log(image);
             let baseurl = "https://mgdemon.org/";
-            // console.log(slug);
             let descriptionSlice = single.slice(single.search('<p class="description">'), single.search('<section id="chapters" class="on">'));
             let description = descriptionSlice.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "");
-            // console.log(description);
             let chapterLinks = [];
             if (checkIfSaved.length > 0)
                 chapterLinks = await searchChapters(single, mid)
-            // console.log(chapterLinks);
 
             let newObj = {
                 title: name,

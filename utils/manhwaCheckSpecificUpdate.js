@@ -6,7 +6,6 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
     let totalManhwas = manhwasCheck.length;
     for (let singleManhwaCheck of manhwasCheck) {
         try {
-            // console.log(singleManhwaCheck)
             await checkSingle(singleManhwaCheck);
         } catch (error) {
             res.write(`data: ${JSON.stringify({ error: error.message, json })}\n\n`);
@@ -31,30 +30,25 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
 
             let responseSingle = await fetch(`https://mgdemon.org/${src}/`);
             let single = await responseSingle.text();
-            // console.log(single);
-
+            //Get genres from site
             let genreSlice = single.slice(single.search('class="categories"'), single.search('class="author"'));
             genreSlice = genreSlice.replace(/<[^>]*>?/gm, '').split('\n');
             let genres = [];
             genreSlice.forEach(genre => genre.length > 2 ? genres.push(genre) : false);
-            genres.splice(0, 2)
-            // console.log(genres);
+            genres.splice(0, 2);
+            //Get chapters from site
             let chapterSlice = single.slice(single.search('<strong class="chapter-title">'), single.search('<strong class="chapter-title">') + 80);
             let chapter = chapterSlice.replace(/[^0-9]/g, '');
-            // console.log(chapter);
+            //Get status from site
             let statusSlice = single.slice(single.search('<small>Status</small>'), single.search('<small>Status</small>') + 80);
             let status = statusSlice.replace(/<[^>]*>?/gm, '').split('\n')[1];
-            // console.log(status);
-            // console.log(image);
-            let baseurl = "https://mgdemon.org/";
-            // console.log(slug);
+            //Get description from site
             let descriptionSlice = single.slice(single.search('<p class="description">'), single.search('<section id="chapters" class="on">'));
             let description = descriptionSlice.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "");
-            // console.log(description);
+            //Check if new chapters need to be fetched.
             let chapterLinks = [];
             if (checkIfSaved.length > 0)
-                chapterLinks = await searchChapters(single, mid)
-            // console.log(chapterLinks);
+                chapterLinks = await searchChapters(single, mid);
 
             let newObj = {
                 title: name,
@@ -64,12 +58,11 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
                 media: 404,
                 image: checkSingleManhwa.image,
                 chapters: parseFloat(chapter),
-                baseurl: baseurl,
+                baseurl: "https://mgdemon.org/",
                 genres: genres,
                 status: status,
                 manhwaChapters: chapterLinks
             }
-            // console.log(newObj);
             let update = await checkUpdate(newObj, checkSingleManhwa);
             if (update != false)
                 manhwas.push(newObj);
@@ -80,7 +73,6 @@ export default async function manhwaCheck(req, res, next, manhwasAll) {
     }
 
     async function checkUpdate(fetchManhwa, existManhwa) {
-        // console.log(fetchManhwa.chapters, existManhwa[0].chapters);
         if (parseFloat(fetchManhwa.chapters).toFixed(1) == parseFloat(existManhwa.chapters).toFixed(1) && fetchManhwa.status == existManhwa.status)
             return false;
         return fetchManhwa;

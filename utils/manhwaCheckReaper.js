@@ -70,6 +70,7 @@ export default async function manhwaCheckReaper(req, res, next) {
                 if (checkIfSaved.length > 0) {
                     chapterLinks = await searchChapters(manhwa.id);
                 }
+                //Fix status when site didn't
                 if (status == 'Dropped')
                     return false;
                 if ((chapterLinks.length < 1 && isNaN(chapter)))
