@@ -139,3 +139,4 @@ main copy.js
 bootstrap.min copy.css
 global.css
 index copy.ejs
+search.js
