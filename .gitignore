@@ -130,3 +130,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+manhwas copy.ejs
+manhwas copy 2.ejs
+changepasswordanswer.ejs
+changepassword.ejs
+savedmanhwas copy.ejs
+main copy.js
+bootstrap.min copy.css
+global.css
