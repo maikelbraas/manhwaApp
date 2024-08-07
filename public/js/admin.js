@@ -171,3 +171,39 @@ document.getElementById("findSpecific").addEventListener("click", () => {
         };
     }
 });
+
+document.getElementById("getImages").addEventListener("click", () => {
+    const progressDiv = document.getElementById("progress");
+    progressDiv.innerHTML = "Starting fetch...";
+    createBar("get-images");
+    const asura = document.getElementById('get-images');
+    const eventSource = new EventSource("/admin/api/getimages");
+
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.progress <= 100) {
+            asura.innerHTML = `${Math.round(
+                data.progress
+            )}%`;
+            asura.style.width = data.progress + "%";
+        }
+        if (data.done) {
+            progressDiv.innerHTML +=
+                "<br>Build completed! Images updated: " + data.updatedRows;
+            eventSource.close();
+
+            if (data.updatedRows > 0)
+                buildJson();
+        }
+        if (data.error) {
+            progressDiv.innerHTML +=
+                data.error;
+            eventSource.close();
+        }
+    };
+
+    eventSource.onerror = () => {
+        progressDiv.innerHTML += "<br>Error occurred";
+        eventSource.close();
+    };
+});

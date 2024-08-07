@@ -26,7 +26,7 @@ export default async function downloadImage(mid, url) {
     } catch (err) {
         console.error(err);
     }
-    return imagename;
+    return url;
 
 
 }
