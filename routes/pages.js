@@ -3,7 +3,6 @@ import manhwaController from '../controllers/Manhwa.js';
 import genreModel from '../models/Genre.js';
 import passport from 'passport';
 import auth from '../controllers/Auth.js';
-import readFromJson from '../utils/getFromJson.js';
 import downloadImage from '../utils/downloadImage.js'
 import pageModel from '../models/Page.js';
 
@@ -62,7 +61,7 @@ router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
         if (!manhwa) {
-            res.redirect('/manhwa?page=1');
+            res.redirect('/manhwas/1');
             return false;
         }
         [manhwa] = manhwa;
@@ -77,10 +76,6 @@ router.get('/manhwa/:id', async (req, res, next) => {
     }
 });
 
-
-router.get('/api/manhwas', async (req, res, next) => {
-    await readFromJson(req, res, next);
-});
 
 router.get('/register', (req, res, next) => {
     if (req.session.user == undefined)

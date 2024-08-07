@@ -1,5 +1,4 @@
 import express from 'express';
-import admin from '../controllers/Admin.js';
 import page from '../models/Page.js';
 import manhwaController from '../controllers/Manhwa.js';
 

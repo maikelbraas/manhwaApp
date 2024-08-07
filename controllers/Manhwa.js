@@ -1,7 +1,6 @@
 import manhwaModel from '../models/Manhwa.js';
 import manhwaCheckSpecific from '../utils/manhwaCheckSpecific.js';
 import genreCheck from '../utils/genreCheck.js';
-import readFromJson from '../utils/getFromJson.js';
 import buildJson from '../utils/buildJson.js';
 import downloadImage from '../utils/downloadImage.js';
 import manhwaCheckUpdate from '../utils/manhwaCheckUpdate.js';
@@ -90,10 +89,6 @@ class Manhwa {
     }
 
     static async getManhwas(req, res, next) {
-        // if (!req.session.hasOwnProperty('manhwas')) {
-        //     req.session.manhwas = await manhwaModel.getAllManhwas();
-        // }
-        // return req.session.manhwas;
         let manhwas = await manhwaModel.getAllManhwasLimit(req.params.page);
         return manhwas;
     }
@@ -128,10 +123,6 @@ class Manhwa {
         } catch (e) {
             console.log(e);
         }
-    }
-
-    static async getManhwasFromJson(req, res, next) {
-        return await readFromJson();
     }
 
     static async getLastUpdated(req, res, next) {
