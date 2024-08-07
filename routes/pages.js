@@ -2,9 +2,8 @@ import express from 'express';
 import manhwaController from '../controllers/Manhwa.js';
 import genreModel from '../models/Genre.js';
 import passport from 'passport';
-import auth from '../controllers/Auth.js';
-import downloadImage from '../utils/downloadImage.js'
 import pageModel from '../models/Page.js';
+import page from '../controllers/Page.js';
 
 const router = express.Router();
 
@@ -47,16 +46,6 @@ router.get('/siteUpdates', async (req, res, next) => {
 });
 
 
-router.get('/getimages', async (req, res, next) => {
-    let manhwas = await manhwaController.getManhwas(req, res, next);
-    for (let manhwa of manhwas) {
-        let imagename = await downloadImage(manhwa.mid, manhwa.image);
-        await manhwaController.updateImageOfManhwa(manhwa.mid, imagename);
-    }
-    res.end();
-});
-
-
 router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
@@ -67,8 +56,6 @@ router.get('/manhwa/:id', async (req, res, next) => {
         [manhwa] = manhwa;
         if (typeof req.session.user != 'undefined')
             manhwa.saved = await manhwaController.getSavedManhwaChapter(req, res, next);
-
-        manhwa.genres = await genreModel.getAllGenresOfManhwa(req.params.id);
 
         res.render('layout', { template: 'pages/manhwa.ejs', manhwa });
     } catch (error) {
@@ -85,12 +72,12 @@ router.get('/register', (req, res, next) => {
 })
 
 router.post('/register', async (req, res, next) => {
-    await auth.register(req, res, next);
+    await page.register(req, res, next);
 })
 
 router.get('/login', (req, res, next) => {
     if (req.session.user == undefined)
-        auth.showLoginForm(req, res, next);
+        page.showLoginForm(req, res, next);
     else
         res.redirect('/auth/savedmanhwas');
 });
@@ -100,8 +87,7 @@ router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) { return next(err); }
         if (!user) {
-            // Authentication failed
-            res.flash(info.message); // Set the flash message
+            res.flash(info.message);
             return res.redirect('/login');
         }
         req.logIn(user, (err) => {

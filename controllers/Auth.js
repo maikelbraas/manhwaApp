@@ -1,74 +1,22 @@
-import user from '../models/User.js';
-import isAuthenticated from '../utils/checkAuth.js';
 import manhwaModel from '../models/Manhwa.js';
 import checkSingle from '../utils/getAllChapterLinks.js';
 import checkSingleDemon from '../utils/getAllChapterLinksDemon.js';
+import ChapterSaved from '../models/ChaptersSaved.js';
 
 class Auth {
-    static async register(req, res, next) {
-        try {
-            let errors = [];
-            const { username, password, confpassword } = req.body;
-            if (password != confpassword)
-                errors.push('Passwords are not the same.');
-            if (password.length < 8) {
-                errors.push('password needs to be between 8 and 20 characters.');
-            }
-            if (!/[a-z]/g.test(password)) {
-                errors.push('password needs atleast 1 lowercase.');
-            }
-            if (!/[A-Z]/g.test(password)) {
-                errors.push('password needs atleast 1 UPPERCASE.');
-            }
-            if (!/\d/g.test(password)) {
-                errors.push('password needs atleast 1 number.');
-            }
-            if (!/[#$@!%&*?]/g.test(password)) {
-                errors.push('password needs atleast 1 special character.');
-            }
-            // if (!/^(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z]{8,20}$/.test(password)) {
-            //     errors.push('password needs to be between 8 and 20 characters, atleast 1 number and 1 special character.');
-            // }
-
-            const existingUser = await user.findByUsernameOrEmail(username);
-
-            if (existingUser.length > 0)
-                errors.push('Account already exists.')
-
-            if (errors.length > 0) {
-                res.flash(errors);
-                return res.redirect('/register');
-                // return res.render('layout', { template: 'pages/register.ejs', errors })
-            }
-
-            const userId = await user.create(username, password);
-            res.flash('Account created!');
-            console.log('Acount created');
-            return res.redirect('/login');
-        } catch (err) {
-            console.log(err);
-            // return res.render('layout', { template: 'pages/register.ejs', errors: ['Er is iets fout gegaan met het aanmaken van je account.'] })
-            return res.redirect('/register')
-        }
-    }
-
-    static showLoginForm(req, res, next) {
-        res.render('layout', { template: 'pages/login.ejs' });
-
-    }
 
     static async saveOrUpdateChapter(req, res, next) {
         const chapter = req.body.chapternumber;
         const userid = req.session.user.id;
-        const existingChapter = await user.getChapter(userid, req.params.id);
+        const existingChapter = await ChapterSaved.getChapter(userid, req.params.id);
         const chapterExists = await manhwaModel.getCurrentChapter(req.params.id, chapter);
         if (existingChapter.length > 0) {
             if (chapterExists.length > 0)
-                await user.updateChapter(chapter, req.params.id, userid);
+                await ChapterSaved.updateChapter(chapter, req.params.id, userid);
             else
                 res.flash('Input chapter does not exist');
         } else {
-            await user.saveChapter(chapter, req.params.id, req.session.user.id);
+            await ChapterSaved.saveChapter(chapter, req.params.id, req.session.user.id);
             let chapters;
             if (req.params.id.includes('mgdemon')) {
                 chapters = await checkSingleDemon(req.params.id, null, null);
@@ -125,6 +73,28 @@ class Auth {
         const mid = req.params.mid;
         const uid = req.session.user.id;
         await manhwaModel.patchSaved(mid, uid);
+    }
+
+    static async getSavedManhwas(req, res, next) {
+        try {
+            const userid = req.session.user.id;
+            const manhwas = await manhwaModel.getSavedManhwas(userid);
+            for (let manhwa of manhwas) {
+                const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
+                manhwa.link = link.chapter_link;
+                const next = await manhwaModel.getNextChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
+                manhwa.next = "";
+                if (next.length > 0)
+                    manhwa.next = next[0].chapter_link;
+            }
+            return manhwas;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static async updateImageOfManhwa(mid, imagename) {
+        await manhwaModel.updateImageOfManhwa(mid, imagename);
     }
 }
 

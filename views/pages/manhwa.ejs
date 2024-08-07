@@ -38,9 +38,9 @@
         <h6 class="card-subtitle px-1 mb-1">Description:</h6>
         <p class="card-text mb-2 card-text-single px-1"><%- manhwa.content %></p>
         <div class="mb-4 px-1">
-          Genres: <% for(let genre of manhwa.genres){ %>
+          Genres: <% if(manhwa.genres != null) for(let genre of manhwa.genres.split(',')){ %>
           <span class="badge genre-badge me-1"
-            ><i class="fas fa-fist-raised"><%- genre.name %></i>
+            ><i class="fas fa-fist-raised"><%- genre %></i>
           </span>
           <% } %>
         </div>

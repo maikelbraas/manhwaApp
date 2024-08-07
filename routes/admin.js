@@ -1,6 +1,7 @@
 import express from 'express';
 import page from '../models/Page.js';
 import manhwaController from '../controllers/Manhwa.js';
+import auth from '../controllers/Auth.js';
 
 const router = express.Router();
 
@@ -48,6 +49,15 @@ router.get('/api/specific/:id', async (req, res, next) => {
         'Content-Encoding': 'none'
     });
     await manhwaController.checkSpecific(req, res, next);
+});
+
+router.get('/getimages', async (req, res, next) => {
+    let manhwas = await manhwaController.getManhwas(req, res, next);
+    for (let manhwa of manhwas) {
+        let imagename = await downloadImage(manhwa.mid, manhwa.image);
+        await auth.updateImageOfManhwa(manhwa.mid, imagename);
+    }
+    res.end();
 });
 
 

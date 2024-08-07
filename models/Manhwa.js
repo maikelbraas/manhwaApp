@@ -1,10 +1,16 @@
 import connect from '../utils/Database.js';
-import bcrypt from 'bcryptjs';
 
 class Manhwa {
 
     static async findManhwaById(id) {
-        const query = "SELECT * FROM manhwas WHERE mid = ?";
+        const query = `SELECT 
+m.*,
+GROUP_CONCAT(g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
+FROM manhwas m
+LEFT JOIN manhwa_genre mg ON m.mid = mg.manhwaid
+LEFT JOIN genres g ON mg.genreid = g.id
+WHERE m.mid = ?
+GROUP BY m.id`;
         const [rows] = await connect.execute(query, [id]);
         return rows;
     }
@@ -154,23 +160,6 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
         } catch (e) {
             console.log(e);
         }
-    }
-
-    static async saveLastRun(lastPage, site) {
-        try {
-            const query = "INSERT INTO runJson (lastPage, site) VALUES (?, ?)";
-            const [result] = await connect.execute(query, [lastPage, site]);
-
-            return result.insertId;
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    static async getLastRun(site) {
-        const query = "SELECT * FROM runJson WHERE site = ? ORDER BY id DESC LIMIT 1";
-        const [rows] = await connect.execute(query, [site]);
-        return rows;
     }
 
     static async deleteSaved(mid, uid) {

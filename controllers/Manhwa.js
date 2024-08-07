@@ -78,10 +78,6 @@ class Manhwa {
         return;
     }
 
-    static async updateImageOfManhwa(mid, imagename) {
-        await manhwaModel.updateImageOfManhwa(mid, imagename);
-    }
-
     static async getAllManhwas() {
         let manhwas = await manhwaModel.getAllManhwasAndGenres();
         global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
@@ -107,23 +103,6 @@ class Manhwa {
         return chapterData
     }
 
-    static async getSavedManhwas(req, res, next) {
-        try {
-            const userid = req.session.user.id;
-            const manhwas = await manhwaModel.getSavedManhwas(userid);
-            for (let manhwa of manhwas) {
-                const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
-                manhwa.link = link.chapter_link;
-                const next = await manhwaModel.getNextChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
-                manhwa.next = "";
-                if (next.length > 0)
-                    manhwa.next = next[0].chapter_link;
-            }
-            return manhwas;
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     static async getLastUpdated(req, res, next) {
         const manhwas = await manhwaModel.getLastUpdated();

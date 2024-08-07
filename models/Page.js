@@ -1,6 +1,5 @@
 import connect from '../utils/Database.js';
 
-
 class Page {
 
     static async getUpdates() {
