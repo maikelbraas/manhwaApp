@@ -10,9 +10,9 @@
     localStorage.setItem("manhwas", JSON.stringify(manhwas));
     document.cookie = 'newBuild=false;SameSite=Lax';
     }
-  //document.addEventListener("DOMContentLoaded", (event) => {
-  //window.scrollTo(0, 1);
-  //});
+  document.addEventListener("DOMContentLoaded", (event) => {
+    window.scrollTo(0, 1);
+  });
 </script>
 <footer class="bg-dark mt-auto align-items-center d-flex row py-2 me-0">
   <div class="row col-md-6 align-items-center">
@@ -26,6 +26,17 @@
     <span class="col text-body-secondary">© Hobby project, 07-2024</span>
     <span class="col-md text-body-secondary ps-3"
       >Contact: manhwasaver@gmail.com</span
+    >
+    <span class="col"
+      ><a href="https://github.com/maikelbraas/manhwaApp" target="_blank">
+        <button id="running" class="button">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          Github
+        </button>
+      </a></span
     >
   </div>
   <div class="row col-md-6 align-items-center me-0 ps-3">
