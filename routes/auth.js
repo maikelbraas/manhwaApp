@@ -3,15 +3,12 @@ import auth from '../controllers/Auth.js';
 
 const router = express.Router();
 
-
-
 router.get('/logout', (req, res, next) => {
     req.logout((err) => {
         if (err) return next(err);
         res.redirect('/');
     })
 });
-
 
 router.get('/savedmanhwas', async (req, res, next) => {
     const manhwas = await auth.getSavedManhwas(req, res, next);
@@ -28,7 +25,6 @@ router.get('/updatesavedmanhwa', async (req, res, next) => {
     await auth.updateSavedManhwa(req, res, next);
 })
 
-
 router.post('/chapter/:id', async (req, res, next) => {
     await auth.saveOrUpdateChapter(req, res, next);
 })
@@ -42,7 +38,5 @@ router.patch('/patch/:mid', async (req, res, next) => {
     await auth.patchSaved(req, res, next);
     next();
 })
-
-
 
 export default router;

@@ -40,8 +40,6 @@ router.get('/api/manhwa', async (req, res, next) => {
     await manhwaController.checkInsert(req, res, next);
 });
 
-
-
 router.get('/api/specific/:id', async (req, res, next) => {
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
@@ -80,7 +78,5 @@ router.get('/api/getimages', async (req, res, next) => {
         return;
     }
 });
-
-
 
 export default router;

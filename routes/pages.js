@@ -1,6 +1,5 @@
 import express from 'express';
 import manhwaController from '../controllers/Manhwa.js';
-import genreModel from '../models/Genre.js';
 import passport from 'passport';
 import pageModel from '../models/Page.js';
 import page from '../controllers/Page.js';
@@ -11,7 +10,6 @@ router.get('/', async (req, res, next) => {
     let manhwas = await manhwaController.getLastUpdated(req, res, next);
     return res.render('layout', { template: 'pages/index.ejs', manhwas });
 });
-
 
 router.get('/manhwas/:page', async (req, res, next) => {
 
@@ -45,7 +43,6 @@ router.get('/siteUpdates', async (req, res, next) => {
     res.render('layout', { template: 'pages/siteUpdates.ejs', updates });
 });
 
-
 router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
@@ -62,7 +59,6 @@ router.get('/manhwa/:id', async (req, res, next) => {
         console.log(error);
     }
 });
-
 
 router.get('/register', (req, res, next) => {
     if (req.session.user == undefined)

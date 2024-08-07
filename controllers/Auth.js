@@ -30,9 +30,7 @@ class Auth {
             }
         }
         res.redirect('/auth/savedmanhwas');
-        // next();
     }
-
 
     static async updateSavedManhwa(req, res, next) {
         let chapters = [];

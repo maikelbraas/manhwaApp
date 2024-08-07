@@ -1,5 +1,4 @@
 import connect from '../utils/Database.js';
-import bcrypt from 'bcryptjs';
 
 class ChapterSaved {
 
