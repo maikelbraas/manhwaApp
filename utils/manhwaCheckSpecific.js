@@ -25,14 +25,12 @@ export default async function manhwaCheck(req, res, next) {
     async function checkSingle(checkSingleManhwa) {
         try {
             let checkManhwa = ["fdsfdsdfs"];
-            let checkIfSaved;
 
             let name = manga.slice(0, -5).replaceAll('-', ' ');
             name = name.replace("25", '').replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%27", "'").replaceAll("%2C", ",").replaceAll("%21", "!").replaceAll("%3F", "?").replaceAll("%2D", '-').replaceAll("%3A", ':');
             let slug = manga;
-            let mid = name.replaceAll(' ', '-');
+            let mid = encodeURIComponent(name.replaceAll(' ', '-').replaceAll("'", ""));
             checkManhwa = await manhwaModel.findManhwaById("mgdemon-" + mid);
-            checkIfSaved = await manhwaModel.findSavedManhwa("mgdemon-" + mid, req.user.id)
             if (checkManhwa.length > 0)
                 return false;
 
@@ -53,9 +51,6 @@ export default async function manhwaCheck(req, res, next) {
             let baseurl = "https://mgdemon.org/";
             let descriptionSlice = single.slice(single.search('<p class="description">'), single.search('<section id="chapters" class="on">'));
             let description = descriptionSlice.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "");
-            let chapterLinks = [];
-            if (checkIfSaved.length > 0)
-                chapterLinks = await searchChapters(single, mid)
 
             let newObj = {
                 title: name,
@@ -68,25 +63,12 @@ export default async function manhwaCheck(req, res, next) {
                 baseurl: baseurl,
                 genres: genres,
                 status: status,
-                manhwaChapters: chapterLinks
+                manhwaChapters: []
             }
             manhwa = newObj;
 
         } catch (e) {
             console.log(e);
         }
-    }
-
-    async function searchChapters(content, name) {
-        //Get chapters links
-        let chapterLinks = [];
-        content.slice(content.search('class="chapter-list"'));
-        let allNumber = content.split('data-chapterno="');
-        for (let number of allNumber) {
-            let chapterNum = number.split('"')[0];
-            if (!isNaN(parseFloat(chapterNum)))
-                chapterLinks.push({ link: `https://mgdemon.org/manga/${name}/chapter/${chapterNum}-VA54`, number: chapterNum })
-        }
-        return chapterLinks;
     }
 }

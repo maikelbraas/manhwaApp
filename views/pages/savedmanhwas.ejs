@@ -69,7 +69,7 @@
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="hiatus">
           <% for(let manhwa of manhwas){
-          if(manhwa.status.toLowerCase().replace(/\s/g, '') == 'hiatus' &&
+          if(manhwa.status.toLowerCase() == 'hiatus' &&
           manhwa.chapter.toFixed(1) == manhwa.chapters.toFixed(1) &&
           !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <%
           manhwa.used = true;}} %>
@@ -127,7 +127,7 @@
       <div class="manhwa-rows tabindex="0">
         <div class="devider card-group" id="completed">
           <% for(let manhwa of manhwas){
-          if(manhwa.status.toLowerCase().replace(/\s/g, '') == 'completed' &&
+          if(manhwa.status.toLowerCase() == 'completed' &&
           manhwa.chapter.toFixed(1) != manhwa.chapters.toFixed(1) &&
           !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <%
           manhwa.used = true;}} %>
@@ -157,7 +157,7 @@
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="dropped">
           <% for(let manhwa of manhwas){
-          if(manhwa.status.toLowerCase().replace(/\s/g, '') == 'dropped' &&
+          if(manhwa.status.toLowerCase() == 'dropped' &&
           !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <%
           manhwa.used = true;}} %>
         </div>

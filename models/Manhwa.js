@@ -261,6 +261,16 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
         }
     }
 
+    static async getAllManhwasByOrigin(origin) {
+        try {
+            const query = `SELECT * FROM manhwas WHERE status != 'Dropped' AND mid LIKE ?`;
+            const [rows] = await connect.execute(query, [origin]);
+            return rows;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 }
 
 export default Manhwa;

@@ -1,89 +1,52 @@
 import manhwaModel from '../models/Manhwa.js';
-import genreModel from '../models/Genre.js';
-import manhwaCheck from '../utils/manhwaCheckAsura.js';
-import manhwaCheckReaper from '../utils/manhwaCheckReaper.js';
-import manhwaCheckAsuraUpdate from '../utils/manhwaCheckAsuraUpdate.js';
-import manhwaCheckReaperUpdate from '../utils/manhwaCheckReaperUpdate.js';
-import manhwaCheckFlame from '../utils/manhwaCheckFlame.js';
-import manhwaCheckFlameUpdate from '../utils/manhwaCheckFlameUpdate.js';
 import manhwaCheckSpecific from '../utils/manhwaCheckSpecific.js';
-import manhwaCheckSpecificUpdate from '../utils/manhwaCheckSpecificUpdate.js';
 import genreCheck from '../utils/genreCheck.js';
-import writeToJson from '../utils/writeToJson.js';
-import updateToJson from '../utils/updateToJson.js';
 import readFromJson from '../utils/getFromJson.js';
 import buildJson from '../utils/buildJson.js';
 import downloadImage from '../utils/downloadImage.js';
+import manhwaCheckUpdate from '../utils/manhwaCheckUpdate.js';
+import manhwaCheck from '../utils/manhwaCheck.js';
 
 class Manhwa {
     static async checkInsert(req, res, next) {
-        let manhwasReaper = await manhwaCheckReaper(req, res, next);
-        // let manhwasReaper = [];
-        if (manhwasReaper.length > 0) {
-            for (let manhwa of manhwasReaper) {
-                let image = await downloadImage(manhwa.mid, manhwa.image);
-                await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
-                for (let chapter of manhwa.manhwaChapters) {
-                    await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+        let sources = [{ baseurl: 'https://flamecomics.me/', name: 'flame' }];
+        let totalCreated = 0;
+        for (let source of sources) {
+            let manhwasCreate = await manhwaCheck(req, res, next, source.baseurl, source.name);
+            totalCreated += manhwasCreate.length;
+            if (manhwasCreate.length > 0) {
+                for (let manhwa of manhwasCreate) {
+                    let image = await downloadImage(manhwa.mid, manhwa.image);
+                    await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+                    await genreCheck(req, res, next, manhwa);
                 }
             }
         }
-        let manhwasFlame = await manhwaCheckFlame(req, res, next);
-        // console.log(manhwasReaper);
-        if (manhwasFlame.length > 0) {
-            for (let manhwa of manhwasFlame) {
-                let image = await downloadImage(manhwa.mid, manhwa.image);
-                await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
-                for (let chapter of manhwa.manhwaChapters) {
-                    await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-                }
-            }
-        }
-        res.flash(`New manhwas added: ${manhwasReaper.length + manhwasFlame.length}`);
-        res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100 }, done: true, createdRows: manhwasReaper.length + manhwasFlame.length })}\n\n`);
+        res.flash(`New manhwas added: ${totalCreated}`);
+        res.write(`data: ${JSON.stringify({ progress: 100, done: true, createdRows: totalCreated })}\n\n`);
         res.end();
         return;
     }
 
     static async checkUpdate(req, res, next) {
-        // let manhwasReaper = [];
-        let manhwasReaper = await manhwaCheckReaperUpdate(req, res, next);
-        if (manhwasReaper.length > 0) {
-            for (let manhwa of manhwasReaper) {
-                await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
-                for (let chapter of manhwa.manhwaChapters) {
-                    await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+        let sources = ['reaper', 'flame', 'mgdemon'];
+        let totalUpdated = 0;
+        for (let source of sources) {
+            let updates = await manhwaCheckUpdate(req, res, next, source);
+            if (updates.length > 0) {
+                for (let manhwa of updates) {
+                    await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+                    await genreCheck(req, res, next, manhwa);
+                    for (let chapter of manhwa.manhwaChapters) {
+                        await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+                    }
                 }
             }
-        }
-        // let manhwasFlame = [];
-        let manhwasFlame = await manhwaCheckFlameUpdate(req, res, next);
-        if (manhwasFlame.length > 0) {
-            for (let manhwa of manhwasFlame) {
-                await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
-                for (let chapter of manhwa.manhwaChapters) {
-                    await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-                }
-            }
-        }
-        let savedDemonManhwa = await manhwaModel.getDemonManhwa();
-        let manhwasDemon = await manhwaCheckSpecificUpdate(req, res, next, savedDemonManhwa);
-        if (manhwasDemon.length > 0) {
-            for (let manhwa of manhwasDemon) {
-                await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-                await genreCheck(req, res, next, manhwa);
-                for (let chapter of manhwa.manhwaChapters) {
-                    await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-                }
-            }
+            totalUpdated += updates.length;
         }
 
-        res.flash(`Manhwas updated: ${manhwasReaper.length + manhwasFlame.length + manhwasDemon.length}`);
-        res.write(`data: ${JSON.stringify({ progress: { asura: 100, reaper: 100, flame: 100, demon: 100 }, done: true, updatedRows: manhwasReaper.length + manhwasFlame.length + manhwasDemon.length })}\n\n`);
+        res.flash(`Manhwas updated: ${totalUpdated}`);
+        res.write(`data: ${JSON.stringify({ progress: 100, done: true, updatedRows: totalUpdated })}\n\n`);
         res.end();
         return;
     }

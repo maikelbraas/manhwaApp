@@ -1,23 +1,24 @@
 import manhwaModel from '../models/Manhwa.js';
-export default async function checkSingle(mid) {
+export default async function checkChapterLinks(mid, jsonSingle, manhwa) {
     try {
-        let [manhwa] = await manhwaModel.findManhwaById(mid);
-        let jsonSingle;
-        let responseSingleOr;
-        responseSingleOr = await fetch(`${manhwa.baseurl}series/${manhwa.slug}`);
-        jsonSingle = await responseSingleOr.text();
+        if (manhwa == null)
+            [manhwa] = await manhwaModel.findManhwaById(mid);
+        if (jsonSingle == null) {
+            let responseSingleOr = await fetch(`${manhwa.baseurl}series/${manhwa.slug}`);
+            jsonSingle = await responseSingleOr.text();
+        }
         //Get chapters links
         let chapterLinks = [];
-        let chapterLinkSlice = jsonSingle.slice(jsonSingle.search('<div class="eplister" id="chapterlist">'), jsonSingle.search('var chapterSearchNotFound'));
-        let splitted = chapterLinkSlice.split('<li data-num="');
-        splitted.shift();
-        for (let splits of splitted) {
+        let reg = new RegExp(String.raw`href=".*?-chapter.*?"`, "gi");
+        let chapterLinksRaw = jsonSingle.match(reg).join('').replaceAll('"', '').split('href=');
+        for (let splits of chapterLinksRaw) {
             try {
-                let link = splits.split('href=')[1].split('"')[1];
-                let number = parseFloat(splits.split(' ')[0].split('"')[0])
-                let findChapter = await manhwaModel.findChapterByMidAndLink(manhwa.mid, link);
-                if (findChapter.length == 0)
-                    chapterLinks.push({ link, number })
+                if (splits != "") {
+                    let number = parseFloat(splits.split('chapter').pop().slice(0, -1).substring(1).replace(/-/g, '.').match(/\b\d+(?:.\d+)?/, '')[0]).toFixed(1);
+                    let findChapter = await manhwaModel.findChapterByMidAndLink(manhwa.mid, splits);
+                    if (findChapter.length == 0)
+                        chapterLinks.push({ link: splits, number })
+                }
             } catch (e) {
                 console.log(e);
             }

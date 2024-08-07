@@ -147,6 +147,8 @@ function createBar(name) {
 document.getElementById("findSpecific").addEventListener("click", () => {
     let promptAnswer = prompt('what manhwa do you want to get?');
     if (promptAnswer != '' && promptAnswer != false && promptAnswer != null) {
+
+        promptAnswer = promptAnswer.split('manga')[1].split('/')[1];
         const progressDiv = document.getElementById("progress");
         progressDiv.innerHTML = "Starting fetch...";
         createBar("get-single");
