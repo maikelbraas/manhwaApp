@@ -46,7 +46,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 if (source == 'mgdemon')
                     chapterLinks = await getAllChapterLinksDemon(manhwa.mid, data.jsonSingle, manhwa.slug.slice(0, -5));
                 else
-                    chapterLinks = await searchChapters(manhwa.mid, data.jsonSingle, manhwa);
+                    chapterLinks = await getAllChapterLinks(manhwa.mid, data.jsonSingle, manhwa);
             }
             //Fix status when site didn't
             data.status = await checkStatus(data.status.trim(), chapterLinks, data.chapter);
