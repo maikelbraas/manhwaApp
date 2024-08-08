@@ -43,9 +43,10 @@ router.get('/siteUpdates', async (req, res, next) => {
     res.render('layout', { template: 'pages/siteUpdates.ejs', updates });
 });
 
-
 router.get('/api/manhwas/:num', async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('totalPages', Math.ceil(global.manhwas.totalManhwas / 10));
+    res.setHeader('totalManhwas', global.manhwas.totalManhwas);
     const start = (parseInt(req.params.num) - 1) * 10;
     const end = start + 10;
     res.json(global.manhwas.manhwas.slice(start, end));
