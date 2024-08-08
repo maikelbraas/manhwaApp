@@ -20,12 +20,10 @@ import isAuthenticated from './utils/checkAuth.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-let allVisitors = [];
 const PORT = process.env.PORT;
 const HOST_NAME = process.env.HOST_NAME;
 const counters = {};
 const app = express();
-let visitorsTotal = 0;
 let visitedPages = [];
 global.manhwas;
 global.buildDate = Date.now();
@@ -61,7 +59,6 @@ app.use(async (req, res, next) => {
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     req.session.counter = counters;
-    req.session.visitorsTotal = visitorsTotal;
     if (global.manhwas) {
         res.locals.manhwasSearch = global.manhwas.manhwas;
         res.locals.totalManhwas = global.manhwas.totalManhwas;
@@ -70,10 +67,6 @@ app.use((req, res, next) => {
     if (req.headers.referer != undefined && !req.headers.referer.includes('login'))
         visitedPages.push(req.headers.referer);
     req.session.visitedPages = visitedPages;
-    if (!allVisitors.includes(req.ip)) {
-        visitorsTotal++;
-        allVisitors.push(req.ip);
-    }
     if (req.user != undefined) {
         req.session.user = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };
         res.locals.currentUser = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };

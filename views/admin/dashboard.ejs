@@ -4,13 +4,16 @@
     <div class="card mb-3 col" style="max-width: 18rem">
       <h2 class="card-header">Unique total visitors</h2>
       <p class="card-body">
-        <% let visitors = 0; let visitorsMob = 0; for(let count in counter){
+        <% console.log(counter); let visitors = 0; let visitorsMob = 0; let visitorsTotal = 0; let ips = 0; for(let count in counter){ 
+          if(!count.includes('new') && count.includes('visitor'))visitorsTotal += parseInt(counter[count])
+          if(count.includes('ip'))ips += parseInt(counter[count])
         if(count.includes('new-visitors')){ %> <% count.includes('mobile') ?
         visitorsMob += parseInt(counter[count]) : visitors +=
         parseInt(counter[count])}} %> 
         <%- `<br>Total visitors desktop: ${visitors}` %>
         <%- `<br>Total visitors mobile: ${visitorsMob}` %>
-        <%- `<br>Total visitors non-unique: ${visitorsTotal}` %>
+        <%- `<br>Total visitors unique: ${visitorsTotal}` %>
+        <%- `<br>Total visitors unique ips: ${ips}` %>
       </p>
     </div>
     <div class="col">
