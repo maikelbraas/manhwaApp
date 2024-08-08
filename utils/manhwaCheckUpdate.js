@@ -93,9 +93,9 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
             status: status,
             manhwaChapters: chapterLinks
         }
-        let update = await checkUpdate(newObj, manhwa);
-        if (update != false)
-            manhwasUpdate.push(newObj);
+        // let update = await checkUpdate(newObj, manhwa);
+        // if (update != false)
+        manhwasUpdate.push(newObj);
     }
 
     async function checkUpdate(fetchManhwa, existManhwa) {
