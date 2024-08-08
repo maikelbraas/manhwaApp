@@ -43,6 +43,14 @@ router.get('/siteUpdates', async (req, res, next) => {
     res.render('layout', { template: 'pages/siteUpdates.ejs', updates });
 });
 
+
+router.get('/api/manhwas/:num', async (req, res, next) => {
+    res.setHeader('Content-Type', 'application/json');
+    const start = (parseInt(req.params.num) - 1) * 10;
+    const end = start + 10;
+    res.json(global.manhwas.manhwas.slice(start, end));
+});
+
 router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
