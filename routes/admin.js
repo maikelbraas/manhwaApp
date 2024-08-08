@@ -65,11 +65,9 @@ router.get('/api/getimages', async (req, res, next) => {
         for (let manhwa of manhwas) {
             progress = (nextImage / global.manhwas.totalManhwas) * 100;
             res.write(`data: ${JSON.stringify({ progress })}\n\n`);
-            let imagename = await downloadImage(manhwa.mid, manhwa.image);
-            await auth.updateImageOfManhwa(manhwa.mid, imagename);
+            await downloadImage(manhwa.mid, manhwa.image);
             nextImage++;
         }
-        res.flash(`Images updated: ${nextImage}`);
         res.write(`data: ${JSON.stringify({ progress: 100, done: true, updatedRows: nextImage })}\n\n`);
     } catch (error) {
         console.log(error);
