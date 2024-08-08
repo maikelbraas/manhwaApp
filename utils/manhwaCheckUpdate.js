@@ -56,6 +56,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
             data.chapter = chapterLinks.length != 0 ? chapterLinks[0].number : data.chapter;
             data.genres = data.genres.slice(2);
             data.status = data.status.trim();
+            manhwa.image = !data.image.includes('https://') ? "https://" + data.image : data.image;
 
             await createNewObj(manhwa, data.chapter, data.description, data.genres, data.status, chapterLinks, checkIfSaved);
         } catch (e) {
@@ -116,6 +117,9 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 if (genres[genres.length - 1].startsWith('\n')) {
                     genres.splice(genres.length - 1, 1);
                 }
+                //Get image
+                let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('fetchpriority="high"'));
+                let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
                 //Get description
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('itemprop="description">') + 23, jsonSingle.search('<div class="lastend">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
@@ -126,7 +130,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 let chapter;
                 let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
                 chapter = chapterSlice.split(' ')[3].split('<')[0];
-                return { genres, description, status, chapter, jsonSingle };
+                return { genres, description, status, chapter, image, jsonSingle };
             }
         } catch (err) {
             console.log(err);
@@ -148,6 +152,9 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 //Get description
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('<div class="entry-content entry-content-single" itemprop="description">'), jsonSingle.search('<div class="see-more">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
+                //Get image
+                let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('decoding="async"'));
+                let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
                 //Get status
                 let statusSlice = jsonSingle.slice(jsonSingle.search('class="status"'), jsonSingle.search('class="status"') + 100);
                 let status = statusSlice.split('>')[4].split('<')[0];
@@ -155,7 +162,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 let chapter;
                 let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
                 chapter = chapterSlice.split(' ')[3].split('<')[0];
-                return { genres, description, status, chapter, jsonSingle };
+                return { genres, description, status, chapter, image, jsonSingle };
             }
         } catch (err) {
             console.log(err);
@@ -176,6 +183,9 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
             //Get chapters from site
             let chapterSlice = jsonSingle.slice(jsonSingle.search('<strong class="chapter-title">'), jsonSingle.search('<strong class="chapter-title">') + 80);
             let chapter = chapterSlice.replace(/[^0-9]/g, '');
+            //get image from site
+            let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);
+            let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];
             //Get status from site
             let statusSlice = jsonSingle.slice(jsonSingle.search('<small>Status</small>'), jsonSingle.search('<small>Status</small>') + 80);
             let status = statusSlice.replace(/<[^>]*>?/gm, '').split('\n')[1];
@@ -183,7 +193,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
             let descriptionSlice = jsonSingle.slice(jsonSingle.search('<p class="description">'), jsonSingle.search('<section id="chapters" class="on">'));
             let description = descriptionSlice.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "");
             //Check if new chapters need to be fetched.
-            return { genres, description, status, chapter, jsonSingle };
+            return { genres, description, status, chapter, image, jsonSingle };
         } catch (err) {
             console.log(err);
             res.write(`data: ${JSON.stringify({ error: err })}\n\n`);
