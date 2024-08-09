@@ -269,6 +269,9 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             denied = denied || []
             let allowedLength = allowed.length;
 
+            let variablesTemp = [allowedLength, page];
+            let variables = allowed.concat(variablesTemp);
+
             const placeholders = allowed.map(() => '?').join(',');
             const excludePlaceholders = denied.map(() => '?').join(',');
             console.log(allowed);
@@ -308,7 +311,7 @@ WHERE m.mid NOT IN (
 GROUP BY m.mid
 ORDER BY m.title ASC 
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [allowed.toStrig(), allowed.length, ...denied, page]);
+                [rows] = await connect.execute(query, [...allowed, allowed.length, ...denied, page]);
             } else if (allowed.length > 0 && denied.length == 0) {
                 query = `SELECT
     m.id,
@@ -337,7 +340,7 @@ LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...allowed, allowedLength, page]);
+                [rows] = await connect.execute(query, variables);
             } else if (allowed.length == 0 && denied.length > 0) {
                 query = `SELECT
                 m.id,
