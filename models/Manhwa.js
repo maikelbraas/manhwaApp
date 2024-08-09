@@ -270,49 +270,17 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             let allowedLength = allowed.length;
 
             let variablesTemp = [allowedLength, page];
-            let variables = allowed.concat(variablesTemp);
+            for (let all of allowed) {
+                variablesTemp.push(parseInt(all));
+            }
 
             const placeholders = allowed.map(() => '?').join(',');
             const excludePlaceholders = denied.map(() => '?').join(',');
             console.log(allowed);
             console.log(denied);
             console.log(placeholders);
-            console.log(variables);
-            if (allowed.length > 0 && denied.length > 0) {
-                query = `SELECT
-    m.id,
-    m.mid,
-    m.title,
-    m.content,
-    m.slug,
-    m.media,
-    m.image,
-    m.chapters,
-    m.baseurl,
-    m.lastUpdate,
-    m.status,
-    COUNT(*) OVER() AS total,
-    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
-FROM manhwas m
-JOIN (
-    SELECT manhwaid
-    FROM manhwa_genre
-    WHERE genreid IN (${placeholders})
-    GROUP BY manhwaid
-    HAVING COUNT(DISTINCT genreid) = ?
-) mg ON m.mid = mg.manhwaid
-LEFT JOIN manhwa_genre mg2 ON m.mid = mg2.manhwaid
-LEFT JOIN genres g ON mg2.genreid = g.id
-WHERE m.mid NOT IN (
-        SELECT DISTINCT manhwaid
-        FROM manhwa_genre
-        WHERE genreid IN (${excludePlaceholders})
-      )
-GROUP BY m.mid
-ORDER BY m.title ASC 
-LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...allowed, allowed.length, ...denied, page]);
-            } else if (allowed.length > 0 && denied.length == 0) {
+            console.log(variablesTemp);
+            if (allowed.length > 0 && denied.length == 0) {
                 query = `SELECT
     m.id,
     m.mid,
@@ -340,7 +308,7 @@ LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [parseInt(...allowed), allowedLength, page]);
+                [rows] = await connect.execute(query, variablesTemp);
             } else if (allowed.length == 0 && denied.length > 0) {
                 query = `SELECT
                 m.id,
