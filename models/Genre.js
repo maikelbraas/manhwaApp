@@ -39,7 +39,7 @@ class Genre {
 
     static async getAllGenres() {
         const query =
-            "SELECT * FROM genres";
+            "SELECT * FROM genres ORDER BY name ASC";
         const [rows] = await connect.execute(query);
         return rows;
     }
