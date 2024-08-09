@@ -271,7 +271,7 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
 
             let variablesTemp = [allowedLength, page];
             for (let all of allowed) {
-                variablesTemp.push(parseInt(all));
+                variablesTemp.unshift(parseInt(all));
             }
 
             const placeholders = allowed.map(() => '?').join(',');
