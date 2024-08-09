@@ -360,7 +360,7 @@ LIMIT 6 OFFSET ?`;
             return rows;
         } catch (e) {
             console.log(e);
-            return rows;
+            return [];
         }
     }
 
