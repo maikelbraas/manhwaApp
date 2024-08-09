@@ -7,7 +7,8 @@ const connect = mysql.createPool({
     database: process.env.DATABASE,
     waitForConnections: true,
     connectionLimit: 130,
-    queueLimit: 0
+    queueLimit: 0,
+    charset: 'utf8mb4'
 });
 
 export default connect;
