@@ -12,7 +12,7 @@ router.get('/logout', (req, res, next) => {
 
 router.get('/savedmanhwas', async (req, res, next) => {
     const manhwas = await auth.getSavedManhwas(req, res, next);
-    res.render('layout', { template: 'pages/savedmanhwas.ejs', manhwas });
+    res.render('layout', { template: 'pages/savedmanhwas.ejs', manhwas, title: 'Saved Manhwas' });
 });
 
 router.get('/updatesavedmanhwa', async (req, res, next) => {

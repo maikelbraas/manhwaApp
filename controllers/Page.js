@@ -3,7 +3,7 @@ import user from "../models/User.js";
 class Page {
 
     static showLoginForm(req, res, next) {
-        res.render('layout', { template: 'pages/login.ejs' });
+        res.render('layout', { template: 'pages/login.ejs', title: 'Login' });
     }
 
     static async register(req, res, next) {

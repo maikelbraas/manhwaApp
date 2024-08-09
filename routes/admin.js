@@ -7,11 +7,11 @@ import downloadImage from '../utils/downloadImage.js';
 const router = express.Router();
 
 router.get('/dashboard', (req, res, next) => {
-    res.render('layout', { template: 'admin/dashboard.ejs', counter: req.session.counter })
+    res.render('layout', { template: 'admin/dashboard.ejs', counter: req.session.counter, title: 'Dashboard' })
 });
 
 router.get('/newUpdate', (req, res, next) => {
-    res.render('layout', { template: 'admin/newUpdate.ejs' })
+    res.render('layout', { template: 'admin/newUpdate.ejs', title: 'New site update' })
 });
 
 router.post('/newUpdate', async (req, res, next) => {

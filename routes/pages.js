@@ -8,14 +8,14 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     let manhwas = await manhwaController.getLastUpdated(req, res, next);
-    return res.render('layout', { template: 'pages/index.ejs', manhwas });
+    return res.render('layout', { template: 'pages/index.ejs', manhwas, title: 'Latest updates' });
 });
 
 router.get('/manhwas/:page', async (req, res, next) => {
 
     if (req.params.page > 0 && req.params.page <= Math.ceil(global.manhwas.totalManhwas / 6)) {
         let manhwas = await manhwaController.getManhwas(req, res, next);
-        return res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.params.page, totalManhwas: global.manhwas.totalManhwas });
+        return res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.params.page, totalManhwas: global.manhwas.totalManhwas, title: 'Page: ' + req.params.page });
     }
     return res.redirect('/manhwas/1');
 });
@@ -31,16 +31,16 @@ router.get('/api/jsonWrite', async (req, res, next) => {
 });
 
 router.get('/privacypolicy', async (req, res, next) => {
-    res.render('layout', { template: 'pages/privacypolicy.ejs' });
+    res.render('layout', { template: 'pages/privacypolicy.ejs', title: 'Privacy Policy' });
 });
 
 router.get('/cookiepolicy', async (req, res, next) => {
-    res.render('layout', { template: 'pages/cookiepolicy.ejs' });
+    res.render('layout', { template: 'pages/cookiepolicy.ejs', title: 'Cookie Policy' });
 });
 
 router.get('/siteUpdates', async (req, res, next) => {
     let updates = await pageModel.getUpdates();
-    res.render('layout', { template: 'pages/siteUpdates.ejs', updates });
+    res.render('layout', { template: 'pages/siteUpdates.ejs', updates, title: 'Site updates' });
 });
 
 router.get('/api/manhwas/:num', async (req, res, next) => {
@@ -63,7 +63,7 @@ router.get('/manhwa/:id', async (req, res, next) => {
         if (typeof req.session.user != 'undefined')
             manhwa.saved = await manhwaController.getSavedManhwaChapter(req, res, next);
 
-        res.render('layout', { template: 'pages/manhwa.ejs', manhwa });
+        res.render('layout', { template: 'pages/manhwa.ejs', manhwa, title: manhwa.title });
     } catch (error) {
         console.log(error);
     }
@@ -71,7 +71,7 @@ router.get('/manhwa/:id', async (req, res, next) => {
 
 router.get('/register', (req, res, next) => {
     if (req.session.user == undefined)
-        res.render('layout', { template: 'pages/register.ejs', errors: [] });
+        res.render('layout', { template: 'pages/register.ejs', errors: [], title: 'Register' });
     else
         res.redirect('/auth/savedmanhwas');
 })
