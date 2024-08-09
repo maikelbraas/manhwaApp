@@ -32,7 +32,7 @@ router.get('/manhwas/:page', async (req, res, next) => {
             return res.render('layout', { template: 'pages/manhwas.ejs', manhwas: data.manhwas, filter, page: req.params.page, manhwasTotal: global.manhwas.totalManhwas, title: 'Page: ' + req.params.page, genres: data.genres });
         } else if (Object.keys(req.query).length !== 0) {
             let data = await manhwaController.getFilteredManhwas(req, res, next);
-            let manhwasTotal = data.manhwas.length > 0 ? data.manhwas[0].total - 6 : 0
+            let manhwasTotal = data.manhwas.length != undefined ? data.manhwas[0].total - 6 : 0
             if (data.manhwas == false) {
                 res.flash(['remove', 'Genre combination could not be found.']);
             }
