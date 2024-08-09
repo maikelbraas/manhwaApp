@@ -281,7 +281,7 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
     m.status,
     count(m.mid) OVER() AS total,
     GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
-FROM Manhwas m
+FROM manhwas m
 JOIN (
     SELECT manhwaid
     FROM manhwa_genre
@@ -315,7 +315,7 @@ LIMIT 6 OFFSET ?`;
     m.status,
     count(m.mid) OVER() AS total,
     GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
-FROM Manhwas m
+FROM manhwas m
 JOIN (
     SELECT manhwaid
     FROM manhwa_genre
@@ -344,7 +344,7 @@ LIMIT 6 OFFSET ?`;
                 m.status,
     count(m.mid) OVER() AS total,
                 GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
-            FROM Manhwas m
+            FROM manhwas m
             LEFT JOIN manhwa_genre mg2 ON m.mid = mg2.manhwaid
             LEFT JOIN genres g ON mg2.genreid = g.id
             WHERE m.mid NOT IN (
