@@ -307,7 +307,7 @@ WHERE m.mid NOT IN (
 GROUP BY m.mid
 ORDER BY m.title ASC 
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...allowed, allowed.length, ...denied, page * 6]);
+                [rows] = await connect.execute(query, [...allowed, allowed.length, ...denied, page]);
             } else if (allowed.length > 0 && denied.length == 0) {
                 query = `SELECT
     m.id,
@@ -336,7 +336,7 @@ LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...allowed, allowed.length,]);
+                [rows] = await connect.execute(query, [...allowed, allowed.length, page]);
             } else if (allowed.length == 0 && denied.length > 0) {
                 query = `SELECT
                 m.id,
@@ -363,7 +363,7 @@ LIMIT 6 OFFSET ?`;
             GROUP BY m.mid
             ORDER BY m.title ASC
             LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...denied, (page * 6) - 6]);
+                [rows] = await connect.execute(query, [...denied, page]);
             }
             return rows;
         } catch (e) {
