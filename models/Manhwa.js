@@ -360,7 +360,7 @@ LIMIT 6 OFFSET ${page}`;
             GROUP BY m.mid
             ORDER BY m.title ASC
             LIMIT 6 OFFSET ${page}`;
-                    [rows] = await connect.execute(query, [...denied, page]);
+                    [rows] = await connect.execute(query, [...denied]);
                 }
             return rows;
         } catch (e) {
