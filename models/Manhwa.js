@@ -267,21 +267,46 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             page = page * 6;
             allowed = allowed || []
             denied = denied || []
-            let allowedLength = allowed.length;
-
-            let variablesTemp = [allowedLength];
-            for (let all of allowed) {
-                variablesTemp.unshift(parseInt(all));
-            }
 
             const placeholders = allowed.map(() => '?').join(',');
             const excludePlaceholders = denied.map(() => '?').join(',');
-            console.log(allowed);
-            console.log(denied);
-            console.log(placeholders);
-            console.log(variablesTemp);
-            if (allowed.length > 0 && denied.length == 0) {
+            if (allowed.length > 0 && denied.length > 0) {
                 query = `SELECT
+    m.id,
+    m.mid,
+    m.title,
+    m.content,
+    m.slug,
+    m.media,
+    m.image,
+    m.chapters,
+    m.baseurl,
+    m.lastUpdate,
+    m.status,
+    COUNT(*) OVER() AS total,
+    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
+FROM manhwas m
+JOIN (
+    SELECT manhwaid
+    FROM manhwa_genre
+    WHERE genreid IN (${placeholders})
+    GROUP BY manhwaid
+    HAVING COUNT(DISTINCT genreid) = ?
+) mg ON m.mid = mg.manhwaid
+LEFT JOIN manhwa_genre mg2 ON m.mid = mg2.manhwaid
+LEFT JOIN genres g ON mg2.genreid = g.id
+WHERE m.mid NOT IN (
+        SELECT DISTINCT manhwaid
+        FROM manhwa_genre
+        WHERE genreid IN (${excludePlaceholders})
+      )
+GROUP BY m.mid
+ORDER BY m.title ASC 
+LIMIT 6 OFFSET ${page}`;
+                [rows] = await connect.execute(query, [...allowed, allowed.length, ...denied, page]);
+            } else
+                if (allowed.length > 0 && denied.length == 0) {
+                    query = `SELECT
     m.id,
     m.mid,
     m.title,
@@ -308,9 +333,9 @@ LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
 LIMIT 6 OFFSET ${page}`;
-                [rows] = await connect.execute(query, variablesTemp);
-            } else if (allowed.length == 0 && denied.length > 0) {
-                query = `SELECT
+                    [rows] = await connect.execute(query, [...allowed, allowed.length]);
+                } else if (allowed.length == 0 && denied.length > 0) {
+                    query = `SELECT
                 m.id,
                 m.mid,
                 m.title,
@@ -334,9 +359,9 @@ LIMIT 6 OFFSET ${page}`;
                   )
             GROUP BY m.mid
             ORDER BY m.title ASC
-            LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...denied, page]);
-            }
+            LIMIT 6 OFFSET ${page}`;
+                    [rows] = await connect.execute(query, [...denied, page]);
+                }
             return rows;
         } catch (e) {
             console.log(e);
