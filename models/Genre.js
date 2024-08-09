@@ -37,6 +37,13 @@ class Genre {
         return rows;
     }
 
+    static async getAllGenres() {
+        const query =
+            "SELECT * FROM genres";
+        const [rows] = await connect.execute(query);
+        return rows;
+    }
+
 }
 
 export default Genre;

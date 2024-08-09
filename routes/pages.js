@@ -12,13 +12,36 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/manhwas/:page', async (req, res, next) => {
+    let filter = "?";
+    if (Object.keys(req.query).length > 0) {
+        let i = Object.keys(req.query).length - 1;
+        for (let genre in req.query) {
 
-    if (req.params.page > 0 && req.params.page <= Math.ceil(global.manhwas.totalManhwas / 6)) {
-        let manhwas = await manhwaController.getManhwas(req, res, next);
-        return res.render('layout', { template: 'pages/manhwas.ejs', manhwas, page: req.params.page, totalManhwas: global.manhwas.totalManhwas, title: 'Page: ' + req.params.page });
+            filter += `${genre}=${req.query[genre]}`;
+            if (i > 0) {
+                filter += '&';
+                i--;
+            }
+        }
+    } else {
+        filter = '';
     }
-    return res.redirect('/manhwas/1');
+    if (req.params.page > 0 && req.params.page <= Math.ceil(global.manhwas.totalManhwas / 6)) {
+        if (Object.keys(req.query).length === 0) {
+            let data = await manhwaController.getManhwas(req, res, next);
+            return res.render('layout', { template: 'pages/manhwas.ejs', manhwas: data.manhwas, filter, page: req.params.page, manhwasTotal: global.manhwas.totalManhwas, title: 'Page: ' + req.params.page, genres: data.genres });
+        } else if (Object.keys(req.query).length !== 0) {
+            let data = await manhwaController.getFilteredManhwas(req, res, next);
+            let manhwasTotal = data.manhwas.length > 0 ? data.manhwas[0].total - 6 : 0
+            if (data.manhwas == false) {
+                res.flash(['remove', 'Genre combination could not be found.']);
+            }
+            return res.render('layout', { template: 'pages/manhwas.ejs', manhwas: data.manhwas, filter, baseFilter: req.query, page: req.params.page, manhwasTotal, title: 'Filtered: ' + req.params.page, genres: data.genres });
+        }
+    }
+    return res.redirect('/manhwas/1' + filter);
 });
+
 
 router.get('/api/jsonWrite', async (req, res, next) => {
     res.writeHead(200, {

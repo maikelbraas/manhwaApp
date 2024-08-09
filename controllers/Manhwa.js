@@ -5,6 +5,7 @@ import buildJson from '../utils/buildJson.js';
 import downloadImage from '../utils/downloadImage.js';
 import manhwaCheckUpdate from '../utils/manhwaCheckUpdate.js';
 import manhwaCheck from '../utils/manhwaCheck.js';
+import genreModel from '../models/Genre.js';
 
 class Manhwa {
     static async checkInsert(req, res, next) {
@@ -68,8 +69,9 @@ class Manhwa {
 
     static async buildJson(req, res, next) {
         let manhwas = await manhwaModel.getAllManhwasAndGenres();
+        let genres = await genreModel.getAllGenres();
         await buildJson(manhwas);
-        global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
+        global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length, genres };
         global.buildDate = Date.now();
         if (res != null) {
             res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);
@@ -80,13 +82,15 @@ class Manhwa {
 
     static async getAllManhwas() {
         let manhwas = await manhwaModel.getAllManhwasAndGenres();
-        global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length };
-        return;
+        let genres = await genreModel.getAllGenres();
+        global.manhwas = { manhwas: manhwas, totalManhwas: manhwas.length, genres };
+        return manhwas;
     }
 
     static async getManhwas(req, res, next) {
         let manhwas = await manhwaModel.getAllManhwasLimit(req.params.page);
-        return manhwas;
+        let genres = await genreModel.getAllGenres();
+        return { manhwas, genres };
     }
 
     static async getManhwa(req, res, next) {
@@ -107,6 +111,24 @@ class Manhwa {
     static async getLastUpdated(req, res, next) {
         const manhwas = await manhwaModel.getLastUpdated();
         return manhwas;
+    }
+
+    static async getFilteredManhwas(req, res, next) {
+        const data = req.query;
+        const page = req.params.page;
+        let allowed = [];
+        let denied = [];
+        for (let filter in data) {
+            if (data[filter] == 'denied') {
+                denied.push(filter);
+            }
+            if (data[filter] == 'allowed') {
+                allowed.push(filter)
+            }
+        }
+
+        let genres = await genreModel.getAllGenres();
+        return { manhwas: await manhwaModel.getFilteredManhwa(allowed, denied, page), genres };
     }
 
 }

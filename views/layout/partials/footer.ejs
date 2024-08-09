@@ -11,7 +11,12 @@
     document.cookie = 'newBuild=false;SameSite=Lax';
     }
   document.addEventListener("DOMContentLoaded", (event) => {
-    window.scrollTo(0, 1);
+    if(!window.location.href.includes('#'))
+      window.scrollTo(0, 1);
+    else if(window.location.href.includes('#')){
+      const manhwaMid = window.location.href.split('#')[1];
+      document.getElementById(manhwaMid).parentNode.parentNode.parentNode.classList.add('show')
+    }
   });
 </script>
 <footer

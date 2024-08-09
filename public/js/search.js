@@ -28,7 +28,7 @@ search.addEventListener('focus', () => {
 })
 search.addEventListener('blur', (event) => {
     searchContainer.style.width = '240px';
-    searchContainer.style.right = '80px';
+    searchContainer.style.right = '50%';
     searchContainer.classList.add('active');
     search.value = "";
     searchManhwa()

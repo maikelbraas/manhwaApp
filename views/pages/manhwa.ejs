@@ -83,6 +83,10 @@
             </button>
           </form>
 
+          <% }else{ %>
+
+            <a href="/auth/savedmanhwas#<%- manhwa.mid %>"class="btn btn-primary form-control text-white w-100">
+              Go to saved manhwa.</a>
           <% }}else{ %>
           <a href="/login" class="btn btn-warning w-100"
             >Login to save manhwa</a

@@ -1,4 +1,47 @@
 <div class="manhwa-rows card-group" id="manhwas">
+  <div id="filter-container">
+    <div class="genre-buttons">
+      <button id="open-filter">Filter Genres</button>
+      <button id="reset-filter">Reset filter</button>
+    </div>
+    <form action="/manhwas/1?filters" method="GET">
+      <div id="checks">
+        <button type="submit" id="go-right">Go</button>
+        <% for(let genre of genres){ %>
+        <div class="pretty p-default p-smooth">
+          <% let index = filter.search(new
+          RegExp(String.raw`\b${genre.id}\b`,'i')); if(index > -1){ %> <%
+          if(filter[index+parseInt(genre.id.toString().length)+1] == 'a'){ %>
+          <input
+            type="checkbox"
+            class="genres"
+            name="<%- genre.id %>"
+            value="allowed"
+            checked />
+          <div class="state p-allow" id="<%- genre.name %>">
+            <label><%- genre.name %></label>
+          </div>
+          <% }else{ %>
+          <input
+            type="checkbox"
+            class="genres"
+            name="<%- genre.id %>"
+            value="denied"
+            checked />
+          <div class="state p-denied" id="<%- genre.name %>">
+            <label><%- genre.name %></label>
+          </div>
+          <% }}else{ %>
+          <input type="checkbox" class="genres" name="<%- genre.id %>" />
+          <div class="state" id="<%- genre.name %>">
+            <label><%- genre.name %></label>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+    </form>
+  </div>
   <div>
     <% for(let manhwa of manhwas){ %>
     <a
@@ -79,28 +122,42 @@
 <nav aria-label="Page navigation" class="pagination-manhwas">
   <ul class="pagination">
     <li class="page-item">
-      <a class="page-link" href="/manhwas/<%-page-1 %>"> Prev </a>
-      <a class="page-link" href="/manhwas/1">Start</a>
+      <a
+        class="page-link <% if(page == 1){ %> disabled <% } %>"
+        href="/manhwas/<%-(page-1)+filter %>">
+        Prev
+      </a>
+      <a
+        class="page-link <% if(page == 1){ %> disabled <% } %>"
+        href="/manhwas/1<%- filter %>"
+        >Start</a
+      >
     </li>
 
     <% let start = page > 3 ? page-1 : 1; for(let pages = start; pages <
-    Math.ceil(totalManhwas / 6)+1; pages++){ %> <%if(pages > start+3 && pages+2
-    < Math.ceil(totalManhwas/6)){ %> <% if(pages > start+4) continue; %>
+    Math.ceil(manhwasTotal / 6)+1; pages++){ %> <%if(pages > start+3 && pages+2
+    < Math.ceil(manhwasTotal/6)){ %> <% if(pages > start+4) continue; %>
     <li class="page-item page-link-number">
-      <a class="page-link" href="/manhwas/<%- pages %>">...</a>
+      <a class="page-link" href="/manhwas/<%- pages + filter %>">...</a>
     </li>
     <% }else{ if(pages == page) {%>
     <li class="page-item page-link-number mobile-number">
-      <p class="page-link" href="/manhwas/<%-pages%>"><%- pages %></p>
+      <p class="page-link" href="/manhwas/<%-pages + filter%>"><%- pages %></p>
     </li>
     <% }else{ %>
     <li class="page-item page-link-number">
-      <a class="page-link" href="/manhwas/<%-pages%>"><%- pages %></a>
+      <a class="page-link" href="/manhwas/<%-pages + filter%>"><%- pages %></a>
     </li>
     <% }} %> <% } %>
     <li class="page-item">
-      <a class="page-link" href="/manhwas/<%-parseInt(page)+1%>">Next</a>
-      <a class="page-link" href="/manhwas/<%-Math.ceil(totalManhwas/6)%>"
+      <a
+        class="page-link <% if(page == Math.ceil(manhwasTotal / 6)){ %> disabled <% } %>"
+        href="/manhwas/<%-(parseInt(page)+1) + filter%>"
+        >Next</a
+      >
+      <a
+        class="page-link <% if(page == Math.ceil(manhwasTotal / 6)){ %> disabled <% } %>"
+        href="/manhwas/<%-(Math.ceil(manhwasTotal/6)) + filter%>"
         >End</a
       >
     </li>
