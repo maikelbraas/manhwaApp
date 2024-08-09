@@ -269,7 +269,7 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             denied = denied || []
             let allowedLength = allowed.length;
 
-            let variablesTemp = [allowedLength, page];
+            let variablesTemp = [allowedLength];
             for (let all of allowed) {
                 variablesTemp.unshift(parseInt(all));
             }
@@ -307,7 +307,7 @@ LEFT JOIN manhwa_genre mg2 ON m.mid = mg2.manhwaid
 LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
-LIMIT 6 OFFSET ?`;
+LIMIT 6 OFFSET ${page}`;
                 [rows] = await connect.execute(query, variablesTemp);
             } else if (allowed.length == 0 && denied.length > 0) {
                 query = `SELECT
