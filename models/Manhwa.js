@@ -340,7 +340,7 @@ LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, variables);
+                [rows] = await connect.execute(query, [parseInt(...allowed), allowedLength, page]);
             } else if (allowed.length == 0 && denied.length > 0) {
                 query = `SELECT
                 m.id,
