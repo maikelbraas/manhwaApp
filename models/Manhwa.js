@@ -303,7 +303,7 @@ WHERE m.mid NOT IN (
 GROUP BY m.mid
 ORDER BY m.title ASC 
 LIMIT 6 OFFSET ${page}`;
-                [rows] = await connect.execute(query, [...allowed, allowed.length, ...denied, page]);
+                [rows] = await connect.execute(query, [...allowed, allowed.length, ...denied]);
             } else
                 if (allowed.length > 0 && denied.length == 0) {
                     query = `SELECT
