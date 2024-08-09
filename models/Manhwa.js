@@ -277,7 +277,7 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             console.log(allowed);
             console.log(denied);
             console.log(placeholders);
-            console.log(excludePlaceholders);
+            console.log(variables);
             if (allowed.length > 0 && denied.length > 0) {
                 query = `SELECT
     m.id,
