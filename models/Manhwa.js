@@ -267,6 +267,7 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             page = page * 6;
             allowed = allowed || []
             denied = denied || []
+            allowedLength = allowed.length;
 
             const placeholders = allowed.map(() => '?').join(',');
             const excludePlaceholders = denied.map(() => '?').join(',');
@@ -336,7 +337,7 @@ LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...allowed, allowed.length, page]);
+                [rows] = await connect.execute(query, [...allowed, allowedLength, page]);
             } else if (allowed.length == 0 && denied.length > 0) {
                 query = `SELECT
                 m.id,
