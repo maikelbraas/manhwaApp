@@ -39,7 +39,7 @@ router.get('/manhwas/:page', async (req, res, next) => {
             return res.render('layout', { template: 'pages/manhwas.ejs', manhwas: data.manhwas, filter, baseFilter: req.query, page: req.params.page, manhwasTotal, title: 'Filtered: ' + req.params.page, genres: data.genres });
         }
     }
-    return res.redirect('/manhwas/1' + filter);
+    next();
 });
 
 
@@ -79,8 +79,8 @@ router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
         if (!manhwa) {
-            res.redirect('/manhwas/1');
-            return false;
+            next();
+            return;
         }
         [manhwa] = manhwa;
         if (typeof req.session.user != 'undefined')
