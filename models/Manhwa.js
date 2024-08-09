@@ -261,12 +261,20 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
     }
 
     static async getFilteredManhwa(allowed, denied, page) {
-        const placeholders = allowed.map(() => '?').join(',');
-        const excludePlaceholders = denied.map(() => '?').join(',');
         try {
             let query;
             let rows = [];
-            if (allowed.length > 0 && denied > 0) {
+            page = page * 6;
+            allowed = allowed || []
+            denied = denied || []
+
+            const placeholders = allowed.map(() => '?').join(',');
+            const excludePlaceholders = denied.map(() => '?').join(',');
+            console.log(allowed);
+            console.log(denied);
+            console.log(placeholders);
+            console.log(excludePlaceholders);
+            if (allowed.length > 0 && denied.length > 0) {
                 query = `SELECT
     m.id,
     m.mid,
@@ -328,7 +336,7 @@ LEFT JOIN genres g ON mg2.genreid = g.id
 GROUP BY m.mid
 ORDER BY m.title ASC
 LIMIT 6 OFFSET ?`;
-                [rows] = await connect.execute(query, [...allowed, allowed.length, page * 6]);
+                [rows] = await connect.execute(query, [...allowed, allowed.length,]);
             } else if (allowed.length == 0 && denied.length > 0) {
                 query = `SELECT
                 m.id,

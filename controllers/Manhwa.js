@@ -115,7 +115,7 @@ class Manhwa {
 
     static async getFilteredManhwas(req, res, next) {
         const data = req.query;
-        const page = req.params.page;
+        const page = req.params.page - 1;
         let allowed = [];
         let denied = [];
         for (let filter in data) {
