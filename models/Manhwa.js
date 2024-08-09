@@ -267,7 +267,7 @@ ORDER BY m.title ASC LIMIT 6 OFFSET ${page}`;
             page = page * 6;
             allowed = allowed || []
             denied = denied || []
-            allowedLength = allowed.length;
+            let allowedLength = allowed.length;
 
             const placeholders = allowed.map(() => '?').join(',');
             const excludePlaceholders = denied.map(() => '?').join(',');
