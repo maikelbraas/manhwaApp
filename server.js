@@ -88,7 +88,8 @@ app.use('/auth', isAuthenticated, auth)
 app.use('/admin', checkRole(2), admin);
 
 app.use('*', (req, res, next) => {
-    res.render('page_not_found.ejs');
+    res.status(404);
+    res.render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
 
 })
 
