@@ -1,5 +1,6 @@
 <div class="manhwa-rows card-group" id="manhwas">
   <div id="filter-container">
+    <h1 style="padding: 0;margin: 0;width:fit-content;">All manhwas page: <%- page %></h1>
     <div class="genre-buttons">
       <button id="open-filter">Filter Genres</button>
       <button id="reset-filter">Reset filter</button>
@@ -20,7 +21,7 @@
               value="allowed"
               checked />
             <div class="state p-allow" id="<%- genre.name %>">
-              <label><%- genre.name %></label>
+              <labe for="<%- genre.id %>"><%- genre.name %></label>
             </div>
             <% }else{ %>
             <input
@@ -30,12 +31,12 @@
               value="denied"
               checked />
             <div class="state p-denied" id="<%- genre.name %>">
-              <label><%- genre.name %></label>
+              <label for="<%- genre.id %>"><%- genre.name %></label>
             </div>
             <% }}else{ %>
             <input type="checkbox" class="genres" name="<%- genre.id %>" />
             <div class="state" id="<%- genre.name %>">
-              <label><%- genre.name %></label>
+              <label for="<%- genre.id %>"><%- genre.name %></label>
             </div>
             <% } %>
           </div>
@@ -60,9 +61,9 @@
             <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p>
           </div>
           <div class="card-body pb-0 d-flex flex-column h-100">
-            <h5 class="card-title card-title-elip text-decoration-underline">
+            <h2 class="card-title card-title-elip text-decoration-underline">
               <%- manhwa.title %>
-            </h5>
+            </h2>
             <span class="d-flex phone-col">
               <small class="card-chapter"
                 >Chapters <%- manhwa.chapters % 1 !== 0
