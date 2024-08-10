@@ -72,6 +72,8 @@ app.use((req, res, next) => {
         res.locals.currentUser = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };
     }
 
+    res.locals.url = req.originalUrl;
+
     next();
 })
 
