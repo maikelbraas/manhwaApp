@@ -7,38 +7,40 @@
     <form action="/manhwas/1?filters" method="GET">
       <div id="checks">
         <button type="submit" id="go-right">Go</button>
-        <% for(let genre of genres){ %>
-        <div class="pretty p-default p-smooth">
-          <% let index = filter.search(new
-          RegExp(String.raw`\b${genre.id}\b`,'i')); if(index > -1){ %> <%
-          if(filter[index+parseInt(genre.id.toString().length)+1] == 'a'){ %>
-          <input
-            type="checkbox"
-            class="genres"
-            name="<%- genre.id %>"
-            value="allowed"
-            checked />
-          <div class="state p-allow" id="<%- genre.name %>">
-            <label><%- genre.name %></label>
-          </div>
-          <% }else{ %>
-          <input
-            type="checkbox"
-            class="genres"
-            name="<%- genre.id %>"
-            value="denied"
-            checked />
-          <div class="state p-denied" id="<%- genre.name %>">
-            <label><%- genre.name %></label>
-          </div>
-          <% }}else{ %>
-          <input type="checkbox" class="genres" name="<%- genre.id %>" />
-          <div class="state" id="<%- genre.name %>">
-            <label><%- genre.name %></label>
+        <div>
+          <% for(let genre of genres){ %>
+          <div class="pretty p-default p-smooth">
+            <% let index = filter.search(new
+            RegExp(String.raw`\b${genre.id}\b`,'i')); if(index > -1){ %> <%
+            if(filter[index+parseInt(genre.id.toString().length)+1] == 'a'){ %>
+            <input
+              type="checkbox"
+              class="genres"
+              name="<%- genre.id %>"
+              value="allowed"
+              checked />
+            <div class="state p-allow" id="<%- genre.name %>">
+              <label><%- genre.name %></label>
+            </div>
+            <% }else{ %>
+            <input
+              type="checkbox"
+              class="genres"
+              name="<%- genre.id %>"
+              value="denied"
+              checked />
+            <div class="state p-denied" id="<%- genre.name %>">
+              <label><%- genre.name %></label>
+            </div>
+            <% }}else{ %>
+            <input type="checkbox" class="genres" name="<%- genre.id %>" />
+            <div class="state" id="<%- genre.name %>">
+              <label><%- genre.name %></label>
+            </div>
+            <% } %>
           </div>
           <% } %>
         </div>
-        <% } %>
       </div>
     </form>
   </div>
