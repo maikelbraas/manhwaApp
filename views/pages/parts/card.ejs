@@ -2,8 +2,13 @@
   <div class="g-0 d-flex h-100">
     <!-- <div class="col-md-4 mb-0"> -->
     <img
+    <% if(manhwa.accordion == 'ongoing'){ %>
+      src="/manhwaImages/<%-manhwa.mid%>.webp"
+       class="rounded-start manga-image m-auto"
+    <% }else{ %>
       data-src="/manhwaImages/<%-manhwa.mid%>.webp"
-      class="rounded-start manga-image m-auto lazyload"
+       class="rounded-start manga-image m-auto lazyload"
+      <% } %>
       style="max-width: 100%; height: auto; width: auto;"
       width="200"
       height="300"
