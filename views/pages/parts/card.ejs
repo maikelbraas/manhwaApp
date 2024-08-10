@@ -54,7 +54,7 @@
             class="input-number form-control my-2 bg-dark text-light"
             type="number"
             name="chapternumber"
-            id=""
+            id="chapternumber-<%-manhwa.mid%>"
             step="0.1"
             pattern="[0-9]*"
             inputmode="numeric"
@@ -63,7 +63,7 @@
             min="1"
             placeholder="Min: 1, Max: <%- manhwa.chapters.toFixed(1) %>"
             required />
-            <label for="chapternumber" style="position: absolute; margin-top:-5px; ">Chapter</label>
+            <label for="chapternumber-<%-manhwa.mid%>" style="position: absolute; margin-top:-5px; ">Chapter</label>
           <button
             type="submit"
             class="btn btn-primary my-2 form-control"
@@ -121,7 +121,7 @@
         class="input-number form-control my-2 bg-dark text-light"
         type="number"
         name="chapternumber"
-        id=""
+        id="chapternumber-<%-manhwa.mid%>"
         step="0.1"
         pattern="[0-9]*"
         inputmode="numeric"
@@ -130,7 +130,7 @@
         min="1"
         placeholder="Min: 1, Max: <%- manhwa.chapters % 1 === 0 ? manhwa.chapters : manhwa.chapters.toFixed(1) %>"
         required />
-        <label for="chapternumber" style="position: absolute; margin-top:-5px;">Chapter</label>
+        <label for="chapternumber-<%-manhwa.mid%>" style="position: absolute; margin-top:-5px;">Chapter</label>
       <button
         type="submit"
         class="btn btn-primary my-2 form-control"
