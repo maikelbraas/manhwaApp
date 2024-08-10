@@ -14,7 +14,7 @@
     <!-- <div class="col-md-8"> -->
     <div class="card-body pb-0">
       <a href="/manhwa/<%- manhwa.mid %>" class="card-link">
-        <h5 class="card-title card-title-elip p-0"><%- manhwa.title %></h5>
+        <h2 class="card-title card-title-elip p-0"><%- manhwa.title %></h2>
       </a>
       <span class="d-flex phone-col">
         <small
@@ -57,12 +57,13 @@
             id=""
             step="0.1"
             pattern="[0-9]*"
-            style="font-size: 20px"
             inputmode="numeric"
             tabindex="-1"
             max="<%- manhwa.chapters.toFixed(1) %>"
             min="1"
+            placeholder="Min: 1, Max: <%- manhwa.chapters.toFixed(1) %>"
             required />
+            <label for="chapterbumber" style="position: absolute; margin-top:-5px; ">Chapter</label>
           <button
             type="submit"
             class="btn btn-primary my-2 form-control"
@@ -123,12 +124,13 @@
         id=""
         step="0.1"
         pattern="[0-9]*"
-        style="font-size: 20px"
         inputmode="numeric"
         tabindex="-1"
         max="<%- manhwa.chapters.toFixed(1) %>"
         min="1"
+        placeholder="Min: 1, Max: <%- manhwa.chapters % 1 === 0 ? manhwa.chapters : manhwa.chapters.toFixed(1) %>"
         required />
+        <label for="chapterbumber" style="position: absolute; margin-top:-5px;">Chapter</label>
       <button
         type="submit"
         class="btn btn-primary my-2 form-control"
