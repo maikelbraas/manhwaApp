@@ -1,6 +1,8 @@
 <div class="manhwa-rows card-group" id="manhwas">
   <div id="filter-container">
-    <h1 style="padding: 0;margin: 0;width:fit-content;">All manhwas page: <%- page %></h1>
+    <h1 style="padding: 0; margin: 0; width: fit-content">
+      All manhwas page: <%- page %>
+    </h1>
     <div class="genre-buttons">
       <button id="open-filter">Filter Genres</button>
       <button id="reset-filter">Reset filter</button>
@@ -21,7 +23,7 @@
               value="allowed"
               checked />
             <div class="state p-allow" id="<%- genre.name %>">
-              <labe for="<%- genre.id %>"><%- genre.name %></label>
+              <label for="<%- genre.id %>"><%- genre.name %></label>
             </div>
             <% }else{ %>
             <input
