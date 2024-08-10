@@ -29,7 +29,7 @@ class Auth {
                 await manhwaModel.saveManhwaChapters(req.params.id, chapter.link, chapter.number);
             }
         }
-        res.redirect('/auth/savedmanhwas');
+        res.redirect('/auth/savedmanhwas#' + req.params.id);
     }
 
     static async updateSavedManhwa(req, res, next) {
