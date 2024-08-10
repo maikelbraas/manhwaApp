@@ -30,7 +30,7 @@ search.addEventListener('blur', (event) => {
     searchContainer.style.width = '240px';
     searchContainer.style.right = '50%';
     searchContainer.classList.add('active');
-    search.value = "";
+    // search.value = "";
     searchManhwa()
 })
 
