@@ -32,7 +32,7 @@ class Auth {
             }
         }
 
-        res.redirect('/auth/savedmanhwas' + flag);
+        return res.redirect('/auth/savedmanhwas' + flag);
     }
 
     static async updateSavedManhwa(req, res, next) {

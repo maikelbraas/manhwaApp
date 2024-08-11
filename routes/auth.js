@@ -27,7 +27,6 @@ router.get('/updatesavedmanhwa', async (req, res, next) => {
 
 router.post('/chapter/:id', async (req, res, next) => {
     await auth.saveOrUpdateChapter(req, res, next);
-    next();
 })
 
 router.delete('/remove/:mid', async (req, res, next) => {
