@@ -10,7 +10,7 @@ export default async function downloadImage(mid, url) {
     const buffer = await response.arrayBuffer();
     try {
         image = await sharp(buffer)
-            .resize({ width: 200, height: 300, fit: sharp.fit.fill })
+            .resize({ width: 200, height: 300, fit: sharp.fit.fill, quality: 100, lossless: true })
             .toFormat("webp")
             .toBuffer(mid + '.webp');
     } catch (error) {
