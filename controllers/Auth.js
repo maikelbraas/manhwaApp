@@ -6,16 +6,19 @@ import ChapterSaved from '../models/ChaptersSaved.js';
 class Auth {
 
     static async saveOrUpdateChapter(req, res, next) {
+        let flag;
         const chapter = req.body.chapternumber;
         const userid = req.session.user.id;
         const existingChapter = await ChapterSaved.getChapter(userid, req.params.id);
         const chapterExists = await manhwaModel.getCurrentChapter(req.params.id, chapter);
         if (existingChapter.length > 0) {
-            if (chapterExists.length > 0)
+            if (chapterExists.length > 0) {
+                flag = 'update';
                 await ChapterSaved.updateChapter(chapter, req.params.id, userid);
-            else
+            } else
                 res.flash('Input chapter does not exist');
         } else {
+            flag = 'save';
             await ChapterSaved.saveChapter(chapter, req.params.id, req.session.user.id);
             let chapters;
             if (req.params.id.includes('mgdemon')) {
@@ -29,7 +32,10 @@ class Auth {
                 await manhwaModel.saveManhwaChapters(req.params.id, chapter.link, chapter.number);
             }
         }
-        res.redirect('/auth/savedmanhwas#' + req.params.id);
+        if (flag == 'save')
+            res.redirect('/auth/savedmanhwas#' + req.params.id);
+        else
+            res.redirect('/auth/savedmanhwas');
     }
 
     static async updateSavedManhwa(req, res, next) {
