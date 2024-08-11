@@ -71,7 +71,7 @@ app.use((req, res, next) => {
         req.session.user = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };
         res.locals.currentUser = { id: req.user.id, username: req.user.username, email: req.user.email, rol: req.user.rol };
     }
-
+    res.locals.host = HOST_NAME;
     res.locals.url = req.originalUrl;
 
     next();

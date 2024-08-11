@@ -3,6 +3,7 @@ import page from '../models/Page.js';
 import manhwaController from '../controllers/Manhwa.js';
 import auth from '../controllers/Auth.js';
 import downloadImage from '../utils/downloadImage.js';
+import pageController from '../controllers/Page.js';
 
 const router = express.Router();
 
@@ -48,6 +49,17 @@ router.get('/api/specific/:id', async (req, res, next) => {
         'Content-Encoding': 'none'
     });
     await manhwaController.checkSpecific(req, res, next);
+});
+
+
+router.get('/api/resizeImages/:size', async (req, res, next) => {
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Content-Encoding': 'none'
+    });
+    await pageController.resizeImages(req, res, next);
 });
 
 router.get('/api/getimages', async (req, res, next) => {

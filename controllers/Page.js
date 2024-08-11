@@ -1,5 +1,6 @@
 import user from "../models/User.js";
-
+import manhwaModel from '../models/Manhwa.js';
+import resizeImages from '../utils/resizeImages.js';
 class Page {
 
     static showLoginForm(req, res, next) {
@@ -46,6 +47,16 @@ class Page {
             console.log(err);
             return res.redirect('/register')
         }
+    }
+
+    static async resizeImages(req, res, next) {
+        let manhwas = await manhwaModel.getAllManhwas();
+        let size = { width: parseInt(req.params.size.split('x')[0]), height: parseInt(req.params.size.split('x')[1]) };
+        for (let manhwa of manhwas) {
+            await resizeImages(manhwa.mid, size);
+        }
+        res.write(`data: ${JSON.stringify({ progress: 100, done: true })}\n\n`);
+        return;
     }
 }
 export default Page;

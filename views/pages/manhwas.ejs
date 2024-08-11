@@ -55,15 +55,23 @@
       <div class="card h-100">
         <div class="g-0 d-flex d-flex-home h-100">
           <div class="d-flex flex-column">
-            <img
-              data-src="/manhwaImages/<%- manhwa.mid %>.webp"
-              class="rounded-start manga-image m-auto lazyload"
-              style="width: 200px !important"
-              rel="preload"
-              fetchpriority="high"
-              as="image"
-              type="image/webp"
-              alt="<%- manhwas.title %>" />
+            <picture>
+              <source
+                media="(min-width: 1058px)"
+                width="200"
+                height="300"
+                data-srcset="/manhwaImages/<%- manhwa.mid %>.webp" />
+              <img
+                data-src="/manhwaImages/<%- manhwa.mid %>-150x225.webp"
+                class="rounded-start manga-image m-auto lazyload"
+                alt="<%- manhwa.title %>"
+                width="150"
+                height="225"
+                fetchpriority="high"
+                as="image"
+                type="image/webp"
+                rel="preload" />
+            </picture>
             <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p>
           </div>
           <div class="card-body pb-0 d-flex flex-column h-100">
