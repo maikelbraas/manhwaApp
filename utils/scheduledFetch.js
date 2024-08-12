@@ -18,6 +18,10 @@ export default async function scheduledFetch(req, res, next, hostname) {
                 await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
                 await genreCheck(req, res, next, manhwa);
             }
+            for (let manhwaResize of manhwasCreate) {
+                await resizeImages(manhwaResize.mid, { width: 150, height: 225 });
+                await resizeImages(manhwaResize.mid, { width: 100, height: 150 });
+            }
         }
     }
 
