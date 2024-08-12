@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
-app.use(session({ secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: true, cookie: { sameSite: 'lax', httpOnly: true } }));
+app.use(session({ secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: true, cookie: { sameSite: 'lax', httpOnly: true, hostOnly: true } }));
 
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);
@@ -80,8 +80,8 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     if (req.headers.cookie == undefined || (global.buildDate != undefined && req.headers.cookie.indexOf(global.buildDate) == -1)) {
-        res.cookie('newBuild', true, { sameSite: 'lax', secure: true, httpOnly: true });
-        res.cookie('dateBuild', global.buildDate, { sameSite: 'lax', secure: true, httpOnly: true });
+        res.cookie('newBuild', true, { sameSite: 'lax', secure: true });
+        res.cookie('dateBuild', global.buildDate, { sameSite: 'lax', secure: true, httpOnly: true, hostOnly: true });
     }
     next();
 })
