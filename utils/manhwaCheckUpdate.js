@@ -182,7 +182,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
             genreSlice.forEach(genre => genre.length > 2 ? genres.push(genre) : false);
             //Get chapters from site
             let chapterSlice = jsonSingle.slice(jsonSingle.search('<strong class="chapter-title">'), jsonSingle.search('<strong class="chapter-title">') + 80);
-            let chapter = chapterSlice.replace(/[^0-9]/g, '');
+            let chapter = chapterSlice.replace(/[^0-9.]/g, '');
             //get image from site
             let imageSlice = jsonSingle.slice(jsonSingle.search('src="https://readermc.org/images/thumbnails/'), jsonSingle.search('src="https://readermc.org/images/thumbnails/') + 200);
             let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];

@@ -4,7 +4,6 @@ export default async function manhwaCheck(req, res, next) {
     let response;
     let text;
     let manga = req.params.id;
-    console.log(manga);
     let manhwa = false;
     try {
         response = await fetch(`https://mgdemon.org/manga/${manga}`);
@@ -43,7 +42,7 @@ export default async function manhwaCheck(req, res, next) {
             genreSlice.forEach(genre => genre.length > 2 ? genres.push(genre) : false);
             genres.splice(0, 2)
             let chapterSlice = single.slice(single.search('<strong class="chapter-title">'), single.search('<strong class="chapter-title">') + 80);
-            let chapter = chapterSlice.replace(/[^0-9]/g, '');
+            let chapter = chapterSlice.replace(/[^0-9.]/g, '');
             let statusSlice = single.slice(single.search('<small>Status</small>'), single.search('<small>Status</small>') + 80);
             let status = statusSlice.replace(/<[^>]*>?/gm, '').split('\n')[1];
             let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);

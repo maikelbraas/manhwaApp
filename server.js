@@ -16,6 +16,7 @@ import pages from './routes/pages.js';
 import auth from './routes/auth.js';
 import admin from './routes/admin.js';
 import isAuthenticated from './utils/checkAuth.js';
+import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,11 +42,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
-app.use(session({ secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: true, cookie: { sameSite: 'lax', httpOnly: true, hostOnly: true } }));
+app.use(session({ secret: uuidv4(v4options).toString(), resave: false, saveUninitialized: false, cookie: { sameSite: 'lax', httpOnly: true, hostOnly: true } }));
 
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);
 initializePassport(app);
+app.use(cors({
+    origin: HOST_NAME,
+    credentials: true
+}))
 
 
 app.use(async (req, res, next) => {

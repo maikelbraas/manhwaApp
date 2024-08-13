@@ -3,6 +3,7 @@ import manhwaController from '../controllers/Manhwa.js';
 import passport from 'passport';
 import pageModel from '../models/Page.js';
 import page from '../controllers/Page.js';
+import Auth from '../controllers/Auth.js';
 
 const router = express.Router();
 
@@ -116,19 +117,47 @@ router.post('/login', (req, res, next) => {
         if (err) { return next(err); }
         if (!user) {
             res.flash(info.message);
-            res.setHeader('error', info.message);
             return page.showLoginForm(req, res, next);
         }
         req.logIn(user, (err) => {
             let goback = pages[pages.length - 1] == undefined || pages[pages.length - 1].split('/')[3] != 'manhwa' ? pages[pages.length - 1] = '/auth/savedmanhwas' : pages[pages.length - 1].split('/')
             if (err) { return next(err); }
-            if (goback[3] == 'manhwa')
+            if (goback[3] == 'manhwa') {
                 return res.redirect(`/manhwa/${goback.pop()}`);
-            else
+            } else {
                 return res.redirect(`${goback}`);
+            }
 
         });
     })(req, res, next);
 });
+
+router.post('/api/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err); }
+        if (!user) {
+            res.json('error', info.message)
+        }
+        req.logIn(user, (err) => {
+            if (err) { return next(err); }
+            res.json(user);
+        });
+    })(req, res, next);
+});
+
+router.get('/api/savedmanhwas/:id', async (req, res, next) => {
+    const manhwas = await Auth.getSavedManhwasApi(req, res, next);
+    res.setHeader('totalpages', manhwas.length);
+    return res.json(manhwas);
+});
+
+router.get('/api/check-auth', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({ isAuthenticated: true, user: req.user });
+    } else {
+        res.json({ isAuthenticated: false });
+    }
+})
+
 
 export default router;

@@ -16,7 +16,7 @@ export default function initializePassport(app) {
                 if (!isValid) {
                     return done(null, false, { message: 'Password or username incorrect.' });
                 }
-                return done(null, user);
+                return done(null, user.id);
             } catch (error) {
                 return done(error);
             }
@@ -25,7 +25,7 @@ export default function initializePassport(app) {
 
 
     passport.serializeUser((user, done) => {
-        done(null, user.id);
+        done(null, user);
     });
 
     passport.deserializeUser(async (id, done) => {
