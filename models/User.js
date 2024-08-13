@@ -16,6 +16,12 @@ class User {
         return result.insertId;
     }
 
+    static async getUsersCount() {
+        const query = "SELECT COUNT(id) as usersCount FROM users";
+        const [rows] = await connect.execute(query);
+        return rows;
+    }
+
 }
 
 export default User;

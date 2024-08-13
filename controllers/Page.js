@@ -1,10 +1,16 @@
 import user from "../models/User.js";
 import manhwaModel from '../models/Manhwa.js';
+import users from '../models/User.js';
 import resizeImages from '../utils/resizeImages.js';
 class Page {
 
     static showLoginForm(req, res, next) {
         res.render('layout', { template: 'pages/login.ejs', title: 'Login' });
+    }
+
+    static async getUsersCount() {
+        const [usersCount] = await users.getUsersCount();
+        return usersCount.usersCount;
     }
 
     static async register(req, res, next) {

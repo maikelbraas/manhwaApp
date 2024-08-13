@@ -1,14 +1,13 @@
 import express from 'express';
 import page from '../models/Page.js';
 import manhwaController from '../controllers/Manhwa.js';
-import auth from '../controllers/Auth.js';
 import downloadImage from '../utils/downloadImage.js';
 import pageController from '../controllers/Page.js';
 
 const router = express.Router();
 
-router.get('/dashboard', (req, res, next) => {
-    res.render('layout', { template: 'admin/dashboard.ejs', counter: req.session.counter, title: 'Dashboard' })
+router.get('/dashboard', async (req, res, next) => {
+    res.render('layout', { template: 'admin/dashboard.ejs', counter: req.session.counter, title: 'Dashboard', usersCount: await pageController.getUsersCount() })
 });
 
 router.get('/newUpdate', (req, res, next) => {
