@@ -116,7 +116,8 @@ router.post('/login', (req, res, next) => {
         if (err) { return next(err); }
         if (!user) {
             res.flash(info.message);
-            return res.redirect('/login');
+            res.setHeader('error', info.message);
+            return page.showLoginForm(req, res, next);
         }
         req.logIn(user, (err) => {
             let goback = pages[pages.length - 1] == undefined || pages[pages.length - 1].split('/')[3] != 'manhwa' ? pages[pages.length - 1] = '/auth/savedmanhwas' : pages[pages.length - 1].split('/')
