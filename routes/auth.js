@@ -23,7 +23,6 @@ router.get('/profile', async (req, res, next) => {
 
 router.delete('/deleteAccount', async (req, res, next) => {
     const response = await auth.deleteAccount(req, res, next);
-    console.log(response, req.user);
     req.logout((err) => {
         if (err) return next(err);
         return res.redirect('/');
