@@ -22,6 +22,12 @@ class User {
         return rows;
     }
 
+    static async deleteAccount(id) {
+        const query = "DELETE FROM users WHERE id = ?";
+        const [rows] = await connect.execute(query, [id]);
+        return rows;
+    }
+
 }
 
 export default User;

@@ -15,6 +15,21 @@ router.get('/savedmanhwas', async (req, res, next) => {
     res.render('layout', { template: 'pages/savedmanhwas.ejs', manhwas, title: 'Saved Manhwas' });
 });
 
+
+router.get('/profile', async (req, res, next) => {
+    const manhwas = await auth.getSavedManhwas(req, res, next);
+    res.render('layout', { template: 'auth/profile.ejs', user: req.user, manhwas, title: 'Profile' });
+});
+
+router.delete('/deleteAccount', async (req, res, next) => {
+    const response = await auth.deleteAccount(req, res, next);
+    console.log(response, req.user);
+    req.logout((err) => {
+        if (err) return next(err);
+        return res.redirect('/');
+    })
+})
+
 router.get('/updatesavedmanhwa', async (req, res, next) => {
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',

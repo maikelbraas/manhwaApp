@@ -2,6 +2,7 @@ import manhwaModel from '../models/Manhwa.js';
 import checkSingle from '../utils/getAllChapterLinks.js';
 import checkSingleDemon from '../utils/getAllChapterLinksDemon.js';
 import ChapterSaved from '../models/ChaptersSaved.js';
+import user from '../models/User.js'
 
 class Auth {
 
@@ -114,6 +115,17 @@ class Auth {
 
     static async updateImageOfManhwa(mid, imagename) {
         await manhwaModel.updateImageOfManhwa(mid, imagename);
+    }
+
+    static async deleteAccount(req, res, next) {
+        const id = req.user.id;
+        const response = await user.deleteAccount(id);
+        if (response.affectedRows > 0) {
+            res.flash(`Account deleted.`)
+        } else {
+            res.flash(`Something went wrong with deleting your account.`);
+        }
+        return response;
     }
 }
 

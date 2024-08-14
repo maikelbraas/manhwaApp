@@ -30,7 +30,7 @@ export default function initializePassport(app) {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            const [rows] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
+            const [rows] = await db.query('SELECT id, username, email, rol FROM users WHERE id = ?', [id]);
             done(null, rows[0]);
         } catch (error) {
             done(error);
