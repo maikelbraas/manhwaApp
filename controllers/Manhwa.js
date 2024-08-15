@@ -118,6 +118,11 @@ class Manhwa {
         return chapterData
     }
 
+    static async getSavedManhwaChapterApi(req, res, next, id) {
+        const [chapterData] = await manhwaModel.getSavedManhwaChapter(id, req.session.user.id);
+        return chapterData
+    }
+
 
     static async getLastUpdated(req, res, next) {
         const manhwas = await manhwaModel.getLastUpdated();

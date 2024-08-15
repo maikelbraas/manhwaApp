@@ -40,17 +40,40 @@ router.get('/updatesavedmanhwa', async (req, res, next) => {
 })
 
 router.post('/chapter/:id', async (req, res, next) => {
-    await auth.saveOrUpdateChapter(req, res, next);
+    console.log(req.body);
+    let api = await auth.saveOrUpdateChapter(req, res, next);
+    if (api.api)
+        res.json({ success: true });
+    else
+        res.redirect('/auth/savedmanhwas' + api.flag);
 })
 
 router.delete('/remove/:mid', async (req, res, next) => {
     await auth.removeSaved(req, res, next);
-    next();
+    res.json({ success: true });
 })
 
 router.patch('/patch/:mid', async (req, res, next) => {
     await auth.patchSaved(req, res, next);
-    next();
+    res.json({ success: true });
 })
+
+//API
+
+router.get('/api/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) return next(err);
+        res.json({ succes: true })
+    })
+});
+
+router.get('/api/savedmanhwas/:id', async (req, res, next) => {
+    console.log(req.params.id);
+    const manhwas = await auth.getSavedManhwasApi(req, res, next);
+    res.setHeader('totalpages', manhwas.length);
+    return res.json(manhwas);
+});
+
+
 
 export default router;

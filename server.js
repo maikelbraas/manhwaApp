@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
-app.use(session({ secret: uuidv4(v4options).toString(), resave: false, saveUninitialized: false, cookie: { sameSite: 'lax', httpOnly: true, hostOnly: true } }));
+app.use(session({ secret: uuidv4(v4options).toString(), resave: false, saveUninitialized: false, cookie: { sameSite: 'lax', maxAge: 30 * 24 * 60 * 100, httpOnly: true, hostOnly: true } }));
 
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);

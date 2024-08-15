@@ -4,6 +4,7 @@ import passport from 'passport';
 import pageModel from '../models/Page.js';
 import page from '../controllers/Page.js';
 import Auth from '../controllers/Auth.js';
+import isAuthenticated from '../utils/checkAuth.js';
 
 const router = express.Router();
 
@@ -67,15 +68,6 @@ router.get('/siteUpdates', async (req, res, next) => {
     res.render('layout', { template: 'pages/siteUpdates.ejs', updates, title: 'Site updates' });
 });
 
-router.get('/api/manhwas/:num', async (req, res, next) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('totalPages', Math.ceil(global.manhwas.totalManhwas / 10));
-    res.setHeader('totalManhwas', global.manhwas.totalManhwas);
-    const start = (parseInt(req.params.num) - 1) * 10;
-    const end = start + 10;
-    res.json(global.manhwas.manhwas.slice(start, end));
-});
-
 router.get('/manhwa/:id', async (req, res, next) => {
     try {
         let manhwa = await manhwaController.getManhwa(req, res, next);
@@ -132,32 +124,41 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-router.post('/api/login', (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
-        if (err) { return next(err); }
-        if (!user) {
-            res.json('error', info.message)
-        }
-        req.logIn(user, (err) => {
-            if (err) { return next(err); }
-            res.json(user);
-        });
-    })(req, res, next);
-});
 
-router.get('/api/savedmanhwas/:id', async (req, res, next) => {
-    const manhwas = await Auth.getSavedManhwasApi(req, res, next);
-    res.setHeader('totalpages', manhwas.length);
-    return res.json(manhwas);
+router.post('/api/login', passport.authenticate('local'), (req, res) => {
+    return res.json({ success: true, user: req.user });
 });
 
 router.get('/api/check-auth', (req, res) => {
+    console.log(req.isAuthenticated());
     if (req.isAuthenticated()) {
         res.json({ isAuthenticated: true, user: req.user });
     } else {
         res.json({ isAuthenticated: false });
     }
 })
+
+
+
+router.get('/api/manhwas/:num', async (req, res, next) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('totalPages', Math.ceil(global.manhwas.totalManhwas / 10));
+    res.setHeader('totalManhwas', global.manhwas.totalManhwas);
+    const start = (parseInt(req.params.num) - 1) * 10;
+    const end = start + 10;
+    const manhwas = global.manhwas.manhwas.slice(start, end);
+    if (typeof req.session.user != 'undefined') {
+        for (let manhwa of manhwas) {
+            manhwa.saved = await manhwaController.getSavedManhwaChapterApi(req, res, next, manhwa.mid);
+        }
+        return res.json(manhwas);
+    }
+    return res.json(manhwas);
+
+});
+
+
+
 
 
 export default router;

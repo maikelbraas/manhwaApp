@@ -102,7 +102,7 @@
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="try">
           <% for(let manhwa of manhwas){ if(manhwa.chapter == 1 &&
-          !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <%
+          !manhwa.used && manhwa.reading == 0){ %> <%- include('parts/card.ejs', {manhwa}) %> <%
           manhwa.used = true;}} %>
         </div>
       </div>

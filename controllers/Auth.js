@@ -9,6 +9,7 @@ class Auth {
     static async saveOrUpdateChapter(req, res, next) {
         let flag = '';
         const chapter = req.body.chapternumber;
+        const api = req.body.api != undefined ? req.body.api : false;
         const userid = req.session.user.id;
         const existingChapter = await ChapterSaved.getChapter(userid, req.params.id);
         const chapterExists = await manhwaModel.getCurrentChapter(req.params.id, chapter);
@@ -32,8 +33,7 @@ class Auth {
                 await manhwaModel.saveManhwaChapters(req.params.id, chapter.link, chapter.number);
             }
         }
-
-        return res.redirect('/auth/savedmanhwas' + flag);
+        return { api, flag };
     }
 
     static async updateSavedManhwa(req, res, next) {

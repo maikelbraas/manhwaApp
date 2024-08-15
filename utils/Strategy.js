@@ -16,7 +16,7 @@ export default function initializePassport(app) {
                 if (!isValid) {
                     return done(null, false, { message: 'Password or username incorrect.' });
                 }
-                return done(null, user.id);
+                return done(null, { id: user.id, username: user.username, email: user.email, rol: user.rol });
             } catch (error) {
                 return done(error);
             }
@@ -28,9 +28,9 @@ export default function initializePassport(app) {
         done(null, user);
     });
 
-    passport.deserializeUser(async (id, done) => {
+    passport.deserializeUser(async (user, done) => {
         try {
-            const [rows] = await db.query('SELECT id, username, email, rol FROM users WHERE id = ?', [id]);
+            const [rows] = await db.execute('SELECT * FROM users WHERE id = ?', [user.id]);
             done(null, rows[0]);
         } catch (error) {
             done(error);
