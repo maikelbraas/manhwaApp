@@ -66,7 +66,8 @@ router.get('/api/logout', (req, res, next) => {
     })
 });
 
-router.get('/api/savedmanhwas/:id', async (req, res, next) => {
+router.get('/api/savedmanhwas', async (req, res, next) => {
+    console.log(req.session);
     const manhwas = await auth.getSavedManhwasApi(req, res, next);
     res.setHeader('totalpages', manhwas.length);
     return res.json(manhwas);
