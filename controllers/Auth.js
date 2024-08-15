@@ -98,7 +98,6 @@ class Auth {
     static async getSavedManhwasApi(req, res, next) {
         try {
             const userid = req.session.user.id;
-            console.log(req.session.user);
             const manhwas = await manhwaModel.getSavedManhwas(userid);
             for (let manhwa of manhwas) {
                 const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
