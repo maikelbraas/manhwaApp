@@ -3,14 +3,13 @@ import manhwaController from '../controllers/Manhwa.js';
 import passport from 'passport';
 import pageModel from '../models/Page.js';
 import page from '../controllers/Page.js';
-import Auth from '../controllers/Auth.js';
-import isAuthenticated from '../utils/checkAuth.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
-    let manhwas = await manhwaController.getLastUpdated(req, res, next);
-    return res.render('layout', { template: 'pages/index.ejs', manhwas, title: 'Latest updates' });
+    let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated);
+    var date = new Date(manhwas[0].lastUpdate);
+    return res.render('layout', { template: 'pages/index.ejs', manhwas, title: 'Latest updates', date: date.toLocaleString() });
 });
 
 router.get('/manhwas/:page', async (req, res, next) => {
@@ -157,8 +156,9 @@ router.get('/api/manhwas/:num', async (req, res, next) => {
 
 });
 
-
-
-
+router.get('/api/latest', async (req, res, next) => {
+    let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated);
+    return res.json(manhwas);
+})
 
 export default router;

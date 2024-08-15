@@ -54,6 +54,7 @@ class Manhwa {
             }
             totalUpdated += updates.length;
         }
+        global.totalUpdated = totalUpdated;
 
         res.flash(`Manhwas updated: ${totalUpdated}`);
         res.write(`data: ${JSON.stringify({ progress: 100, done: true, updatedRows: totalUpdated })}\n\n`);
@@ -124,8 +125,8 @@ class Manhwa {
     }
 
 
-    static async getLastUpdated(req, res, next) {
-        const manhwas = await manhwaModel.getLastUpdated();
+    static async getLastUpdated(req, res, next, limit) {
+        const manhwas = await manhwaModel.getLastUpdated(limit);
         return manhwas;
     }
 

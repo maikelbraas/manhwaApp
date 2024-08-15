@@ -16,7 +16,7 @@ GROUP BY m.id`;
     }
 
 
-    static async getLastUpdated() {
+    static async getLastUpdated(limit) {
         const query = `SELECT 
     m.*,
     GROUP_CONCAT(g.name ORDER BY g.name ASC SEPARATOR ', ') AS genres
@@ -24,7 +24,7 @@ FROM manhwas m
 LEFT JOIN manhwa_genre mg ON m.mid = mg.manhwaid
 LEFT JOIN genres g ON mg.genreid = g.id
 GROUP BY m.id
-ORDER BY m.lastUpdate DESC LIMIT 10;`;
+ORDER BY m.lastUpdate DESC LIMIT ${limit};`;
         const [rows] = await connect.execute(query);
         return rows;
     }

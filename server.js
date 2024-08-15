@@ -26,6 +26,7 @@ const HOST_NAME = process.env.HOST_NAME;
 const counters = {};
 const app = express();
 let visitedPages = [];
+global.totalUpdated = 10;
 global.manhwas;
 global.buildDate = Date.now();
 const v4options = {

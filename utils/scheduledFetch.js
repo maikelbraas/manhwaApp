@@ -41,7 +41,10 @@ export default async function scheduledFetch(req, res, next, hostname) {
         }
         totalUpdated += updates.length;
     }
-
+    if ((totalUpdated + totalCreated) > 10)
+        global.totalUpdated = totalUpdated + totalCreated;
+    else
+        global.totalUpdated = 10
     await fetch(hostname + '/api/jsonWrite');
     console.log('Finished scheduled update at: ' + new Date())
     console.log(`Total created: ${totalCreated}
