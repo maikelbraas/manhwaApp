@@ -40,7 +40,6 @@ router.get('/updatesavedmanhwa', async (req, res, next) => {
 })
 
 router.post('/chapter/:id', async (req, res, next) => {
-    console.log(req.body);
     let api = await auth.saveOrUpdateChapter(req, res, next);
     if (api.api)
         res.json({ success: true });
@@ -68,7 +67,6 @@ router.get('/api/logout', (req, res, next) => {
 });
 
 router.get('/api/savedmanhwas/:id', async (req, res, next) => {
-    console.log(req.params.id);
     const manhwas = await auth.getSavedManhwasApi(req, res, next);
     res.setHeader('totalpages', manhwas.length);
     return res.json(manhwas);

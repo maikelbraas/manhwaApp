@@ -124,13 +124,13 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+//API
 
 router.post('/api/login', passport.authenticate('local'), (req, res) => {
     return res.json({ success: true, user: req.user });
 });
 
 router.get('/api/check-auth', (req, res) => {
-    console.log(req.isAuthenticated());
     if (req.isAuthenticated()) {
         res.json({ isAuthenticated: true, user: req.user });
     } else {
