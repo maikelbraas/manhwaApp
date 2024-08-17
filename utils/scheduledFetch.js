@@ -46,6 +46,7 @@ export default async function scheduledFetch(req, res, next, hostname) {
     else
         global.totalUpdated = 10
     await fetch(hostname + '/api/jsonWrite');
+    global.lastUpdated = new Date();
     console.log('Finished scheduled update at: ' + new Date())
     console.log(`Total created: ${totalCreated}
 Total updated: ${totalUpdated}`)

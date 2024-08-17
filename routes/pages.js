@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated);
-    var date = new Date(manhwas[0].lastUpdate);
-    return res.render('layout', { template: 'pages/index.ejs', manhwas, title: 'Latest updates', date: date.toLocaleString() });
+    var date = new Date(manhwas[0].lastUpdate).toString().slice(0, 24).slice(4);
+    return res.render('layout', { template: 'pages/index.ejs', manhwas, title: 'Latest updates', date: global.lastUpdated ? global.lastUpdated.toString().slice(0, 24).slice(4) : date });
 });
 
 router.get('/manhwas/:page', async (req, res, next) => {

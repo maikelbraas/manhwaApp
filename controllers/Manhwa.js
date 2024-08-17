@@ -26,6 +26,7 @@ class Manhwa {
         }
         res.flash(`New manhwas added: ${totalCreated}`);
         res.write(`data: ${JSON.stringify({ progress: 100, done: true, createdRows: totalCreated })}\n\n`);
+        global.lastUpdated = new Date();
         res.end();
         await this.buildJson();
         return;
@@ -55,6 +56,8 @@ class Manhwa {
             totalUpdated += updates.length;
         }
         global.totalUpdated = totalUpdated;
+
+        global.lastUpdated = new Date();
 
         res.flash(`Manhwas updated: ${totalUpdated}`);
         res.write(`data: ${JSON.stringify({ progress: 100, done: true, updatedRows: totalUpdated })}\n\n`);
