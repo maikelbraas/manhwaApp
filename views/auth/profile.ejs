@@ -5,8 +5,8 @@ manhwa.chapter %>
   <div class="g-0 d-flex h-100">
     <div class="card-body pb-0">
       <h2 class="card-title card-title-elip p-0"><%- user.username %></h2>
-      <p>email: <%- user.email %></p>
-      <p class="card-time">Rol: <%= user.rol == 0 ? 'Saver' : 'Admin' %></p>
+      <p>Email: <%- user.email %></p>
+      <p class="card-time">Role: <%= user.rol == 0 ? 'Saver' : 'Admin' %></p>
       <p class="card-time">Manhwas Saved: <%- manhwas.length %></p>
       <p class="card-content">
         Manhwa chapters read: <%- chaptersRead.toFixed(1) %>
