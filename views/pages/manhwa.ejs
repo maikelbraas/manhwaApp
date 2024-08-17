@@ -22,19 +22,21 @@
       <div class="card-body p-4">
         <h1 class="card-title mb-3"><%- manhwa.title %></h1>
         <span class="d-flex phone-col">
-        <% if(typeof currentUser != 'undefined'){ %> <% if(typeof manhwa.saved
+        <% if(typeof currentUser != 'undefined' && typeof manhwa.saved
         != 'undefined'){ %>
         <p class="card-subtitle px-1">
           Chapters read: <%= manhwa.saved.chapter %> OF <%- manhwa.chapters %>
         </p>
         <% }else{ %>
         <p class="card-subtitle px-1">Chapters: <%- manhwa.chapters %></p>
-        <% }} %>
+        <% } %>
         <span class="phone-invis-div">|</span>
         <p class="card-subtitle px-1">
           Status: <%- manhwa.status %>
           <i
-            class="bi bi-circle-fill <%- manhwa.status.toLowerCase().replace(/\s/g, '') %>"></i>
+            class="<%- manhwa.status.toLowerCase().replace(/\s/g, '') %> roundStatus">
+            &#9679;
+          </i>
         </p>
       </span>
       <span class="d-flex phone-col">
