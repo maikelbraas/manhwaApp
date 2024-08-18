@@ -151,7 +151,7 @@ router.get('/api/manhwas/:num', async (req, res, next) => {
 });
 
 router.get('/api/latest', async (req, res, next) => {
-    let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated);
+    let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated ? global.totalUpdated < 10 ? 10 : global.totalUpdated : 10);
     return res.json(manhwas);
 })
 
