@@ -7,7 +7,7 @@ import page from '../controllers/Page.js';
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
-    let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated ? global.totalUpdated : 10);
+    let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated ? global.totalUpdated < 10 ? 10 : global.totalUpdated : 10);
     var date = new Date(manhwas[0].lastUpdate).toString().slice(0, 24).slice(4);
     return res.render('layout', { template: 'pages/index.ejs', manhwas, title: 'Latest updates', date: global.lastUpdated ? global.lastUpdated.toString().slice(0, 24).slice(4) : date });
 });
