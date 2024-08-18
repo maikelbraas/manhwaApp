@@ -146,12 +146,6 @@ router.get('/api/manhwas/:num', async (req, res, next) => {
     const start = (parseInt(req.params.num) - 1) * 10;
     const end = start + 10;
     const manhwas = global.manhwas.manhwas.slice(start, end);
-    if (typeof req.session.user != 'undefined') {
-        for (let manhwa of manhwas) {
-            manhwa.saved = await manhwaController.getSavedManhwaChapterApi(req, res, next, manhwa.mid);
-        }
-        return res.json(manhwas);
-    }
     return res.json(manhwas);
 
 });
