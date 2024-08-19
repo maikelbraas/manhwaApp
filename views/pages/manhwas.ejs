@@ -72,7 +72,7 @@
                 type="image/webp"
                 rel="preload" />
             </picture> -->
-            <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p>
+            <!-- <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p> -->
           </div>
           <div class="card-body pb-0 d-flex flex-column h-100">
             <h2 class="card-title card-title-elip text-decoration-underline">
@@ -108,7 +108,7 @@
             <p class="card-text manhwa-row-content mb-1 text-break">
               <%- manhwa.content %>
             </p>
-            <div class="gap-2 p-0 g-0 mb-1 w-100 phone-invis">
+            <div class="gap-2 p-0 g-0 mb-1 w-100">
               Genres:
               <div class="genres-manhwa">
                 <% if(manhwa.genres != null) for(let genre of
@@ -121,7 +121,7 @@
             </div>
           </div>
         </div>
-        <div class="gap-2 p-1 g-0 w-100 phone-vis">
+        <!-- <div class="gap-2 p-1 g-0 w-100 phone-vis">
           <div class="genres-manhwa d-flex flex-wrap">
             <% if(manhwa.genres != null) for(let genre of
             manhwa.genres.split(',')){ %>
@@ -130,7 +130,7 @@
             </span>
             <% } %>
           </div>
-        </div>
+        </div> -->
       </div>
     </a>
     <% } %>
