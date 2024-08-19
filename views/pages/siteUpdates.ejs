@@ -5,6 +5,7 @@
       <button
         class="accordion-button collapsed"
         type="button"
+        style="font-size: 20px"
         data-bs-toggle="collapse"
         data-bs-target="#collapse<%-update.id%>"
         aria-expanded="false"
@@ -18,7 +19,8 @@
       id="collapse<%-update.id%>"
       class="accordion-collapse collapse"
       aria-labelledby="heading<%-update.id%>"
-      data-bs-parent="#siteUpdates">
+      data-bs-parent="#siteUpdates"
+      style="background-color: #333a40">
       <div class="accordion-body"><%- update.content %></div>
     </div>
   </div>
