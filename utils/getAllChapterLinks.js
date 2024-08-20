@@ -5,7 +5,7 @@ export default async function checkChapterLinks(mid, jsonSingle, manhwa) {
             [manhwa] = await manhwaModel.findManhwaById(mid);
         if (jsonSingle == null) {
             let responseSingleOr = await fetch(`${manhwa.baseurl}series/${manhwa.slug}`);
-            if (responseSingleOr.status != 200) return;
+            if (responseSingleOr.status != 200) return [];
             jsonSingle = await responseSingleOr.text();
         }
         //Get chapters links
