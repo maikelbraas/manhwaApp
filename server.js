@@ -110,8 +110,8 @@ app.use('*', (req, res, next) => {
 // })
 
 const server = https.createServer({
-    key: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/fullchain.pem', 'utf8'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/privkey.pem', 'utf8')
+    key: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/privkey.pem', 'utf8'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/fullchain.pem', 'utf8')
 }, app);
 
 server.listen(3000);
