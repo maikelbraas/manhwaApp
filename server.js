@@ -1,4 +1,6 @@
 import express from 'express';
+import https from 'https';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import ejs from 'ejs';
@@ -44,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
-app.use(session({ secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: false, cookie: { sameSite: 'lax', maxAge: 4 * 60 * 60 * 1000, httpOnly: true, hostOnly: true, secure: true } }));
+app.use(session({ key: 'NodeJS', secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: false, cookie: { sameSite: 'lax', maxAge: 4 * 60 * 60 * 1000, httpOnly: true, hostOnly: true, secure: true } }));
 
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);
@@ -100,9 +102,16 @@ app.use('*', (req, res, next) => {
     res.status(404).render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
 })
 
-app.listen(PORT, () => {
-    console.log(`Server is running on PORT: ${PORT}`);
-    setInterval(async () => {
-        scheduledFetch(null, null, null, HOST_NAME);
-    }, 1000 * 60 * 60 * 6)
-})
+// app.listen(PORT, () => {
+//     console.log(`Server is running on PORT: ${PORT}`);
+//     setInterval(async () => {
+//         scheduledFetch(null, null, null, HOST_NAME);
+//     }, 1000 * 60 * 60 * 6)
+// })
+
+const server = https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/fullchain.pem', 'utf8'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/privkey.pem', 'utf8')
+}, app);
+
+server.listen(3000);
