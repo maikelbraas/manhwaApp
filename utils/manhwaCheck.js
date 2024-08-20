@@ -14,7 +14,7 @@ export default async function manhwaCheck(req, res, next, baseurl, source) {
                 totalManhwas = response.headers.get('x-wp-total');
             json = await response.json();
             for (let next = 0; next < json.length; next++) {
-                if (typeof json[next] === 'object' && !Array.isArray(json[next]) && json[next] !== null && json[next] !== undefined) {
+                if (typeof json[next] === 'object' && !Array.isArray(json[next]) && json[next] !== null && json[next] !== undefined && response.status == 200) {
                     await checkSingle(json[next]);
                 }
             }
