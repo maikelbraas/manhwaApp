@@ -18,6 +18,18 @@
   </form>
   <button id="showOrHide" class="btn btn-primary mt-2">Show</button>
 </div>
+<div class="alert alert-warning mt-2" id="feedback-container">
+  <h2>Password should contain:</h2>
+  <p id="feedback">
+    At least one uppercase letter <br />
+    At least one lowercase letter <br />
+    At least one digit <br />
+    At least one special symbol <br />
+    Should be 8 characters or more <br />
+    Should be 20 characters or less <br />
+    Password and confirm password must match
+  </p>
+</div>
 <script>
   const passwordFields = document.querySelectorAll(".pass");
   document.getElementById("showOrHide").addEventListener("click", (event) => {
@@ -33,4 +45,50 @@
       }
     }
   });
+  var errors = {
+    uppercase: { regex: /[A-Z]/, description: "At least one uppercase letter" },
+    lowercase: { regex: /[a-z]/, description: "At least one lowercase letter" },
+    digit: { regex: /[0-9]/, description: "At least one digit" },
+    special: {
+      regex: /[^A-Za-z0-9]/,
+      description: "At least one special symbol",
+    },
+    lengthMin: {
+      test: (e) => e.length > 7,
+      description: "Should be 8 characters or more",
+    },
+    lengthMax: {
+      test: (e) => e.length < 21,
+      description: "Should be 20 characters or less",
+    },
+  };
+  for (let i = 0; i < 2; i++)
+    passwordFields[i].addEventListener("input", () => {
+      let feedback = validatePassword(event.target.value);
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("feedback-container").style.display = "block";
+      for (let message of feedback) {
+        document.getElementById(
+          "feedback"
+        ).innerHTML += `${message.description}<br>`;
+      }
+      if (passwordFields[0].value != passwordFields[1].value) {
+        document.getElementById("feedback").innerHTML +=
+          "Password and confirm password must match";
+      } else if (
+        passwordFields[0].value == passwordFields[1].value &&
+        feedback.length == 0
+      ) {
+        document.getElementById("feedback-container").style.display = "none";
+      }
+    });
+
+  function validatePassword(e) {
+    return Object.entries(errors).flatMap(
+      ([name, { test, regex, description }]) => {
+        const isValid = test ? test(e) : regex.test(e);
+        return isValid ? [] : { description, name };
+      }
+    );
+  }
 </script>
