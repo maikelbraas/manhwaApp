@@ -114,4 +114,9 @@ const server = https.createServer({
     cert: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/fullchain.pem', 'utf8')
 }, app);
 
-server.listen(3000);
+server.listen(PORT, () => {
+    console.log(`Server is running on PORT: ${PORT}`);
+    setInterval(async () => {
+        scheduledFetch(null, null, null, HOST_NAME);
+    }, 1000 * 60 * 60 * 6)
+});

@@ -20,8 +20,7 @@ export default async function manhwaCheck(req, res, next, baseurl, source) {
             }
             i++;
         } catch (error) {
-            res.write(`data: ${JSON.stringify({ progress: 100, error, i, json })}\n\n`);
-            res.end();
+            console.log(error);
         }
     } while (response.status == 200 && json.length > 0);
 
