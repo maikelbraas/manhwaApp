@@ -52,11 +52,11 @@ CookieConsent.run({
             en: {
                 consentModal: {
                     title: "Hello traveller, it's cookie time!",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.",
+                    description: "For this website we use 2 types of cookies, necessary and functional cookies. The necessary cookies can not be turned off, the functional cookies are for the search functionality on the website.",
                     acceptAllBtn: "Accept all",
                     acceptNecessaryBtn: "Reject all",
                     showPreferencesBtn: "Manage preferences",
-                    footer: "<a href=\"#link\">Privacy Policy</a>\n<a href=\"#link\">Terms and conditions</a>"
+                    footer: "<a href=\"/privacypolicy\">Privacy Policy</a>\n<a href=\"/cookiepolicy\">Cookie policy</a>"
                 },
                 preferencesModal: {
                     title: "Consent Preferences Center",
