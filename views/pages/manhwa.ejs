@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center h-100">
   <div class="d-flex manga-card">
-    <div class="manga-single-place">
+    <!-- <div class="manga-single-place"> -->
       <!-- <picture class="m-auto">
         <source
           media="(min-width: 1058px)"
@@ -18,7 +18,7 @@
           type="image/webp"
           rel="preload" />
       </picture> -->
-        </div>
+        <!-- </div> -->
       <div class="card-body p-4">
         <h1 class="card-title mb-3"><%- manhwa.title %></h1>
         <span class="d-flex phone-col">
@@ -65,15 +65,15 @@
             href="<%- manhwa.baseurl %>series/<%- manhwa.slug %>"
             target="_blank"
             class="btn btn-info w-100"
-            >Manhwa site</a
-          >
+            style="align-content: center"
+            >Manhwa site</a>
           <% }else{ %>
           <a
             href="<%- manhwa.baseurl %>manga/<%- manhwa.slug %>"
             target="_blank"
             class="btn btn-info w-100"
-            >Manhwa site</a
-          >
+            style="align-content: center"
+            >Manhwa site</a>
           <% } %> <% if(typeof currentUser != 'undefined'){ %> <% if(typeof
           manhwa.saved == 'undefined'){ %>
           <form
@@ -93,7 +93,8 @@
               required />
             <button
               type="submit"
-              class="btn btn-primary form-control text-white w-100">
+              class="btn btn-primary form-control text-white w-100"
+              style="">
               Save manhwa
             </button>
           </form>
