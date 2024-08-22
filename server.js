@@ -46,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
-app.use(session({ key: 'NodeJS', secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: false, cookie: { sameSite: 'lax', path: '/auth/', maxAge: 4 * 60 * 60 * 1000, httpOnly: true, hostOnly: true, secure: true } }));
+app.use(session({ key: 'NodeJS', secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: false, cookie: { sameSite: 'lax', maxAge: 4 * 60 * 60 * 1000, httpOnly: true, hostOnly: true, secure: true } }));
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);
 initializePassport(app);
