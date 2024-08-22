@@ -5,11 +5,21 @@
 <script src="/js/lazysizes.min.js"></script>
 <script src="/js/search.min.js" type="module"></script>
 <script>
+  const checkIfAccepted = setInterval(() => {if(checkAccept()) clearInterval(checkIfAccepted)}, 500);
+  function checkAccept(){
+  if(decodeURIComponent(document.cookie).indexOf('"functionality":["db","nb"]') > -1){
   if(!localStorage.getItem('manhwas') || document.cookie.indexOf("newBuild=true") > -1){
     let manhwas = <%- JSON.stringify(manhwasSearch) %>
     localStorage.setItem("manhwas", JSON.stringify(manhwas));
     document.cookie = 'newBuild=false;SameSite=Lax';
+    document.getElementById('search-container').style.display = 'flex'
+    return true;
     }
+    return true;
+  }
+  document.getElementById('search-container').style.display = 'none'
+  return false;
+  }
   document.addEventListener("DOMContentLoaded", (event) => {
     if(window.location.href.includes('#')){
       const manhwaMid = window.location.href.split('#')[1];
@@ -60,16 +70,5 @@
       </a>
     </div>
   </div>
-  <script
-    type="text/javascript"
-    src="https://cookieconsent.popupsmart.com/src/js/popper.js"></script>
-  <script>
-    window.start.init({
-      Palette: "palette1",
-      Mode: "banner bottom",
-      Theme: "block",
-      Location: "https://manhwasaver.com/cookiepolicy",
-      Time: "0",
-    });
-  </script>
+  <script type="module" src="/js/cookieconsent-config.js"></script>
 </footer>

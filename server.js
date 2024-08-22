@@ -46,8 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static('public'))
 app.set('trust proxy', true);
-app.use(session({ key: 'NodeJS', secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: false, cookie: { sameSite: 'lax', maxAge: 4 * 60 * 60 * 1000, httpOnly: true, hostOnly: true, secure: true } }));
-
+app.use(session({ key: 'NodeJS', secret: uuidv4(v4options).toString(), resave: true, saveUninitialized: false, cookie: { sameSite: 'lax', path: '/auth/', maxAge: 4 * 60 * 60 * 1000, httpOnly: true, hostOnly: true, secure: true } }));
 app.use(expressVisitorCounter({ hook: counterId => counters[counterId] = (counters[counterId] || 0) + 1 }));
 app.use(flashMessage);
 initializePassport(app);
@@ -56,6 +55,23 @@ app.use(cors({
     credentials: true
 }))
 
+
+function parseCookies(request) {
+    const list = {};
+    const cookieHeader = request.headers?.cookie;
+    if (!cookieHeader) return list;
+
+    cookieHeader.split(`;`).forEach(function (cookie) {
+        let [name, ...rest] = cookie.split(`=`);
+        name = name?.trim();
+        if (!name) return;
+        const value = rest.join(`=`).trim();
+        if (!value) return;
+        list[name] = decodeURIComponent(value);
+    });
+
+    return list;
+}
 
 app.use(async (req, res, next) => {
     if (!global.manhwas) {
@@ -88,9 +104,20 @@ app.use((req, res, next) => {
 
 
 app.use((req, res, next) => {
-    if (req.headers.cookie == undefined || (global.buildDate != undefined && req.headers.cookie.indexOf(global.buildDate) == -1)) {
-        res.cookie('newBuild', true, { sameSite: 'lax', secure: true });
-        res.cookie('dateBuild', global.buildDate, { sameSite: 'lax', secure: true, httpOnly: true, hostOnly: true });
+    let checkIfAcepted
+    if (parseCookies(req).cc_cookie == undefined && checkIfAcepted == undefined) {
+        checkIfAcepted = setInterval(checkBuild, 500)
+    } else {
+        clearInterval(checkIfAcepted);
+    }
+    checkBuild();
+    function checkBuild() {
+        if (parseCookies(req).cc_cookie != undefined) if (JSON.parse(parseCookies(req).cc_cookie).services.functionality.length > 0)
+            if (parseCookies(req).cc_cookie != false && parseCookies(req).cc_cookie != undefined)
+                if (req.headers.cookie == undefined || (global.buildDate != undefined && req.headers.cookie.indexOf(global.buildDate) == -1)) {
+                    res.cookie('newBuild', true, { sameSite: 'lax', secure: true });
+                    res.cookie('dateBuild', global.buildDate, { sameSite: 'lax', secure: true, httpOnly: true, hostOnly: true });
+                }
     }
     next();
 })
@@ -101,13 +128,6 @@ app.use('/admin', checkRole(2), admin);
 app.use('*', (req, res, next) => {
     res.status(404).render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
 })
-
-// app.listen(PORT, () => {
-//     console.log(`Server is running on PORT: ${PORT}`);
-//     setInterval(async () => {
-//         scheduledFetch(null, null, null, HOST_NAME);
-//     }, 1000 * 60 * 60 * 6)
-// })
 
 const server = https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/privkey.pem', 'utf8'),
