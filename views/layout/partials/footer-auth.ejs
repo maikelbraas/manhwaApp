@@ -1,0 +1,74 @@
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="/js/jquery-slim.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/lazysizes.min.js"></script>
+<script src="/js/search.min.js" type="module"></script>
+<script>
+  const checkIfAccepted = setInterval(() => {if(checkAccept()) clearInterval(checkIfAccepted)}, 500);
+  function checkAccept(){
+  if(decodeURIComponent(document.cookie).indexOf('"functionality":["db","nb"]') > -1){
+  if(!localStorage.getItem('manhwas') || document.cookie.indexOf("newBuild=true") > -1){
+    let manhwas = <%- JSON.stringify(manhwasSearch) %>
+    localStorage.setItem("manhwas", JSON.stringify(manhwas));
+    document.cookie = 'newBuild=false;SameSite=Lax';
+    document.getElementById('search-container').style.display = 'flex'
+    return true;
+    }
+    return true;
+  }
+  document.getElementById('search-container').style.display = 'none'
+  return false;
+  }
+  document.addEventListener("DOMContentLoaded", (event) => {
+    if(window.location.href.includes('#')){
+      const manhwaMid = window.location.href.split('#')[1];
+      document.getElementById(manhwaMid).parentNode.parentNode.parentNode.classList.add('show')
+    }
+  });
+</script>
+<footer
+  class="bg-dark mt-auto align-items-center d-flex row me-0"
+  style="padding: 10px 0">
+  <div class="row align-items-center">
+    <a class="col" href="/" aria-label="Back to home">
+      <img
+        src="/favicon_io/android-chrome-192x192.webp"
+        width="50"
+        height="50"
+        alt="" />
+    </a>
+    <span class="col text-body-secondary">Hobby project, 07-2024</span>
+    <span class="col text-body-secondary">Contact: manhwasaver@gmail.com</span>
+    <span class="col"
+      ><a
+        href="https://github.com/maikelbraas/manhwaApp"
+        aria-label="Github link to the project"
+        id="running"
+        class="button"
+        target="_blank">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Github
+      </a>
+    </span>
+    <div class="col text-body-secondary">
+      <a href="/siteUpdates" aria-label="Updates made to the website">
+        Latest updates to site
+      </a>
+    </div>
+    <div class="col text-body-secondary">
+      <a href="/privacypolicy" aria-label="Privacy policy of the website">
+        Privacy policy
+      </a>
+    </div>
+    <div class="col text-body-secondary">
+      <a href="/cookiepolicy" aria-label="Cookie policy of the website">
+        Cookie policy
+      </a>
+    </div>
+  </div>
+  <script type="module" src="/js/cookieconsent-config.js"></script>
+</footer>

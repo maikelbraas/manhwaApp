@@ -205,7 +205,7 @@
       </script>
       <%} %> <%- include(`../${template}`) %>
     </main>
-
-    <%- include('./partials/footer') %>
+    <% if(isAuthenticated){ %><%- include('./partials/footer-auth') %> <% }else{
+    %> <%- include('./partials/footer') %> <% } %>
   </body>
 </html>
