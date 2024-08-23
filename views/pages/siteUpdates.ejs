@@ -1,5 +1,5 @@
 <div class="accordion" id="siteUpdates">
-  <% for(let update of updates){ %>
+  <% for(let update of updates){ if(update.vis === 1){ %>
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading<%-update.id%>">
       <button
@@ -24,5 +24,5 @@
       <div class="accordion-body"><%- update.content %></div>
     </div>
   </div>
-  <% } %>
+  <% }} %>
 </div>
