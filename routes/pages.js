@@ -8,10 +8,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res, next) => {
-    if (req.session.user == undefined)
-        page.showLoginForm(req, res, next);
-    else
-        res.redirect('/auth/savedmanhwas');
+    res.render('layout', { template: 'pages/notice.ejs', title: 'Removal Notice' });
 });
 
 
@@ -49,7 +46,7 @@ router.get('/siteUpdates', async (req, res, next) => {
 //     await page.register(req, res, next);
 // })
 
-router.get('/login', (req, res, next) => {
+router.get('/aV46X3j9z9m6', (req, res, next) => {
     if (req.session.user == undefined)
         page.showLoginForm(req, res, next);
     else

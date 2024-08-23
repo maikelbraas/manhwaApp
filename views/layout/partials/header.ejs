@@ -53,12 +53,8 @@
       <li class="nav-item">
         <a class="nav-link" href="/admin/dashboard">Dashboard</a>
       </li>
-      <% }} else if(!isAuthenticated){ %>
-      <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
-      </li>
-      <% } %>
+      <% }} %>
     </ul>
   </div>
-  <%- include('./search.ejs') %>
+  <% if(isAuthenticated){ %> <%- include('./search.ejs') %> <% } %>
 </nav>
