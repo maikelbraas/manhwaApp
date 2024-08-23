@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res, next) => {
-    res.render('layout', { template: 'pages/notice.ejs', title: 'Removal Notice' });
+    res.render('notice.ejs');
 });
 
 
