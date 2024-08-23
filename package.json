@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "release": "sudo node --env-file=.env server",
-    "dev": "node --watch --env-file=.env server"
+    "dev": "node --watch --env-file=.env server",
+    "devLocal": "node --watch --env-file=.env app"
   },
   "keywords": [],
   "author": "",
