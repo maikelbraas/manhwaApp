@@ -84,16 +84,16 @@ router.get('/manhwa/:id', async (req, res, next) => {
     }
 });
 
-router.get('/register', (req, res, next) => {
-    if (req.session.user == undefined)
-        res.render('layout', { template: 'pages/register.ejs', errors: [], title: 'Register' });
-    else
-        res.redirect('/auth/savedmanhwas');
-})
+// router.get('/register', (req, res, next) => {
+//     if (req.session.user == undefined)
+//         res.render('layout', { template: 'pages/register.ejs', errors: [], title: 'Register' });
+//     else
+//         res.redirect('/auth/savedmanhwas');
+// })
 
-router.post('/register', async (req, res, next) => {
-    await page.register(req, res, next);
-})
+// router.post('/register', async (req, res, next) => {
+//     await page.register(req, res, next);
+// })
 
 router.get('/login', (req, res, next) => {
     if (req.session.user == undefined)
