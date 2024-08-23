@@ -1,5 +1,6 @@
 import express from 'express';
 import auth from '../controllers/Auth.js';
+import manhwaController from '../controllers/Manhwa.js';
 
 const router = express.Router();
 
@@ -56,6 +57,60 @@ router.patch('/patch/:mid', async (req, res, next) => {
     await auth.patchSaved(req, res, next);
     res.json({ success: true });
 })
+
+router.get('/manhwa/:id', async (req, res, next) => {
+    try {
+        let manhwa = await manhwaController.getManhwa(req, res, next);
+        if (!manhwa) {
+            next();
+            return;
+        }
+        [manhwa] = manhwa;
+        if (typeof req.session.user != 'undefined')
+            manhwa.saved = await manhwaController.getSavedManhwaChapter(req, res, next);
+
+        res.render('layout', { template: 'pages/manhwa.ejs', manhwa, title: manhwa.title });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+router.get('/latest', async (req, res, next) => {
+    let manhwas = await manhwaController.getLastUpdated(req, res, next, global.totalUpdated ? global.totalUpdated < 10 ? 10 : global.totalUpdated : 10);
+    var date = new Date(manhwas[0].lastUpdate).toString().slice(0, 24).slice(4);
+    return res.render('layout', { template: 'pages/latest.ejs', manhwas, title: 'Latest updates', date: global.lastUpdated ? global.lastUpdated.toString().slice(0, 24).slice(4) : date });
+});
+
+router.get('/manhwas/:page', async (req, res, next) => {
+    let filter = "?";
+    if (Object.keys(req.query).length > 0) {
+        let i = Object.keys(req.query).length - 1;
+        for (let genre in req.query) {
+
+            filter += `${genre}=${req.query[genre]}`;
+            if (i > 0) {
+                filter += '&';
+                i--;
+            }
+        }
+    } else {
+        filter = '';
+    }
+    if (req.params.page > 0 && req.params.page <= Math.ceil(global.manhwas.totalManhwas / 6)) {
+        if (Object.keys(req.query).length === 0) {
+            let data = await manhwaController.getManhwas(req, res, next);
+            return res.render('layout', { template: 'pages/manhwas.ejs', manhwas: data.manhwas, filter, page: req.params.page, manhwasTotal: global.manhwas.totalManhwas, title: 'Page: ' + req.params.page, genres: data.genres });
+        } else if (Object.keys(req.query).length !== 0) {
+            let data = await manhwaController.getFilteredManhwas(req, res, next);
+            let manhwasTotal = data.manhwas.length != 0 ? data.manhwas[0].total - 6 : 0
+            if (data.manhwas == false) {
+                res.flash(['remove', 'Genre combination could not be found.']);
+            }
+            return res.render('layout', { template: 'pages/manhwas.ejs', manhwas: data.manhwas, filter, baseFilter: req.query, page: req.params.page, manhwasTotal, title: 'Filtered: ' + req.params.page, genres: data.genres });
+        }
+    }
+    next();
+});
 
 //API
 
