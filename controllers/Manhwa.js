@@ -17,9 +17,9 @@ class Manhwa {
             totalCreated += manhwasCreate.length;
             if (manhwasCreate.length > 0) {
                 for (let manhwa of manhwasCreate) {
-                    // let image = await downloadImage(manhwa.mid, manhwa.image);
+                    let image = await downloadImage(manhwa.mid, manhwa.image);
 
-                    await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, manhwa.image, manhwa.chapters, manhwa.baseurl, manhwa.status);
+                    await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
                     await genreCheck(req, res, next, manhwa);
                 }
                 await this.resizeImages(manhwasCreate);

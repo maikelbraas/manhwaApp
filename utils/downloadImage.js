@@ -4,7 +4,7 @@ import sharp from 'sharp';
 
 export default async function downloadImage(mid, url) {
     let imagename = mid;
-    const dirPath = 'public/manhwaImages/';
+    const dirPath = 'public/4Z017sNnvsPD/';
     let image;
     const response = await fetch(url);
     const buffer = await response.arrayBuffer();
