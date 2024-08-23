@@ -181,11 +181,13 @@
   </head>
 
   <body class="d-flex flex-column vh-100">
+    <% if(isAuthenticated){ %>
     <header><%- include('./partials/header') %></header>
+    <% } %>
     <main class="container mb-4 flex-grow-1">
-      <% const message = getFlashMessage(); if(message){
-      if(Array.isArray(message)){ for(let i = 0; i < message.length; i++){ %> <%
-      if(message[0]== 'remove'){ i = 1 %>
+      <% if(isAuthenticated){ %> <% const message = getFlashMessage();
+      if(message){ if(Array.isArray(message)){ for(let i = 0; i <
+      message.length; i++){ %> <% if(message[0]== 'remove'){ i = 1 %>
       <div
         class="alert alert-warning removePopup position-absolute z-3 mt- top-0 start-50 translate-middle-x">
         <%= message[i] %>
@@ -203,9 +205,8 @@
           document.querySelector(".removePopup").style.display = "none";
         }, 3000);
       </script>
-      <%} %> <%- include(`../${template}`) %>
+      <%}} %> <%- include(`../${template}`) %>
     </main>
-    <% if(isAuthenticated){ %><%- include('./partials/footer-auth') %> <% }else{
-    %> <%- include('./partials/footer') %> <% } %>
+    <% if(isAuthenticated){ %><%- include('./partials/footer-auth') %> <% } %>
   </body>
 </html>
