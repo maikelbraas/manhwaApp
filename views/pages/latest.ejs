@@ -6,19 +6,19 @@
   <div>
     <% for(let manhwa of manhwas){ %>
     <a
-      href="/manhwa/<%- manhwa.mid %>"
+      href="/auth/manhwa/<%- manhwa.mid %>"
       class="card-link text-decoration-none text-reset">
       <div class="card h-100">
         <div class="g-0 d-flex d-flex-home h-100">
           <div class="d-flex flex-column">
-            <!-- <picture>
+            <picture>
               <source
                 media="(min-width: 1058px)"
                 width="200"
                 height="300"
-                data-srcset="/manhwaImages/.webp" />
+                data-srcset="/4Z017sNnvsPD/<%-manhwa.mid%>.webp" />
               <img
-                data-src="/manhwaImages/-150x225.webp"
+                data-src="/4Z017sNnvsPD/<%-manhwa.mid%>-150x225.webp"
                 class="rounded-start manga-image m-auto lazyload"
                 alt=""
                 width="150"
@@ -27,8 +27,8 @@
                 as="image"
                 type="image/webp"
                 rel="preload" />
-            </picture> -->
-            <!-- <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p> -->
+            </picture>
+            <p class="align-self-bottom mb-0 phone-vis ms-1">Genres:</p>
           </div>
           <div class="card-body pb-0 d-flex flex-column h-100">
             <h2 class="card-title card-title-elip text-decoration-underline">
@@ -64,7 +64,7 @@
             <p class="card-text manhwa-row-content mb-1 text-break">
               <%- manhwa.content %>
             </p>
-            <div class="gap-2 p-0 g-0 mb-1 w-100">
+            <div class="gap-2 p-0 g-0 mb-1 w-100 phone-invis">
               Genres:
               <div class="genres-manhwa">
                 <% if(manhwa.genres != null) for(let genre of
@@ -77,7 +77,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="gap-2 p-1 g-0 w-100 phone-vis">
+        <div class="gap-2 p-1 g-0 w-100 phone-vis">
           <div class="genres-manhwa d-flex flex-wrap">
             <% if(manhwa.genres != null) for(let genre of
             manhwa.genres.split(',')){ %>
@@ -86,7 +86,7 @@
             </span>
             <% } %>
           </div>
-        </div> -->
+        </div>
       </div>
     </a>
     <% } %>

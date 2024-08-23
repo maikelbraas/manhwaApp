@@ -1,7 +1,27 @@
 <div class="card" id="<%- manhwa.mid %>">
   <div class="g-0 d-flex h-100">
+
+    <div class="d-flex flex-column">
+      <picture>
+        <source
+          media="(min-width: 1058px)"
+          width="200"
+          height="300"
+          data-srcset="/4Z017sNnvsPD/<%-manhwa.mid%>.webp" />
+        <img
+          data-src="/4Z017sNnvsPD/<%-manhwa.mid%>-150x225.webp"
+          class="rounded-start manga-image m-auto lazyload"
+          alt=""
+          width="150"
+          height="225"
+          fetchpriority="high"
+          as="image"
+          type="image/webp"
+          rel="preload" />
+      </picture>
+    </div>
     <div class="card-body pb-0">
-      <a href="/manhwa/<%- manhwa.mid %>" class="card-link">
+      <a href="/auth/manhwa/<%- manhwa.mid %>" class="card-link">
         <h2 class="card-title card-title-elip p-0"><%- manhwa.title %></h2>
       </a>
       <span class="d-flex phone-col">
