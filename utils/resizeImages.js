@@ -5,8 +5,8 @@ import sharp from 'sharp';
 export default async function resizeImages(mid, size) {
     let imagename = mid;
 
-    const dirImage = 'public/manhwaImages/' + mid + '.webp';
-    const dirPath = 'public/manhwaImages/';
+    const dirImage = 'public/4Z017sNnvsPD/' + mid + '.webp';
+    const dirPath = 'public/4Z017sNnvsPD/';
     let image;
     try {
         image = await sharp(dirImage)
