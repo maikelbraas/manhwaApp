@@ -2,7 +2,7 @@
 
 export default function isAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        res.cookie('before', true, { sameSite: 'lax', secure: true });
+        res.cookie('before', true, { sameSite: 'lax', maxAge: 34560000, secure: true });
         return next();
     }
     if (req.headers.cookie?.includes('before=true')) {
