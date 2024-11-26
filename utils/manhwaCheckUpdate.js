@@ -120,6 +120,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 //Get image
                 // let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('fetchpriority="high"'));
                 // let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
+                let image = ""
                 //Get description
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('itemprop="description">') + 23, jsonSingle.search('<div class="lastend">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
