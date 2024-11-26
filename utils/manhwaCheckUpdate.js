@@ -129,9 +129,10 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 // let status = statusSlice.split('>')[1].split('<')[0];
                 let status = ""
                 //Get chapters links
-                let chapter;
-                let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
-                chapter = chapterSlice.split(' ')[3].split('<')[0];
+                let chapter = "";
+                // let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
+                // chapter = chapterSlice.split(' ')[3].split('<')[0];
+
                 return { genres, description, status, chapter, image, jsonSingle };
             }
         } catch (err) {
