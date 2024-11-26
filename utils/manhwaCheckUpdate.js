@@ -125,8 +125,9 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('itemprop="description">') + 23, jsonSingle.search('<div class="lastend">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
                 //Get status
-                let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
-                let status = statusSlice.split('>')[1].split('<')[0];
+                // let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
+                // let status = statusSlice.split('>')[1].split('<')[0];
+                let status = ""
                 //Get chapters links
                 let chapter;
                 let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
