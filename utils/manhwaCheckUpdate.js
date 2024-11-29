@@ -118,7 +118,7 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                     genres.splice(genres.length - 1, 1);
                 }
                 //Get image
-                let imageSlice = jsonSingle.slice(jsonSingle.search('class="attachment- size- wp-post-image"'), jsonSingle.search('fetchpriority="high"'));
+                let imageSlice = jsonSingle.slice(jsonSingle.search('class="attachment- size- wp-post-image"') - 200, jsonSingle.search('class="attachment- size- wp-post-image"'));
                 console.log(imageSlice)
                 // let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
                 let image = "";
