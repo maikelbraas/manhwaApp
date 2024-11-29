@@ -118,20 +118,19 @@ export default async function manhwaCheckUpdate(req, res, next, source) {
                     genres.splice(genres.length - 1, 1);
                 }
                 //Get image
-                // let imageSlice = jsonSingle.slice(jsonSingle.search('itemprop="image"'), jsonSingle.search('fetchpriority="high"'));
-                // let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
-                let image = ""
+                let imageSlice = jsonSingle.slice(jsonSingle.search('class="attachment- size- wp-post-image"'), jsonSingle.search('fetchpriority="high"'));
+                let [image] = imageSlice.split('src="https://', 3)[1].split('"', 1);
                 //Get description
                 let descriptionSlice = jsonSingle.slice(jsonSingle.search('itemprop="description">') + 23, jsonSingle.search('<div class="lastend">'));
                 let description = descriptionSlice.replace(/(<([^>]+)>)/gi, "");
                 //Get status
-                // let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
-                // let status = statusSlice.split('>')[1].split('<')[0];
-                let status = ""
+                let statusSlice = jsonSingle.slice(jsonSingle.search('<div class="status-value">'), jsonSingle.search('<div class="status-value">') + 50);
+                let status = statusSlice.split('>')[1].split('<')[0];
+                // let status = ""
                 //Get chapters links
                 let chapter = "";
-                // let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
-                // chapter = chapterSlice.split(' ')[3].split('<')[0];
+                let chapterSlice = jsonSingle.slice(jsonSingle.search('<span class="epcur epcurlast">'), jsonSingle.search('<span class="epcur epcurlast">') + 80);
+                chapter = chapterSlice.split(' ')[3].split('<')[0];
 
                 return { genres, description, status, chapter, image, jsonSingle };
             }
