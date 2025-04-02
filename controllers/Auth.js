@@ -83,7 +83,7 @@ class Auth {
             const manhwas = await manhwaModel.getSavedManhwas(userid);
             for (let manhwa of manhwas) {
                 const [link] = await manhwaModel.getCurrentChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
-                manhwa.link = manhwa.baseurl + '/title/' + manhwa.slug + "/chapter/" + parseInt(manhwa.chapter) + "/1";
+                manhwa.link = manhwa.baseurl + '/title/' + manhwa.slug + "/chapter/" + manhwa.chapter + "/1";
                 const next = await manhwaModel.getNextChapter(manhwa.mid, parseFloat(manhwa.chapter).toFixed(1));
                 manhwa.next = "";
                 if (next.length > 0)
