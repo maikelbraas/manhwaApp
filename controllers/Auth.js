@@ -43,7 +43,7 @@ class Auth {
         const userid = req.session.user.id;
         let manhwas = await manhwaModel.getSavedManhwas(userid);
         for (let manhwa of manhwas) {
-            if (manhwa.mid.includes('mgdemon')) {
+            if (manhwa.mid.includes('demonicscans')) {
                 chapters = await checkSingleDemon(manhwa.mid);
             } else {
                 chapters = await checkSingle(manhwa.mid);

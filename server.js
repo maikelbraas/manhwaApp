@@ -136,7 +136,7 @@ const server = https.createServer({
 
 server.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
-    setInterval(async () => {
-        scheduledFetch(null, null, null, HOST_NAME);
-    }, 1000 * 60 * 60 * 6)
+    // setInterval(async () => {
+    //     scheduledFetch(null, null, null, HOST_NAME);
+    // }, 1000 * 60 * 60 * 6)
 });
