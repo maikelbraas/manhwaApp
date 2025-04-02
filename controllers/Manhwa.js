@@ -10,7 +10,7 @@ import resizeImages from '../utils/resizeImages.js';
 
 class Manhwa {
     static async checkInsert(req, res, next) {
-        let sources = [{ baseurl: 'https://reaper-scans.com/', name: 'reaper' }, { baseurl: 'https://flamecomics.me/', name: 'flame' }];
+        let sources = [{ baseurl: 'https://reaper-scans.com/', name: 'reaper' }, { baseurl: 'https://flamecomics.xyz/', name: 'flame' }];
         let totalCreated = 0;
         for (let source of sources) {
             let manhwasCreate = await manhwaCheck(req, res, next, source.baseurl, source.name);
