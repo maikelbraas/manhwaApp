@@ -12,9 +12,9 @@ class Auth {
         const api = req.body.api != undefined ? req.body.api : false;
         const userid = req.session.user.id;
         const existingChapter = await ChapterSaved.getChapter(userid, req.params.id);
-        const chapterExists = await manhwaModel.getCurrentChapter(req.params.id, chapter);
+        // const chapterExists = await manhwaModel.getCurrentChapter(req.params.id, chapter);
         if (existingChapter.length > 0) {
-            if (chapterExists.length > 0) {
+            if (existingChapter.length > 0) {
                 await ChapterSaved.updateChapter(chapter, req.params.id, userid);
             } else
                 res.flash('Input chapter does not exist');
