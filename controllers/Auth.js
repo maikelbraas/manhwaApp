@@ -41,7 +41,7 @@ class Auth {
         const chapter = req.body.chapternumber;
         const userid = req.session.user.id;
         const api = req.body.api != undefined ? req.body.api : false;
-        await ChapterSaved.updateMaxChapter(chapter, req.params.id, userid);
+        await ChapterSaved.updateMaxChapter(chapter, req.params.id);
         return { api, flag };
     }
 
