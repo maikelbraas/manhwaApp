@@ -14,7 +14,7 @@ class ChapterSaved {
         return result.insertId;
     }
     static async updateMaxChapter(chapter, manhwa) {
-        const query = "UPDATE manhwas SET chapters = ? WHERE manhwaid = ?";
+        const query = "UPDATE manhwas SET chapters = ? WHERE mid = ?";
         const [result] = await connect.execute(query, [chapter, manhwa]);
         return result.insertId;
     }
