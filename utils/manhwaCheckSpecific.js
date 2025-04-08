@@ -6,8 +6,7 @@ export default async function manhwaCheck(req, res, next) {
     let manga = req.params.id;
     let manhwa = false;
     try {
-        response = await fetch(`https://mgdemon.org/manga/${manga}`);
-
+        response = await fetch(`https://demonicscans.org/manga/${manga}`);
         text = await response.text();
         if (text.length > 1)
             await checkSingle(text);
@@ -45,9 +44,9 @@ export default async function manhwaCheck(req, res, next) {
             let chapter = chapterSlice.replace(/[^0-9.]/g, '');
             let statusSlice = single.slice(single.search('<small>Status</small>'), single.search('<small>Status</small>') + 80);
             let status = statusSlice.replace(/<[^>]*>?/gm, '').split('\n')[1];
-            let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);
-            let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];
-            let baseurl = "https://mgdemon.org/";
+            // let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);
+            // let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];
+            let baseurl = "https://demonicscans.org/";
             let descriptionSlice = single.slice(single.search('<p class="description">'), single.search('<section id="chapters" class="on">'));
             let description = descriptionSlice.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "");
 
