@@ -47,6 +47,13 @@ router.post('/chapter/:id', async (req, res, next) => {
     else
         res.redirect('/auth/savedmanhwas' + api.flag);
 })
+router.post('/chapterMax/:id', async (req, res, next) => {
+    let api = await auth.changeMaxChap(req, res, next);
+    if (api.api)
+        res.json({ success: true });
+    else
+        res.redirect('/auth/savedmanhwas' + api.flag);
+})
 
 router.delete('/remove/:mid', async (req, res, next) => {
     await auth.removeSaved(req, res, next);

@@ -36,6 +36,15 @@ class Auth {
         return { api, flag };
     }
 
+    static async changeMaxChap(req, res, next) {
+        let flag = '';
+        const chapter = req.body.chapternumber;
+        const userid = req.session.user.id;
+        const api = req.body.api != undefined ? req.body.api : false;
+        await ChapterSaved.updateMaxChapter(chapter, req.params.id, userid);
+        return { api, flag };
+    }
+
     static async updateSavedManhwa(req, res, next) {
         let chapters = [];
         let nextManhwa = 1;
