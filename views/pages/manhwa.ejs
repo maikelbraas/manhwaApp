@@ -112,6 +112,26 @@
             onclick="window.history.go(-1); return false;">
             Return
           </button>
+
+          <form
+            action="/auth/chapter/<%- manhwa.mid %>"
+            class="w-100"
+            method="POST">
+            <input
+              class="form-control bg-dark text-light w-100"
+              type="hidden"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              name="chapternumber"
+              id=""
+              min="<%- manhwa.chapters %>"
+              required />
+            <button
+              type="submit"
+              class="btn btn-primary form-control text-white w-100">
+              Change Max Chapter
+            </button>
+          </form>
         </div>
       </div>
     </div>
