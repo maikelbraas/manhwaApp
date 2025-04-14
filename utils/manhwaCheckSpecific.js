@@ -40,7 +40,7 @@ export default async function manhwaCheck(req, res, next) {
             // let genres = [];
             // genreSlice.forEach(genre => genre.length > 2 ? genres.push(genre) : false);
             // genres.splice(0, 2)
-            let chapterSlice = single.slice(single.search('<a class="chplinks"'), single.search('<span style="float:right;text-align: right;">'));
+            let chapterSlice = single.slice(single.search('class="chplinks"'), single.search('<span style="float:right;text-align: right;">'));
             console.log(chapterSlice);
             chapterSlice = chapterSlice.split('Chapter ')[1];
             console.log(chapterSlice);
