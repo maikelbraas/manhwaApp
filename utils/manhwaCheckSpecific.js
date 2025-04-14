@@ -43,6 +43,7 @@ export default async function manhwaCheck(req, res, next) {
             let chapterSlice = single.slice(single.search('class="chplinks"'), single.search('<span style="float:right;text-align: right;">'));
             console.log(chapterSlice);
             chapterSlice = chapterSlice.split('Chapter ')[1];
+            chapterSlice = chapterSlice.split('<span')[0];
             console.log(chapterSlice);
             let chapter = chapterSlice.replace(/[^0-9.]/g, '');
             // let statusSlice = single.slice(single.search('<small>Status</small>'), single.search('<small>Status</small>') + 80);
