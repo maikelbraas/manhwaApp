@@ -113,25 +113,25 @@
             Return
           </button>
 
-          <form
-            action="/auth/chapterMax/<%- manhwa.mid %>"
-            class="w-100"
-            method="POST">
-            <input
-              class="form-control bg-dark text-light w-100"
-              type="number"
-              pattern="[0-9]*"
-              inputmode="numeric"
-              name="chapternumber"
-              id=""
-              min="<%- manhwa.chapters %>" />
-            <button
-              type="submit"
-              class="btn btn-primary form-control text-white w-100">
-              Change Max Chapter
-            </button>
-          </form>
-        </div>
+          
+        </div><form
+        action="/auth/chapterMax/<%- manhwa.mid %>"
+        class="w-100"
+        method="POST">
+        <input
+          class="form-control bg-dark text-light w-100"
+          type="number"
+          pattern="[0-9]*"
+          inputmode="numeric"
+          name="chapternumber"
+          id=""
+          min="<%- manhwa.chapters %>" />
+        <button
+          type="submit"
+          class="btn btn-primary form-control text-white w-100">
+          Change Max Chapter
+        </button>
+      </form>
       </div>
     </div>
     </div>
