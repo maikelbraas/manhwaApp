@@ -71,6 +71,7 @@ class Manhwa {
         let manhwa = await manhwaCheckSpecific(req, res, next);
         if (manhwa != false) {
             // let image = await downloadImage(manhwa.mid, manhwa.image);
+            let image = "";
             await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
             // await genreCheck(req, res, next, manhwa);
 
