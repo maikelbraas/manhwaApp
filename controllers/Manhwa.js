@@ -72,11 +72,11 @@ class Manhwa {
         if (manhwa != false) {
             // let image = await downloadImage(manhwa.mid, manhwa.image);
             await manhwaModel.create(manhwa.title, manhwa.mid, manhwa.slug, manhwa.description, manhwa.media, image, manhwa.chapters, manhwa.baseurl, manhwa.status);
-            await genreCheck(req, res, next, manhwa);
+            // await genreCheck(req, res, next, manhwa);
 
-            for (let chapter of manhwa.manhwaChapters) {
-                await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-            }
+            // for (let chapter of manhwa.manhwaChapters) {
+            //     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+            // }
         }
         res.write(`data: ${JSON.stringify({ progress: 100, done: true, manhwa: JSON.stringify(manhwa) })}\n\n`);
         await this.buildJson(req, res, next);
