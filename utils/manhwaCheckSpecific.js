@@ -47,8 +47,8 @@ export default async function manhwaCheck(req, res, next) {
             // let statusSlice = single.slice(single.search('<small>Status</small>'), single.search('<small>Status</small>') + 80);
             // let status = statusSlice.replace(/<[^>]*>?/gm, '').split('\n')[1];
             let status = "Ongoing";
-            // let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);
-            // let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];
+            let imageSlice = single.slice(single.search('src="https://readermc.org/images/thumbnails/'), single.search('src="https://readermc.org/images/thumbnails/') + 200);
+            let image = imageSlice.replace(/<[^>]*>?/gm, '').split('"')[1];
             let baseurl = "https://demonicscans.org/";
             // let descriptionSlice = single.slice(single.search('<p class="description">'), single.search('<section id="chapters" class="on">'));
             // let description = descriptionSlice.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "");
@@ -59,7 +59,7 @@ export default async function manhwaCheck(req, res, next) {
                 description: "",
                 slug: slug,
                 media: 404,
-                image: "",
+                image: image,
                 chapters: chapter,
                 baseurl: baseurl,
                 genres: [""],
