@@ -21,17 +21,17 @@ class Auth {
         } else {
             flag = '#' + req.params.id;
             await ChapterSaved.saveChapter(chapter, req.params.id, req.session.user.id);
-            let chapters;
-            if (req.params.id.includes('mgdemon')) {
-                chapters = await checkSingleDemon(req.params.id, null, null);
-            } else {
-                chapters = await checkSingle(req.params.id, null, null);
-            }
-            if (!chapters)
-                this.removeSaved(req, res, next)
-            for (let chapter of chapters) {
-                await manhwaModel.saveManhwaChapters(req.params.id, chapter.link, chapter.number);
-            }
+            // let chapters;
+            // if (req.params.id.includes('mgdemon')) {
+            //     chapters = await checkSingleDemon(req.params.id, null, null);
+            // } else {
+            //     chapters = await checkSingle(req.params.id, null, null);
+            // }
+            // if (!chapters)
+            //     this.removeSaved(req, res, next)
+            // for (let chapter of chapters) {
+            //     await manhwaModel.saveManhwaChapters(req.params.id, chapter.link, chapter.number);
+            // }
         }
         return { api, flag };
     }
