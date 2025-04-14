@@ -3,8 +3,8 @@ import connect from '../utils/Database.js';
 class ChapterSaved {
 
     static async saveChapter(chapter, manhwa, user) {
-        const query = "INSERT INTO chaptersSaved (manhwaid, chapter, userid) VALUES (?, ?, ?)";
-        const [result] = await connect.execute(query, [manhwa, chapter, user]);
+        const query = "INSERT INTO chaptersSaved (manhwaid, chapter, userid, reading) VALUES (?, ?, ?, ?)";
+        const [result] = await connect.execute(query, [manhwa, chapter, user, 0]);
         return result.insertId;
     }
 
