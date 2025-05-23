@@ -25,7 +25,7 @@ export default async function manhwaCheck(req, res, next) {
             let checkManhwa = ["fdsfdsdfs"];
 
             let name = manga.slice(0, -5).replaceAll('-', ' ');
-            name = name.replace("25", '').replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%27", "'").replaceAll("%2C", ",").replaceAll("%21", "!").replaceAll("%3F", "?").replaceAll("%2D", '-').replaceAll("%3A", ':');
+            name = name.replace("25", '').replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%27", "'").replaceAll("%2C", ",").replaceAll("%21", "!").replaceAll("%3F", "?").replaceAll("%25252D", '-').replaceAll("%3A", ':');
             let slug = manga;
             let mid = encodeURIComponent(name.replaceAll(' ', '-').replaceAll("'", ""));
             checkManhwa = await manhwaModel.findManhwaById("mgdemon-" + mid);
