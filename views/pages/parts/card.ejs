@@ -1,6 +1,5 @@
 <div class="card" id="<%- manhwa.mid %>">
   <div class="g-0 d-flex h-100">
-
     <div class="d-flex flex-column">
       <picture>
         <source
@@ -40,7 +39,8 @@
       <span class="d-flex phone-col">
         <small class="card-status"
           >Status: <%- manhwa.status.replace(/\s/g, '') %>
-          <i class="<%- manhwa.status.toLowerCase().replace(/\s/g, '') %> roundStatus"
+          <i
+            class="<%- manhwa.status.toLowerCase().replace(/\s/g, '') %> roundStatus"
             >&#9679;</i
           ></small
         >
@@ -68,7 +68,11 @@
             min="1"
             placeholder="Min: 1, Max: <%- manhwa.chapters % 1 === 0 ? manhwa.chapters : manhwa.chapters.toFixed(1) %>"
             required />
-            <label for="chapternumber-<%-manhwa.mid%>" style="position: absolute; margin-top:-5px; ">Chapter</label>
+          <label
+            for="chapternumber-<%-manhwa.mid%>"
+            style="position: absolute; margin-top: -5px"
+            >Chapter</label
+          >
           <button
             type="submit"
             class="btn btn-primary my-2 form-control"
@@ -78,40 +82,39 @@
         </form>
         <% } %>
       </div>
-      <div class="gap-2 p-1 g-0 mt-2 w-100 d-flex flex-column" style="align-items: flex-end">
-        <div class="d-flex w-100 mb-3" style="gap: 20px;">
-        <button
-          type="button"
-          data-bs-toggle="modal" data-bs-target="#modal-<%-manhwa.mid%>"
-          data-button="remove" data-id="<%- manhwa.mid %>"
-          class="col btn btn-danger w-100">
-          Remove
-        </button>
-        <button
-          type="button" 
-          data-bs-toggle="modal" data-bs-target="#modal-<%-manhwa.mid%>" 
-          data-button="later" data-id="<%- manhwa.mid %>"
-          class="btn col w-100 <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-info' %>">
-          <%- manhwa.reading == 0 ? "Later" : "Start" %>
-        </button>
-      </div>
-      <div class="d-flex w-100" style="gap: 20px;">
-        
-        <% if(manhwa.reading == 0){ %>
-        <a
-          href="<%- manhwa.link %>"
-          class="col btn btn-primary w-100"
-          target="_blank"
-          >Current</a
-        >
-        <a
-          href="<%- manhwa.next %>"
-          class="col btn btn-success w-100 <%- manhwa.next == "" ? 'disabled' : '' %>"
-          target="_blank"
-          >Next</a
-        >
-        <% } %>
-      </div>
+      <div
+        class="gap-2 p-1 g-0 mt-2 w-100 d-flex flex-column"
+        style="align-items: flex-end">
+        <div class="d-flex w-100 mb-3" style="gap: 20px">
+          <button
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-<%-manhwa.mid%>"
+            data-button="remove"
+            data-id="<%- manhwa.mid %>"
+            class="col btn btn-danger w-100">
+            Remove
+          </button>
+          <button
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-<%-manhwa.mid%>"
+            data-button="later"
+            data-id="<%- manhwa.mid %>"
+            class="btn col w-100 <%- manhwa.reading == 0 ? 'btn-warning' : 'btn-info' %>">
+            <%- manhwa.reading == 0 ? "Later" : "Start" %>
+          </button>
+        </div>
+        <div class="d-flex w-100" style="gap: 20px">
+          <% if(manhwa.reading == 0){ %>
+          <a
+            href="<%- manhwa.link %>"
+            class="col btn btn-primary w-100"
+            target="_blank"
+            >Current</a
+          >
+          <% } %>
+        </div>
       </div>
     </div>
     <!-- </div> -->
@@ -135,7 +138,11 @@
         min="1"
         placeholder="Min: 1, Max: <%- manhwa.chapters % 1 === 0 ? manhwa.chapters : manhwa.chapters.toFixed(1) %>"
         required />
-        <label for="chapternumber-<%-manhwa.mid%>" style="position: absolute; margin-top:-5px;">Chapter</label>
+      <label
+        for="chapternumber-<%-manhwa.mid%>"
+        style="position: absolute; margin-top: -5px"
+        >Chapter</label
+      >
       <button
         type="submit"
         class="btn btn-primary my-2 form-control"
