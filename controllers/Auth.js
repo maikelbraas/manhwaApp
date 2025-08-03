@@ -62,10 +62,9 @@ class Auth {
                 if (content == null) {
                     let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}`);
                     content = await responseSingle.text();
-                    console.log(responseSingle);
                 }
                 //Get chapters links
-                content.slice(content.search('class="chapters-list"'));
+                content.slice(content.search('id="chapters-list"'));
                 maxChapter = content.split('chapter=');
                 console.log(content, maxChapter);
                 return;
