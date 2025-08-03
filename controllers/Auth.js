@@ -64,8 +64,8 @@ class Auth {
                 //Get chapters links
                 content.slice(content.search('id="chapters-list"') - 100);
                 let piece = content.split('chapter=')[2];
-                console.log(piece);
                 maxChapter = piece.split('"')[0];
+                console.log(piece, maxChapter);
                 return;
             }
             // else {
