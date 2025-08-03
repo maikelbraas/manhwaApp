@@ -50,7 +50,7 @@ class Auth {
         let nextManhwa = 1;
         let totalUpdated = 0;
         const userid = req.session.user.id;
-        let content = "";
+        let content = null;
         let maxChapter = 0;
         let manhwas = await manhwaModel.getSavedManhwas(userid);
         for (let manhwa of manhwas) {
@@ -58,7 +58,7 @@ class Auth {
                 // chapters = await checkSingleDemon(manhwa.mid);
 
                 if (content == null) {
-                    let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwas[0].slug}/`);
+                    let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}/`);
                     content = await responseSingle.text();
                 }
                 //Get chapters links
