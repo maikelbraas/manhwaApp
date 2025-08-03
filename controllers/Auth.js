@@ -54,7 +54,7 @@ class Auth {
         let maxChapter = 0;
         let manhwas = await manhwaModel.getSavedManhwas(userid);
         for (let manhwa of manhwas) {
-            if (manhwas[0].mid.includes('mgdemon')) {
+            if (manhwa.mid.includes('mgdemon')) {
                 // chapters = await checkSingleDemon(manhwa.mid);
 
                 if (content == null) {
