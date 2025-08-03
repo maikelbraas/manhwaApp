@@ -60,7 +60,7 @@ class Auth {
                 // chapters = await checkSingleDemon(manhwa.mid);
 
                 if (content == null) {
-                    let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}/`);
+                    let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}`);
                     content = await responseSingle.text();
                     console.log(responseSingle);
                 }
