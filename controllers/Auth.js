@@ -56,15 +56,15 @@ class Auth {
         for (let manhwa of manhwas) {
             if (manhwa.mid.includes('mgdemon')) {
                 // chapters = await checkSingleDemon(manhwa.mid);
-
                 if (content == null) {
                     let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}`);
                     content = await responseSingle.text();
                 }
                 //Get chapters links
-                content.slice(content.search('id="chapters-list"') - 100);
+                content.slice(content.search('id="chapters-list"') - 200);
                 let piece = content.split('chapter=')[2];
                 maxChapter = piece.split('"')[0];
+                console.log(manhwa.mid, maxChapter)
             }
             // else {
             //     chapters = await checkSingle(manhwa.mid);
