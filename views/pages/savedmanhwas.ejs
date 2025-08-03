@@ -131,7 +131,7 @@
         <div class="devider card-group" id="completed">
           <% for(let manhwa of manhwas){
           if(manhwa.status.toLowerCase() == 'completed' &&
-          manhwa.chapter.toFixed(1) != manhwa.chapters.toFixed(1) &&
+          manhwa.chapter.toFixed(1) == manhwa.chapters.toFixed(1) &&
           !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <%
           manhwa.used = true;}} %>
         </div>
