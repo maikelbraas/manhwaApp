@@ -10,11 +10,11 @@ export default async function checkChapterLinksDemon(mid, content, name) {
         }
         //Get chapters links
         let chapterLinks = [];
-        content.slice(content.search('class="chapter-list"'));
-        let allNumber = content.split('data-chapterno="');
+        content.slice(content.search('class="chapters-list"'));
+        let allNumber = content.split('chapter=');
         for (let number of allNumber) {
             let chapterNum = number.split('"')[0];
-            let link = `https://demonicscans.org/title/${manhwa.slug}/chapter/${chapterNum}/1`;
+            let link = `https://demonicscans.org/manga/${manhwa.slug}/chapter/${chapterNum}/1`;
             let findChapter = await manhwaModel.findChapterByMidAndLink(manhwa.mid, link);
             if (findChapter.length == 0) {
                 if (!isNaN(parseFloat(chapterNum)))
