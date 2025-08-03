@@ -50,6 +50,7 @@ class Auth {
         let nextManhwa = 1;
         let totalUpdated = 0;
         const userid = req.session.user.id;
+        let content = "";
         let maxChapter = 0;
         let manhwas = await manhwaModel.getSavedManhwas(userid);
         // for (let manhwa of manhwas) {
