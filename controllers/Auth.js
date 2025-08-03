@@ -64,7 +64,7 @@ class Auth {
                     content = await responseSingle.text();
                 }
                 //Get chapters links
-                content.slice(content.search('id="chapters-list"'));
+                content.slice(content.search('id="chapters-list"') - 200);
                 maxChapter = content.split('chapter=');
                 console.log(content, maxChapter);
                 return;
