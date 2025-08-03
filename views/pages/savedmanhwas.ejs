@@ -72,7 +72,7 @@
       <div class="manhwa-rows" tabindex="0">
         <div class="devider card-group" id="hiatus">
           <% for(let manhwa of manhwas){
-          if(manhwa.status.toLowerCase() == 'hiatus' &&
+          if((manhwa.status.toLowerCase() == 'hiatus' || Math.ceil(manhwa.chapters.toFixed(1)) > manhwa.chapters.toFixed(1)) &&
           manhwa.chapter.toFixed(1) == manhwa.chapters.toFixed(1) &&
           !manhwa.used){ %> <%- include('parts/card.ejs', {manhwa}) %> <%
           manhwa.used = true;}} %>
