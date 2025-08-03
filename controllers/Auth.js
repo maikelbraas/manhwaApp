@@ -53,6 +53,7 @@ class Auth {
         let content = null;
         let maxChapter = 0;
         let manhwas = await manhwaModel.getSavedManhwas(userid);
+        console.log(manhwas);
         for (let manhwa of manhwas) {
             console.log(manhwa.mid, manhwa.slug)
             if (manhwa.mid.includes('mgdemon')) {

@@ -154,7 +154,7 @@ class Manhwa {
 
     static async getSavedManhwas(userid) {
         try {
-            const query = `SELECT manhwas.id, title, mid, slug, media, image, content, chapters, chapter, baseurl, manhwas.lastUpdate, status, reading FROM manhwas INNER JOIN chaptersSaved ON chaptersSaved.manhwaid = manhwas.mid WHERE userid = ? ORDER BY manhwas.lastUpdate DESC, chaptersSaved.lastUpdate DESC`;
+            const query = `SELECT manhwas.id, title, mid, slug, media, image, content, chapters, chapter, baseurl, manhwas.lastUpdate, status, reading FROM manhwas INNER JOIN chaptersSaved ON chaptersSaved.manhwaid = manhwas.mid WHERE userid = ? AND manhwaid LIKE mgdemon% ORDER BY manhwas.lastUpdate DESC, chaptersSaved.lastUpdate DESC`;
             const [rows] = await connect.execute(query, [userid]);
             return rows;
         } catch (e) {
