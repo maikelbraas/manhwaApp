@@ -138,7 +138,7 @@ app.use((err, req, res, next) => {
         err.status = err.statusCode = 400;
 
         // .. your redirect here if still needed
-        return res.redirect(['https://', req.get('Host'), req.url].join(''));
+        return res.redirect(['https://', 'manhwasaver.com', req.url].join(''));
     } else {
         res.status(404).render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
     }
