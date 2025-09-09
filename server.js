@@ -130,19 +130,13 @@ app.use('*', (req, res, next) => {
     res.status(404).render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
 })
 
-// your express error handler
 app.use((err, req, res, next) => {
-    // in case of specific URIError
     if (err instanceof URIError) {
         err.message = 'Failed to decode param: ' + req.url;
         err.status = err.statusCode = 400;
-
-        // .. your redirect here if still needed
+        //Redirect to main page as fallback
         return res.redirect('https://manhwasaver.com');
-    } else {
-        res.status(404).render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
     }
-    // ..
 });
 
 const server = https.createServer({
