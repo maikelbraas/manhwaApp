@@ -140,7 +140,7 @@ app.use((err, req, res, next) => {
         // .. your redirect here if still needed
         return res.redirect(['https://', req.get('Host'), req.url].join(''));
     } else {
-        // ..
+        res.status(404).render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
     }
     // ..
 });
