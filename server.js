@@ -121,6 +121,7 @@ app.use((req, res, next) => {
     }
     next();
 })
+
 app.use('/', pages);
 app.use('/auth', isAuthenticated, auth)
 app.use('/admin', checkRole(2), admin);
@@ -128,6 +129,21 @@ app.use('/admin', checkRole(2), admin);
 app.use('*', (req, res, next) => {
     res.status(404).render('page_not_found.ejs', { title: '404: file not found', url: process.env.HOST_NAME + req.originalUrl });
 })
+
+// your express error handler
+app.use((err, req, res, next) => {
+    // in case of specific URIError
+    if (err instanceof URIError) {
+        err.message = 'Failed to decode param: ' + req.url;
+        err.status = err.statusCode = 400;
+
+        // .. your redirect here if still needed
+        return res.redirect(['https://', req.get('Host'), req.url].join(''));
+    } else {
+        // ..
+    }
+    // ..
+});
 
 const server = https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/manhwasaver.com/privkey.pem', 'utf8'),
