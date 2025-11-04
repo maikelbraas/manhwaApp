@@ -53,6 +53,7 @@ class Auth {
         for (let manhwa of manhwas) {
             // if (manhwa.mid.includes('mgdemon')) {
             // chapters = await checkSingleDemon(manhwa.mid);
+            console.log(manhwa.slug);
             let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}`);
             content = await responseSingle.text();
             //Get chapters links
