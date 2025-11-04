@@ -54,28 +54,33 @@ class Auth {
             // if (manhwa.mid.includes('mgdemon')) {
             // chapters = await checkSingleDemon(manhwa.mid);
             console.log(manhwa.slug);
-            let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}`);
-            content = await responseSingle.text();
-            //Get chapters links
-            content.slice(content.search('id="chapters-list"') - 200);
-            let piece = content.split('chapter=')[2];
-            maxChapter = piece.split('"')[0];
-            console.log(manhwa.mid, piece, maxChapter)
-            // }
-            // else {
-            //     chapters = await checkSingle(manhwa.mid);
-            // }
-            // for (let chapter of chapters) {
-            //     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
-            // }
+            try {
+                let responseSingle = await fetch(`https://demonicscans.org/manga/${manhwa.slug}`);
+                content = await responseSingle.text();
+                //Get chapters links
+                content.slice(content.search('id="chapters-list"') - 200);
+                let piece = content.split('chapter=')[2];
+                maxChapter = piece.split('"')[0];
+                console.log(manhwa.mid, piece, maxChapter)
+                // }
+                // else {
+                //     chapters = await checkSingle(manhwa.mid);
+                // }
+                // for (let chapter of chapters) {
+                //     await manhwaModel.saveManhwaChapters(manhwa.mid, chapter.link, chapter.number);
+                // }
 
-            let inter = (nextManhwa / manhwas.length) * 100;
-            res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
-            if (manhwa.chapters != maxChapter) {
-                totalUpdated++;
-                await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.content, manhwa.media, manhwa.image, maxChapter, manhwa.baseurl, manhwa.status);
+                let inter = (nextManhwa / manhwas.length) * 100;
+                res.write(`data: ${JSON.stringify({ progress: inter })}\n\n`);
+                if (manhwa.chapters != maxChapter) {
+                    totalUpdated++;
+                    await manhwaModel.update(manhwa.title, manhwa.mid, manhwa.slug, manhwa.content, manhwa.media, manhwa.image, maxChapter, manhwa.baseurl, manhwa.status);
+                }
+                nextManhwa++;
+            } catch (e) {
+                console.log(e);
+                res.end();
             }
-            nextManhwa++;
         }
         res.flash(`Saved updated: ${totalUpdated}`);
         res.write(`data: ${JSON.stringify({ progress: 100, updatedRows: totalUpdated, done: true })}\n\n`);
