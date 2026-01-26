@@ -61,7 +61,7 @@ class Auth {
                 content.slice(content.search('id="chapters-list"') - 200);
                 let piece = content.split('chapter=')[1];
                 maxChapter = piece.split('"')[0];
-                console.log(manhwa.mid, piece, maxChapter)
+                console.log(manhwa.mid, content, piece, maxChapter)
                 // }
                 // else {
                 //     chapters = await checkSingle(manhwa.mid);
