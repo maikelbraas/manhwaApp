@@ -60,7 +60,7 @@ class Auth {
                 console.log(content)
                 //Get chapters links
                 content.slice(content.search('id="chapters-list"') - 200);
-                let piece = content.split('chapter=')[1];
+                let piece = content.split('chapter=')[2];
                 maxChapter = piece.split('"')[0];
                 console.log(manhwa.mid, piece, maxChapter)
                 // }
